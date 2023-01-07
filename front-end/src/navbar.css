@@ -1,0 +1,13 @@
+.navbar{
+    background-color:#184d47!important;
+  }
+  
+  .nav-link{
+    color:#f9d486;
+    font-weight:600;
+    cursor: pointer;
+  }
+  
+  .logo{
+    width: 120px;
+  }
