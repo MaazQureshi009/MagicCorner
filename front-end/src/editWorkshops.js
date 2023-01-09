@@ -4,7 +4,7 @@ import Axios from 'axios';
 
 import './users.css';
 
-function Products(){
+function EditWorkshops(){
 
     const Navigate = useNavigate();
     const Location = useLocation();
@@ -13,25 +13,34 @@ function Products(){
     const [ Description , setDescription ] = useState(null);
     const [ NewPrice , setNewPrice ] = useState(0);
     const [ OldPrice , setOldPrice ] = useState(0);
+    const [ Loading , setLoading ] = useState(false);
 
     //const fileref = ref(storage, "Files/");
     const Received = Location.state;
 
     const update = (id) => {
-            Axios.post("http://localhost:3001/UpdateWorkshops" , 
-            {
-                id : id,
-                name : Name,
-                description : Description,
-                newprice : NewPrice,
-                oldprice : OldPrice,
-            });
-            alert("Workshop Added");
-            Navigate("/");
-        };
+        setLoading(true);
+        Axios.put("http://localhost:3001/UpdateWorkshops" , 
+        {
+            id : id,
+            name : Name,
+            description : Description,
+            newprice : NewPrice,
+            oldprice : OldPrice,
+        }).then(() =>{
+            alert("Workshop Edited");
+            setLoading(false);
+            Navigate("/displayWorkshops");
+        });
+    };
 
     return(
-        <div className='overall-log'>
+        <>
+        {
+        (Loading)?
+        <div class="loader"></div>
+        :
+        <div className='overall'>
             <p className='header'>Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
@@ -87,7 +96,7 @@ function Products(){
                         </div>
                         <button className="final-button general-button" onClick={() => {update(Received.id)}}>
                             <p className="final-label">
-                                ADD
+                                UPDATE
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
                             </p>
                         </button>
@@ -96,7 +105,9 @@ function Products(){
                 <div className='clear'></div>
             </div>
         </div>
+        }
+        </>
     );
 };
 
-export default Products;
+export default EditWorkshops;

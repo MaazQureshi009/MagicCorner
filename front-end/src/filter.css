@@ -1,0 +1,48 @@
+.filter {
+  background-color: #f9d486;
+  /* display: flex;
+    justify-content: center;
+    align-items: center; */
+}
+
+.filter-bar {
+  padding: 10px 0;
+  color: #184d47;
+}
+
+.heading {
+  color: #184d47;
+  font-size: large;
+  font-weight: 600;
+}
+
+.filter-button {
+  background-color: #184d47;
+  color: #f9d486;
+  border-radius: 20px;
+  height: 30px;
+  width: 6%;
+  font-size: large;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+}
+
+.apply-button {
+  background-color: #008037;
+  color: #f9d486;
+  border-radius: 20px;
+  height: 32px;
+  width: 6%;
+  font-size: large;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .filter-button {
+    width: 20%;
+  }
+  .apply-button {
+    width: 20%;
+  }
+}

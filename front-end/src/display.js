@@ -1,26 +1,19 @@
-import { useNavigate  , useLocation } from 'react-router-dom';
 import { useEffect , useState } from 'react';
 import Axios from 'axios';
 import NavBar from './navbar';
 import './product_card.css';
 
 function Display(){
-
-    const delete_product = (id) => {
-        Axios.post('http://localhost:3001/DeleteProduct' , {id : id});
-        alert("Product Deleted")
-    };
-
+    const [Loading , setLoading] = useState(false);
     const [ Products , setProducts ] = useState([]);
 
     useEffect( () => {
+        setLoading(true);
         Axios.get('http://localhost:3001/getAllFeaturedProducts').then((response) => {
             setProducts(response.data);
+            setLoading(false);
         });
     } , [] );
-
-    const Navigate = useNavigate();
-    const Location = useLocation();
 
     return(
         <div>
@@ -36,7 +29,11 @@ function Display(){
             <div className='banner'></div>
             <p id='header'>Top Products</p>
             <div className='rowww'>
-                {Products.map((key) => {
+                {
+                    (Loading)?
+                    <div class="loader"></div>
+                    :
+                    Products.map((key) => {
                     return(
                         <div className='col'>
                             <div className='image'>
@@ -49,7 +46,6 @@ function Display(){
                                 </div>
                                 <div className='buttons'>
                                     <button className='button'>VIEW<i class="fi fi-rr-eye end-icons"></i></button>
-                                    <button onClick={() => {delete_product(key._id)}}>DELETE</button>
                                 </div>
                             </div>
                             <div className='clear'></div>
@@ -59,6 +55,14 @@ function Display(){
                     )
                 }
             </div>
+            <a
+                href="https://wa.me/2348100000000"
+                class="whatsapp_float"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <i class="fa fa-whatsapp whatsapp-icon"></i>
+            </a>
         </div>
     );
 };

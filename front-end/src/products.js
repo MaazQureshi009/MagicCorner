@@ -10,6 +10,7 @@ function Products(){
 
     const Navigate = useNavigate();
 
+    const [ Loading , setLoading ] = useState(false);
     const [ Name , setName ] = useState(null);
     const [ Description , setDescription ] = useState(null);
     const [ MainCategory , setMainCategory ] = useState(null);
@@ -22,11 +23,12 @@ function Products(){
     //const fileref = ref(storage, "Files/");
 
     const upload = () => {
+            setLoading(true);
             if (File == null) return;
             const FileReference = ref(storage , `Product_DP/${File.name+Name}`);
             uploadBytes(FileReference , File).then((FileData) => {
                 getDownloadURL(FileData.ref).then((url) => {
-                    Axios.post("http://localhost:3001/addProduct" , 
+                    Axios.put("http://localhost:3001/addProduct" , 
                     {
                         image_url : url,
                         name : Name,
@@ -37,14 +39,24 @@ function Products(){
                         tags : SubCategory,
                         state : State,
                     });
+                }).then(() => {
+                    setLoading(false);
+                    alert("Product Added");
+                    Navigate("/displayProducts");
                 });
             });
-            alert("Product Added");
-            Navigate("/");
         };
 
     return(
-        <div className='overall'>
+        <>
+            {
+                (Loading)?
+                <>
+                <p>Hold Tight , We are Working On it</p>
+                <div class="loader"></div>
+                </>
+                :
+                <div className='overall'>
             <p className='header'>Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
@@ -152,7 +164,10 @@ function Products(){
                 </div>
                 <div className='clear'></div>
             </div>
+            <div className='clear'></div>
         </div>
+            }
+        </>
     );
 };
 

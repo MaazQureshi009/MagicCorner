@@ -73,6 +73,7 @@
     -ms-flex-wrap: wrap; /* IE10 */
     flex-wrap: wrap;
     padding: 0 0px;
+    margin-top:1em;
 }
 
 .col{
@@ -110,6 +111,10 @@
     padding-bottom: 1em;
     border-radius: 0 0 0.5em 0.5em;
 
+}
+
+.delete_float{
+    position : relative ;
 }
 
 @media screen and (max-width: 1030px) {

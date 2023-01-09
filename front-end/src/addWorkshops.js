@@ -10,6 +10,7 @@ function Products(){
 
     const Navigate = useNavigate();
 
+    const [ Loading , setLoading ] = useState(false);
     const [ Name , setName ] = useState(null);
     const [ Description , setDescription ] = useState(null);
     const [ NewPrice , setNewPrice ] = useState(0);
@@ -19,26 +20,37 @@ function Products(){
     //const fileref = ref(storage, "Files/");
 
     const upload = () => {
+        setLoading(true);
             if (File == null) return;
             const FileReference = ref(storage , `Workshop_DP/${File.name+Name}`);
             uploadBytes(FileReference , File).then((FileData) => {
                 getDownloadURL(FileData.ref).then((url) => {
-                    Axios.post("http://localhost:3001/addWorkshop" , 
+                    Axios.put("http://localhost:3001/addWorkshop" , 
                     {
                         image_url : url,
                         name : Name,
                         description : Description,
                         newprice : NewPrice,
                         oldprice : OldPrice,
+                    }).then(()=>{
+                        setLoading(false);
+                        alert("Workshop Added");
+                        Navigate("/displayWorkshops");
                     });
                 });
             });
-            alert("Workshop Added");
-            Navigate("/");
         };
 
     return(
-        <div className='overall-log'>
+        <>
+            {
+                (Loading)?
+                <>
+                <p>Hold Tight , We are Working On it</p>
+                <div class="loader"></div>
+                </>
+                :
+                <div className='overall-log'>
             <p className='header'>Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
@@ -113,6 +125,8 @@ function Products(){
                 <div className='clear'></div>
             </div>
         </div>
+            }
+        </>
     );
 };
 

@@ -136,7 +136,7 @@ app.post("/addAdmin" , async (req,res) => {
 
 //---------------------------------------------------------------Create_Product--------------------------------------------------------------------
 
-app.post("/addProduct" , async (req , res) => {
+app.put("/addProduct" , async (req , res) => {
     console.log("Running");
     const Product = new product_model(
         {
@@ -152,7 +152,7 @@ app.post("/addProduct" , async (req , res) => {
     );
     try{
         await Product.save();
-        console.log("Success");
+        res.send("Done");
     }catch(err){
         console.log(err);
     }
@@ -160,7 +160,7 @@ app.post("/addProduct" , async (req , res) => {
 
 //------------------------------------------------------------Add_Workshop------------------------------------------------------------------------
 
-app.post("/addWorkshop" , async (req , res) => {
+app.put("/addWorkshop" , async (req , res) => {
     const Workshop = new workshop_model(
         {
             image :req.body.image_url,
@@ -172,7 +172,7 @@ app.post("/addWorkshop" , async (req , res) => {
     );
     try{
         await Workshop.save();
-        console.log("Success");
+        res.send("Done");
     }catch(err){
         console.log(err);
     }
@@ -191,8 +191,8 @@ app.get("/getAllFeaturedProducts" , ( req , res ) => {
 
 //-------------------------------------------------------------All_Products----------------------------------------------------------------------
 
-app.get("/getAllProducts" , ( req , res ) => {
-    product_model.find({ name : {$not : null} }, (err , result) => {
+app.get("/getAllWorkshops" , ( req , res ) => {
+    workshop_model.find({ name : {$ne : null} }, (err , result) => {
         if(err){
             console.log(err);
         }
@@ -223,20 +223,49 @@ app.get("/allAdmins" , ( req , res ) => {
 });
 
 //-----------------------------------------------------------Select_Products----------------------------------------------------------------------
-
-app.post("/getProducts" , (req , res) => {
-    Selected_Product_Data = req.body.id;
-} );
-
-app.get("/getProducts" , (req , res) => {
-        product_model.findOne({_id : Selected_Product_Data} ,(err , result) =>{
-            if(err){
-                console.log(err);
-            }
-            else{
-                res.json(result);
-            }
-        });
+app.put("/getProducts" , (req , res) => {
+        Selected_Product_Category = req.body.Category;
+        Selected_Product_Tag = req.body.Tag;
+        if(Selected_Product_Category == "All"){Selected_Product_Category = null}
+        if(Selected_Product_Tag == "All"){Selected_Product_Tag = null}
+        if(Selected_Product_Category  != null && Selected_Product_Tag != null){
+            product_model.find({category : Selected_Product_Category , tags : Selected_Product_Tag} ,(err , result) =>{
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.json(result);
+                }
+            });
+        }
+        else if(Selected_Product_Category != null){
+            product_model.find({category : Selected_Product_Category} ,(err , result) =>{
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.json(result);
+                }
+            });
+        }
+        else if(Selected_Product_Tag!= null){
+            product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    res.json(result);
+                }
+            });
+        }
+        else{
+            product_model.find({ name : {$ne : null} }, (err , result) => {
+                if(err){
+                    console.log(err);
+                }
+                res.send(result);
+            });
+        }
     }
 );
 
@@ -259,7 +288,7 @@ app.get("/getUsers" , (req , res) => {
 
 //--------------------------------------------------------------Update_Product-------------------------------------------------------------------
 
-app.post("/updateProducts" , async (req , res) => {
+app.put("/updateProducts" , async (req , res) => {
     try{
         var newDescription = req.body.description;
         var newNewPrice = req.body.newprice;
@@ -283,6 +312,8 @@ app.post("/updateProducts" , async (req , res) => {
             await product_model.updateOne({_id : req.body.id} , {$set : {tags : newTags}});
         }
         if(newStatus != null){await product_model.updateOne({_id : req.body.id} , {$set : {status : newStatus}});}
+        res.send("Done");
+
     }catch(err){
         console.log(err);
     } 
@@ -290,7 +321,7 @@ app.post("/updateProducts" , async (req , res) => {
 
 //--------------------------------------------------------------Update_Workshop-------------------------------------------------------------------
 
-app.post("/UpdateWorkshops" , async (req , res) => {
+app.put("/UpdateWorkshops" , async (req , res) => {
     try{
         var newDescription = req.body.description;
         var newNewPrice = req.body.newprice;
@@ -305,6 +336,7 @@ app.post("/UpdateWorkshops" , async (req , res) => {
             await workshop_model.updateOne({_id : req.body.id} , {$set : {oldprice : newOldPrice}});
         }
         if(newStatus != null){await workshop_model.updateOne({_id : req.body.id} , {$set : {status : newStatus}});}
+        res.send("Done");
     }catch(err){
         console.log(err);
     } 
@@ -318,7 +350,7 @@ app.post("/DeleteProduct" , async (req , res) => {
 
 //---------------------------------------------------------------------------Delete_Workshop-------------------------------------------------------
 
-app.post("/DeleteWorkshop" , async (req , res) => {
+app.put("/DeleteWorkshop" , async (req , res) => {
     await workshop_model.deleteOne({_id : req.body.id});
 })
 

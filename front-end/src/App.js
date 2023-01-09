@@ -11,6 +11,9 @@ import EditProduct from './editProduct'
 import EditWorkshop from './editWorkshops';
 import Upload_User from './Upload_User';
 import Upload_Admin from './Upload_Admin';
+import Filter from './filter';
+import Search from './searchbar';
+import Workshop from './workshops';
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
           <Route path='/editWorkshops' element={<EditWorkshop />} />
           <Route path='/adminVerification' element={<Upload_Admin/>}/>
           <Route path='/userVerification' element={<Upload_User/>}/>
+          <Route path='/displayProducts' element={<Filter/>}/>
+          <Route path='/search' element={<Search/>}/>
+          <Route path='/displayWorkshops' element={<Workshop/>}/>
           <Route path="/Login" element={<Login/>} />
         </Routes>
       </Router>
