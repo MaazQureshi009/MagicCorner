@@ -1,12 +1,15 @@
 import { useEffect , useState } from 'react';
+import {useLocation} from 'react-router-dom';
 import Axios from 'axios';
 import NavBar from './navbar';
 import './product_card.css';
 
 function Display(){
+    const Location = useLocation();
+
     const [Loading , setLoading] = useState(false);
     const [ Products , setProducts ] = useState([]);
-
+    console.log(Location.state);
     useEffect( () => {
         setLoading(true);
         Axios.get('http://localhost:3001/getAllFeaturedProducts').then((response) => {
@@ -18,13 +21,8 @@ function Display(){
     return(
         <div>
             {
-                (Location.state === null)?
-                <>
-                    <NavBar/>
-                </>:
-                <>
-                    <NavBar/>
-                </>
+                (Location.state === null)?<NavBar Received={null}/>:
+                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
             }
             <div className='banner'></div>
             <p id='header'>Top Products</p>

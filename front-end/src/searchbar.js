@@ -1,11 +1,16 @@
 import React from "react";
 import "./searchbar.css";
 import NavBar from './navbar';
+import { useLocation } from 'react-router-dom'
 
 function Search() {
+    const Location = useLocation();
     return (
         <>
-            <NavBar/>
+            {
+                (Location.state === null)?<NavBar Received={null}/>:
+                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+            }
             <form className="search-container">
                 <input
                     type="text"

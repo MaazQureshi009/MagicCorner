@@ -4,12 +4,13 @@ import Axios from 'axios';
 import "./filter.css"
 import NavBar from './navbar';
 import './product_card.css';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate , useLocation} from 'react-router-dom';
 
 function Workshop() {
 
     const [ Loading , setLoading ] = useState(false);
     const Navigate = useNavigate();
+    const Location = useLocation();
 
     const delete_product = (id) => {
         setLoading(true);
@@ -32,7 +33,10 @@ function Workshop() {
 
     return (
         <>
-        <NavBar/>
+        {
+            (Location.state === null)?<NavBar Received={null}/>:
+                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+        }
         <div className='rowww'>
                 {
                     (Loading)?<div class="loader"></div>:

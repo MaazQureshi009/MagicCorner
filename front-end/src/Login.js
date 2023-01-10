@@ -33,7 +33,7 @@ function Login(){
                     if( Users_list[j].email.toString() === Username.toString() ){
                         if( Users_list[j].password.toString() === Password.toString() ){
                             alert("Success");
-                            Navigate('/' , {state:{status:"LoggedIn" , type : "user" }});
+                            Navigate('/' , {state:{user:Username , status:"LoggedIn" , type : "user" }});
                             break;
                         }
                         else{alert("Invalid Password")}
@@ -47,7 +47,7 @@ function Login(){
                 if( Admins_list[i].email.toString() === Username.toString() ){
                     if( Admins_list[i].password.toString() === Password.toString() ){
                         alert("Success");
-                        Navigate('/' , {state:{status:"LoggedIn" , type : "admin" }});
+                        Navigate('/displayProducts' , {state:{user:Username ,status:"LoggedIn" , type : "admin" }});
                         break;
                     }
                     else{alert("Invalid Password")}
@@ -60,7 +60,7 @@ function Login(){
                         if( Users_list[j].email.toString() === Username.toString() ){
                             if( Users_list[j].password.toString() === Password.toString() ){
                                 alert("Success");
-                                Navigate('/' , {state:{status:"LoggedIn" , type : "user" }});
+                                Navigate('/' , {state:{user:Username ,status:"LoggedIn" , type : "user" }});
                                 break;
                             }
                             else{alert("Invalid Password")}

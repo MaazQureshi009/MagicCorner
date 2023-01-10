@@ -4,7 +4,7 @@ import Axios from 'axios';
 import "./filter.css"
 import NavBar from './navbar';
 import './product_card.css';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate , useLocation} from 'react-router-dom';
 
 function Filter() {
 
@@ -16,6 +16,7 @@ function Filter() {
     const [ Tag , setTag ] = useState( null );
 
     const Navigate = useNavigate();
+    const Location = useLocation();
 
     const delete_product = (id) => {
         setLoading(true);
@@ -47,7 +48,10 @@ function Filter() {
     return (
         <>
         <div className='filter'>
-            <NavBar/>
+            {
+                (Location.state === null)?<NavBar Received={null}/>:
+                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+            }
             <div className="filter-bar">
                 <label for="dropdown" className='heading'>Filters : &nbsp;</label>
                 <select id="dropdown" className='filter-button' onChange={(e) => {setCategory(e.target.value)}}>

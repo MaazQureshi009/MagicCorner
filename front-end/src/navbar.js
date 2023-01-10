@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import "./navbar.css";
 import logo from './logo.png'
 import { Search, ShoppingCart, FavoriteBorder } from "@mui/icons-material"
-function NavBar() {
+function NavBar({Received}) {
+  console.log(Received);
   // const [click, setClick] = useState(false);
 
   // const handleClick = () => setClick(!click);
@@ -16,28 +17,73 @@ function NavBar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+            {(Received === null)?
               <li className="nav-item">
-                <Link className="nav-link" to="/">Home</Link>
-              </li>
+                <Link className="nav-link" to="/" state={Received}>Home</Link>
+              </li>:(Received.type === "user")?
               <li className="nav-item">
-                <Link className="nav-link" to="/displayProducts">Products</Link>
-              </li>
+                <Link className="nav-link" to="/" state={Received}>Home</Link>
+              </li>:
               <li className="nav-item">
-                <Link className="nav-link" to="/displayWorkshops">Workshops</Link>
+                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
               </li>
+              }
+              {
+                (Received === null)?
+                <li className="nav-item">
+                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
+              </li>:(Received.type === "user")?
+              <li className="nav-item">
+                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
+              </li>:
+              <li className="nav-item">
+                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
+              </li>
+              }
+              {
+                (Received === null)?
+                <li className="nav-item">
+                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
+              </li>:(Received.type === "user")?
+              <li className="nav-item">
+                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
+              </li>:
+              <li className="nav-item">
+                <Link className="nav-link" to="/" state={Received}>Queries</Link>
+              </li>
+              }
+              {
+                (Received !== null)?(Received.type === "admin")?
+                <li className="nav-item">
+                <Link className="nav-link" to="/" state={Received}>Orders</Link>
+              </li>:
+              <li className="nav-item">
+              </li>:
+              <li className="nav-item">
+              </li>
+              }
               <li className="nav-item ">
-              <Link className="nav-link" to="/search"><Search/></Link>
+              <Link className="nav-link" to="/search" state={Received}><Search/></Link>
               </li>
               
               <li className="nav-item">
-                <Link className="nav-link" to="cart"><ShoppingCart /></Link>
+                <Link className="nav-link" to="cart" state={Received}><ShoppingCart /></Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="wishlist"><FavoriteBorder /></Link>
+                <Link className="nav-link" to="wishlist" state={Received}><FavoriteBorder /></Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/Login">Login</Link>
-              </li>
+              {
+                (Received === null )?
+                <li className="nav-item">
+                  <Link className="nav-link" to="/Login">Login</Link>
+                </li>
+                :
+                <li className="nav-item">
+                  <Link className="nav-link" to="/" >
+                    {Received.user}
+                  </Link>
+                </li>
+              }
 
             </ul>
             {/* <form className="d-flex" role="search">
