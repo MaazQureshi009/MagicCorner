@@ -48,23 +48,23 @@ function Filter() {
     return (
         <>
         <div className='filter'>
-            {
+        {
                 (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+                <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             <div className="filter-bar">
                 <label for="dropdown" className='heading'>Filters : &nbsp;</label>
                 <select id="dropdown" className='filter-button' onChange={(e) => {setCategory(e.target.value)}}>
                     <option value= {Null} >All</option>
-                    <option>NYLON</option>
-                    <option>WOOLEN</option>
-                    <option>LINEN</option>
+                    <option>Nylon</option>
+                    <option>Woolen</option>
+                    <option>Linen</option>
                 </select>
 
                 <select id="dropdown" className='filter-button' onChange={(e) => {setTag(e.target.value)}}>
                     <option value= {Null}>All</option>
-                    <option className="option-attributes">CURTAIN</option>
-                    <option className="option-attributes">TABLE COVER</option>
+                    <option>Curtain</option>
+                    <option>Table Cover</option>
                 </select>
                 <button type='button' className='apply-button' onClick={Filter}>Apply</button>
             </div>
@@ -88,9 +88,28 @@ function Filter() {
                                     <p className='product-price'>Price : {key.newprice} /-</p>
                                 </div>
                                 <div className='buttons'>
-                                    <button className='button'>VIEW<i class="fi fi-rr-eye end-icons"></i></button>
+                                    {   
+                                        (Location.state === null)?
+                                            <button className='button'
+                                            onClick={()=>{Navigate("/ViewProduct" , 
+                                            {state:{check: "out" ,Product_id : key._id}})}}
+                                        >
+                                            VIEW
+                                            <i class="fi fi-rr-eye end-icons"></i>
+                                        </button>
+                                        :
+                                        <button className='button'
+                                            onClick={()=>{Navigate("/ViewProduct" , 
+                                            {state:{ check: "in" , status: Location.state.status, name : Location.state.name , user:Location.state.user , Product_id : key._id , type:Location.state.type , id:Location.state.id}})}}
+                                        >
+                                            VIEW
+                                            <i class="fi fi-rr-eye end-icons"></i>
+                                        </button>
+                                    }
                                 </div>
                             </div>
+                            {(Location.state!== null && Location.state.type === "admin")?
+                            <>
                             <button className="delete_float" onClick={() => {delete_product(key._id)}}>DELETE</button>
                             <button onClick={() => {
                                 Axios.post("http://localhost:3001/getProducts",{id : key._id}); 
@@ -104,6 +123,9 @@ function Filter() {
                             >
                                 EDIT
                             </button>
+                            </>:
+                            <></>
+                            }
                             <div className='clear'></div>
                         </div>
                         );

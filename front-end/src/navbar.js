@@ -3,7 +3,6 @@ import "./navbar.css";
 import logo from './logo.png'
 import { Search, ShoppingCart, FavoriteBorder } from "@mui/icons-material"
 function NavBar({Received}) {
-  console.log(Received);
   // const [click, setClick] = useState(false);
 
   // const handleClick = () => setClick(!click);
@@ -65,14 +64,27 @@ function NavBar({Received}) {
               <li className="nav-item ">
               <Link className="nav-link" to="/search" state={Received}><Search/></Link>
               </li>
-              
-              <li className="nav-item">
-                <Link className="nav-link" to="cart" state={Received}><ShoppingCart /></Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="wishlist" state={Received}><FavoriteBorder /></Link>
-              </li>
               {
+                (Received !== null)?
+                <>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/cart" state={Received}><ShoppingCart /></Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/WishList" state={Received}><FavoriteBorder /></Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/" >
+                      {Received.name}<i className="fi fi-ss-user end-icons" ></i>
+                    </Link>
+                  </li>
+                </>:
+                <li className="nav-item">
+                  <Link className="nav-link" to="/Login">Login</Link>
+                </li>
+
+              }
+              {/*
                 (Received === null )?
                 <li className="nav-item">
                   <Link className="nav-link" to="/Login">Login</Link>
@@ -82,7 +94,7 @@ function NavBar({Received}) {
                   <Link className="nav-link" to="/" >
                     {Received.user}
                   </Link>
-                </li>
+                </li>*/
               }
 
             </ul>

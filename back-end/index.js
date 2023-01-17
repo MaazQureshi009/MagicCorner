@@ -358,7 +358,121 @@ app.put("/DeleteWorkshop" , async (req , res) => {
 
 app.post("/DeleteUser" , async (req , res) => {
     await user_model.deleteOne({email : req.body.email});
+});
+
+//-------------------------------------------------------------------------Add_to_Cart-------------------------------------------------------------
+
+app.put("/addToCart" , async(req , res) => {
+    if(req.body.type == "user"){
+        await user_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {on_cart : req.body.product_id}});
+        res.send("Done");
+    }
+    else{
+        console.log(req.body);
+        await admin_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {on_cart : req.body.product_id}});
+        res.send("Done");
+    }
+});
+
+//---------------------------------------------------------------------Add_to_Wish_List----------------------------------------------------------
+
+app.put("/addToWishList" , async(req , res) => {
+    console.log(req.body);
+    if(req.body.type == "user"){
+        await user_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {wishlist : req.body.product_id}} , (err , result)=>{
+            if(err){console.log(err);}
+            res.send("Done");
+        }).clone();
+    }
+    else{
+        console.log(req.body);
+        await admin_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {wishlist : req.body.product_id}} , (err,result) =>{
+            res.send("Done");
+        });
+    }
+});
+
+//-------------------------------------------------------------------------Selected_Products--------------------------------------------------------
+
+app.put("/getSelectedProducts" , (req,res) => {
+    product_model.find({_id:{$in:req.body.id}} , (err , result) => {
+        if(err){
+            console.log(err);
+        }
+        res.send(result);
+    }).clone()
 })
+
+//--------------------------------------------------------------------------Get_Cart_List----------------------------------------------------------
+
+app.put("/getCart" , (req , res) => {
+    if(req.body.type == "user"){
+        user_model.find({_id:req.body.id} , (err , result) => {
+            if(err){console.log(err);}
+            res.send(result);
+        }).clone()
+    }
+    else{
+        admin_model.find({_id:req.body.id} , (err , result) => {
+            if(err){console.log(err);}
+            res.send(result);
+        }).clone()
+    }
+});
+
+//----------------------------------------------------------------------------Delete_Cart---------------------------------------------------------
+
+app.put("/deleteMe" , (req , res)=>{
+    if(req.body.type === "user"){
+        user_model.updateOne({_id:req.body.id} , {$set:{on_cart:req.body.file}} , (err , result)=>{
+            if(err){console.log(err)}
+            res.send("Done");
+        })
+    }
+    else{
+        admin_model.updateOne({_id:req.body.id} , {$set:{on_cart:req.body.file}} , (err , result)=>{
+            if(err){console.log(err)}
+            res.send("Done");
+        })
+    }
+});
+
+//------------------------------------------------------------------------Delete_WishList---------------------------------------------------------
+
+app.put("/deleteWishList" , (req , res)=>{
+    if(req.body.type === "user"){
+        user_model.updateOne({_id:req.body.id} , {$set:{wishlist:req.body.file}} , (err , result)=>{
+            if(err){console.log(err)}
+            res.send("Done");
+        })
+    }
+    else{
+        admin_model.updateOne({_id:req.body.id} , {$set:{wishlist:req.body.file}} , (err , result)=>{
+            if(err){console.log(err)}
+            res.send("Done");
+        })
+    }
+});
+
+//---------------------------------------------------------------Search---------------------------------------------------------------------------
+
+app.put("/getSearch" , async (req , res) => {
+    await product_model.find({name : {$regex : '.*' + req.body.name+'.*'}} , (err , result) => {
+        if(err){console.log(err)}
+        res.send(result);
+    }).clone()
+})
+
+//---------------------------------------------------------------All_Products--------------------------------------------------------------------
+
+app.get("/getAllProducts" , async(req , res) => {
+    await product_model.find((err , result) => {
+        if(err){console.log(err)}
+        res.send(result);
+    }).clone()
+})
+
+//--------------------------------------------------------------Server----------------------------------------------------------------------------
 
 app.listen(3001, () => {
     console.log("Server On");

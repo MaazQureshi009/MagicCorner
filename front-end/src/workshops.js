@@ -35,7 +35,7 @@ function Workshop() {
         <>
         {
             (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+                <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         <div className='rowww'>
                 {

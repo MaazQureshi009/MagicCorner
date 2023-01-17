@@ -1,6 +1,9 @@
 /* eslint-disable react/jsx-pascal-case */
 import {BrowserRouter as Router , Route , Routes} from 'react-router-dom';
 
+import "/node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "/node_modules/bootstrap/dist/js/bootstrap.bundle";
+
 import './App.css';
 import Display from './display';
 import Products from './products';
@@ -14,6 +17,9 @@ import Upload_Admin from './Upload_Admin';
 import Filter from './filter';
 import Search from './searchbar';
 import Workshop from './workshops';
+import ViewProduct from './ViewProduct';
+import Cart from './cart';
+import WishList from './WishList';
 
 function App() {
   return (
@@ -31,7 +37,10 @@ function App() {
           <Route path='/displayProducts' element={<Filter/>}/>
           <Route path='/search' element={<Search/>}/>
           <Route path='/displayWorkshops' element={<Workshop/>}/>
+          <Route path="/ViewProduct" element={<ViewProduct/>}/>
+          <Route path='/cart' element={<Cart/>}/>
           <Route path="/Login" element={<Login/>} />
+          <Route path="/WishList" element={<WishList/>} />
         </Routes>
       </Router>
     </div>

@@ -1,8 +1,5 @@
 .filter {
   background-color: #f9d486;
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
 }
 
 .filter-bar {
@@ -21,7 +18,7 @@
   color: #f9d486;
   border-radius: 20px;
   height: 30px;
-  width: 6%;
+  width: 10%;
   font-size: large;
   font-weight: 600;
   cursor: pointer;
@@ -36,9 +33,19 @@
   width: 6%;
   font-size: large;
   font-weight: 600;
+  border: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1150px) {
+  .filter-button {
+    width: 15%;
+  }
+  .apply-button {
+    width: 15%;
+  }
+}
+
+@media (max-width: 650px) {
   .filter-button {
     width: 20%;
   }

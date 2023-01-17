@@ -1,0 +1,34 @@
+.cart .btn {
+    color: #f9d486;
+    background-color: #184d47;
+    border-radius: 2em;
+    font-weight: 500;
+    border: none;
+}
+
+.card {
+    border: none;
+}
+.cart .heart-icon {
+    color: red;
+}
+
+.cart .wishlist-btn {
+    border: none;
+    background: white;
+}
+
+.product .description {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.product .price {
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.cart .btn:active {
+    background-color: #184d47;
+    color: #f9d486;
+}

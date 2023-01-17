@@ -32,8 +32,7 @@ function Login(){
                 for(var j = 0 ; j <= Users_list.length ; j++){
                     if( Users_list[j].email.toString() === Username.toString() ){
                         if( Users_list[j].password.toString() === Password.toString() ){
-                            alert("Success");
-                            Navigate('/' , {state:{user:Username , status:"LoggedIn" , type : "user" }});
+                            Navigate('/' , {state:{id:Users_list[j]._id, name : Users_list[j].full_name ,user:Username , status:"LoggedIn" , type : "user" }});
                             break;
                         }
                         else{alert("Invalid Password")}
@@ -46,8 +45,7 @@ function Login(){
             for(var i = 0; i < Admins_list.length ; i++){
                 if( Admins_list[i].email.toString() === Username.toString() ){
                     if( Admins_list[i].password.toString() === Password.toString() ){
-                        alert("Success");
-                        Navigate('/displayProducts' , {state:{user:Username ,status:"LoggedIn" , type : "admin" }});
+                        Navigate('/displayProducts' , {state:{id:Admins_list[i]._id , name : Admins_list[i].full_name ,user:Username ,status:"LoggedIn" , type : "admin" }});
                         break;
                     }
                     else{alert("Invalid Password")}
@@ -59,8 +57,7 @@ function Login(){
                     for( j = 0 ; j <= Users_list.length ; j++){
                         if( Users_list[j].email.toString() === Username.toString() ){
                             if( Users_list[j].password.toString() === Password.toString() ){
-                                alert("Success");
-                                Navigate('/' , {state:{user:Username ,status:"LoggedIn" , type : "user" }});
+                                Navigate('/' , {state:{id:Users_list[j]._id, name : Users_list[j].full_name,user:Username ,status:"LoggedIn" , type : "user" }});
                                 break;
                             }
                             else{alert("Invalid Password")}

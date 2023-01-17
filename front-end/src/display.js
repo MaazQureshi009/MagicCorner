@@ -1,15 +1,16 @@
 import { useEffect , useState } from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation , useNavigate} from 'react-router-dom';
 import Axios from 'axios';
 import NavBar from './navbar';
 import './product_card.css';
 
 function Display(){
     const Location = useLocation();
+    const Navigate = useNavigate();
 
     const [Loading , setLoading] = useState(false);
     const [ Products , setProducts ] = useState([]);
-    console.log(Location.state);
+
     useEffect( () => {
         setLoading(true);
         Axios.get('http://localhost:3001/getAllFeaturedProducts').then((response) => {
@@ -22,7 +23,7 @@ function Display(){
         <div>
             {
                 (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status , user:Location.state.user , type:Location.state.type} } />
+                <NavBar Received={ {status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             <div className='banner'></div>
             <p id='header'>Top Products</p>
@@ -43,7 +44,23 @@ function Display(){
                                     <p className='product-price'>Price : {key.newprice} /-</p>
                                 </div>
                                 <div className='buttons'>
-                                    <button className='button'>VIEW<i class="fi fi-rr-eye end-icons"></i></button>
+                                    {(Location.state === null)?
+                                        <button className='button'
+                                        onClick={()=>{Navigate("/ViewProduct" , 
+                                        {state:{check: "out" ,Product_id : key._id}})}}
+                                    >
+                                        VIEW
+                                        <i class="fi fi-rr-eye end-icons"></i>
+                                    </button>
+                                    :
+                                    <button className='button'
+                                        onClick={()=>{Navigate("/ViewProduct" , 
+                                        {state:{ check: "in" , status: Location.state.status, name : Location.state.name , user:Location.state.user , Product_id : key._id , type:Location.state.type , id:Location.state.id}})}}
+                                    >
+                                        VIEW
+                                        <i class="fi fi-rr-eye end-icons"></i>
+                                    </button>
+                                    }
                                 </div>
                             </div>
                             <div className='clear'></div>
