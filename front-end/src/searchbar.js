@@ -7,7 +7,7 @@ import Axios from 'axios';
 function Search() {
     const [ Loading , setLoading ] = useState(false);
     const [ SearchThis , setSearchThis ] = useState(null);
-    const [ Products , setProducts ] = useState(null);
+    const [ Products , setProducts ] = useState([]);
 
     const Location = useLocation();
     const Navigate = useNavigate();
@@ -48,12 +48,12 @@ function Search() {
                     placeholder="Search..."
                     onChange={(e)=>{setSearchThis(e.target.value)}}
                 />
-                <input type="button" value="Search" onClick={Search} />
+                <button type="button" onClick={Search}>Search</button>
             </form>
             {
                 (Loading)?<div class="loader"></div>:
 
-                (Products === null)?
+                (Products.length === 0)?
                 <p>NOTHING FOUND</p>
                 :
                 <>
@@ -91,26 +91,26 @@ function Search() {
                                         <i class="fi fi-rr-eye end-icons"></i>
                                     </button>
                                 }
+                                {(Location.state!== null && Location.state.type === "admin")?
+                                    <>
+                                        <button className='delete-btn mx-2' onClick={() => {delete_product(key._id)}}><i class="fi fi-sr-trash"></i></button>
+                                        <button className='edit-btn mx-2' onClick={() => {
+                                            Axios.post("http://localhost:3001/getProducts",{id : key._id}); 
+                                            Navigate('/editProducts' , 
+                                            {
+                                                state:{id : key._id , name: key.name , 
+                                                description : key.description , newprice : key.newprice , 
+                                                oldprice : key.oldprice , category : key.category , 
+                                                tags : key.tags , status : key.status}} )}
+                                            }
+                                        >
+                                        <i class="fi fi-sr-pencil"></i>
+                                        </button>
+                                    </>:
+                                        <></>
+                                }
                             </div>
                         </div>
-                        {(Location.state!== null && Location.state.type === "admin")?
-                            <>
-                            <button className="delete_float" onClick={() => {delete_product(key._id)}}>DELETE</button>
-                            <button onClick={() => {
-                                Axios.post("http://localhost:3001/getProducts",{id : key._id}); 
-                                Navigate('/editProducts' , 
-                                {
-                                    state:{id : key._id , name: key.name , 
-                                    description : key.description , newprice : key.newprice , 
-                                    oldprice : key.oldprice , category : key.category , 
-                                    tags : key.tags , status : key.status}} )}
-                                }
-                            >
-                                EDIT
-                            </button>
-                            </>:
-                            <></>
-                            }
                         <div className='clear'></div>
                     </div>
                     );

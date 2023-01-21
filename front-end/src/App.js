@@ -18,6 +18,7 @@ import Filter from './filter';
 import Search from './searchbar';
 import Workshop from './workshops';
 import ViewProduct from './ViewProduct';
+import ViewWorkShop from './ViewWorkshops';
 import Cart from './cart';
 import WishList from './WishList';
 
@@ -38,6 +39,7 @@ function App() {
           <Route path='/search' element={<Search/>}/>
           <Route path='/displayWorkshops' element={<Workshop/>}/>
           <Route path="/ViewProduct" element={<ViewProduct/>}/>
+          <Route path="/ViewWorkShop" element={<ViewWorkShop/>}/>
           <Route path='/cart' element={<Cart/>}/>
           <Route path="/Login" element={<Login/>} />
           <Route path="/WishList" element={<WishList/>} />

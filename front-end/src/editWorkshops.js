@@ -30,7 +30,7 @@ function EditWorkshops(){
         }).then(() =>{
             alert("Workshop Edited");
             setLoading(false);
-            Navigate("/displayWorkshops");
+            Navigate("/displayWorkshops" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
         });
     };
 
@@ -40,7 +40,7 @@ function EditWorkshops(){
         (Loading)?
         <div class="loader"></div>
         :
-        <div className='overall'>
+        <div className='overall-log'>
             <p className='header'>Magic Corner</p>
             <div className=" main-container">
                 <div className="container">

@@ -18,7 +18,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect("mongodb+srv://Rishichaary:password%4012345@codemath.lfw6dor.mongodb.net/main_data?retryWrites=true&w=majority" , 
+mongoose.connect("mongodb://Rishichaary:rishi12345@ac-hqr0iex-shard-00-00.lfw6dor.mongodb.net:27017,ac-hqr0iex-shard-00-01.lfw6dor.mongodb.net:27017,ac-hqr0iex-shard-00-02.lfw6dor.mongodb.net:27017/main_data?ssl=true&replicaSet=atlas-l3vfnh-shard-0&authSource=admin&retryWrites=true&w=majority" , 
 {
     useNewUrlParser:true,
 });
@@ -83,7 +83,7 @@ app.post("/addUser" , async (req,res) => {
         await user.save();
         let details = {
             from :"manageladen01@gmail.com",
-            to: req.body.mail,
+            to: req.body.email,
             subject : "Magic Corner Account Established",
             text : "Hi!! "+req.body.name+", You have dived into the world of handmade things. Start Enjoying Your Shopping."
         };
@@ -120,8 +120,8 @@ app.post("/addAdmin" , async (req,res) => {
         await user.save();
         let details = {
             from :"manageladen01@gmail.com",
-            to: req.body.mail,
-            subject : "Magic Corner Account Established",
+            to: req.body.email,
+            subject : "Magic Corner Account Confirmation.",
             text : "Hi!! "+req.body.name+", You have dived into the world of handmade things. Start Enjoying Your Shopping."
         };
         mailTransporter.sendMail( details , (err) =>{
@@ -238,7 +238,7 @@ app.put("/getProducts" , (req , res) => {
                 }
             });
         }
-        else if(Selected_Product_Category != null){
+        else if(Selected_Product_Category != null && Selected_Product_Tag == null ){
             product_model.find({category : Selected_Product_Category} ,(err , result) =>{
                 if(err){
                     console.log(err);
@@ -248,12 +248,14 @@ app.put("/getProducts" , (req , res) => {
                 }
             });
         }
-        else if(Selected_Product_Tag!= null){
+        else if(Selected_Product_Tag != null && Selected_Product_Category == null){
+            console.log(Selected_Product_Tag);
             product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
                 if(err){
                     console.log(err);
                 }
                 else{
+                    console.log(result);
                     res.json(result);
                 }
             });
@@ -335,7 +337,6 @@ app.put("/UpdateWorkshops" , async (req , res) => {
         if(newOldPrice != 0){
             await workshop_model.updateOne({_id : req.body.id} , {$set : {oldprice : newOldPrice}});
         }
-        if(newStatus != null){await workshop_model.updateOne({_id : req.body.id} , {$set : {status : newStatus}});}
         res.send("Done");
     }catch(err){
         console.log(err);
@@ -344,14 +345,21 @@ app.put("/UpdateWorkshops" , async (req , res) => {
 
 //----------------------------------------------------------------------------Delete_Product--------------------------------------------------------------------------
 
-app.post("/DeleteProduct" , async (req , res) => {
-    await product_model.deleteOne({_id : req.body.id});
+app.put("/DeleteProduct" , async (req , res) => {
+    console.log("Running");
+    await product_model.deleteOne({_id : req.body.id} , (err , result) => {
+        if(err){console.log(err);}
+        res.send("Done");
+    }).clone();
 })
 
 //---------------------------------------------------------------------------Delete_Workshop-------------------------------------------------------
 
 app.put("/DeleteWorkshop" , async (req , res) => {
-    await workshop_model.deleteOne({_id : req.body.id});
+    await workshop_model.deleteOne({_id : req.body.id} , (err , result) => {
+        if(err){console.log(err);}
+        res.send("Done");
+    }).clone();
 })
 
 //---------------------------------------------------------------------------Delete_User-------------------------------------------------------
@@ -432,6 +440,7 @@ app.put("/deleteMe" , (req , res)=>{
     else{
         admin_model.updateOne({_id:req.body.id} , {$set:{on_cart:req.body.file}} , (err , result)=>{
             if(err){console.log(err)}
+            console.log(result);
             res.send("Done");
         })
     }
@@ -470,6 +479,15 @@ app.get("/getAllProducts" , async(req , res) => {
         if(err){console.log(err)}
         res.send(result);
     }).clone()
+})
+
+//-------------------------------------------------------------Selected_WorkShops----------------------------------------------------------------
+
+app.put("/getSelectedWorkShops" , async (req , res) => {
+    await workshop_model.find({_id : req.body.id} , (err , result) => {
+        if(err){console.log(err)}
+        res.send(result);
+    }).clone();
 })
 
 //--------------------------------------------------------------Server----------------------------------------------------------------------------

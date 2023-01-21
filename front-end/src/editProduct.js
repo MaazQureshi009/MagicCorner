@@ -37,7 +37,7 @@ function EditProducts(){
             }).then(() =>{
                 setLoading(false);
                 alert("Product Updated");
-                Navigate("/displayProducts");
+                Navigate("/displayProducts" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
             });
         };
 

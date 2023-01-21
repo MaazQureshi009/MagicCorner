@@ -77,7 +77,7 @@ function Upload_User(){
                     <div className="container sub-container-1 float-start">
                         <form>
                             <p className="label-log-attributes">
-                                CAPTCHA: {Location.state.captcha}
+                                CAPTCHA: <s>{Location.state.captcha}</s>
                             </p>
                             <br></br>
                             <input type="text" placeholder="CAPTCHA" 

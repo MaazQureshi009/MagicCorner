@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  , useLocation} from 'react-router-dom';
 import Axios from 'axios';
 import { ref , uploadBytes , getDownloadURL } from 'firebase/storage';
 import { storage } from './cloud'
@@ -9,6 +9,9 @@ import './users.css';
 function Products(){
 
     const Navigate = useNavigate();
+    const Location = useLocation();
+
+    console.log(Location.state);
 
     const [ Loading , setLoading ] = useState(false);
     const [ Name , setName ] = useState(null);
@@ -42,7 +45,7 @@ function Products(){
                 }).then(() => {
                     setLoading(false);
                     alert("Product Added");
-                    Navigate("/displayProducts");
+                    Navigate("/displayProducts" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
                 });
             });
         };

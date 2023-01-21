@@ -4,7 +4,7 @@ import Axios from 'axios';
 import "./filter.css"
 import NavBar from './navbar';
 import './product_card.css';
-import {useNavigate , useLocation} from 'react-router-dom';
+import {useNavigate , useLocation , Link} from 'react-router-dom';
 
 function Workshop() {
 
@@ -14,9 +14,12 @@ function Workshop() {
 
     const delete_product = (id) => {
         setLoading(true);
-        Axios.put('http://localhost:3001/DeleteProduct' , {id : id}).then(() =>{
-            setLoading(false);
+        Axios.put('http://localhost:3001/DeleteWorkshop' , {id : id}).then(() =>{
             alert("Product Deleted");
+            Axios.get('http://localhost:3001/getAllWorkshops').then((response) => {
+            setProducts(response.data);
+            setLoading(false);
+        });
         });
     };
 
@@ -56,21 +59,43 @@ function Workshop() {
                                     <p className='product-price'>Price : {key.newprice} /-</p>
                                 </div>
                                 <div className='buttons'>
-                                    <button className='button'>VIEW<i class="fi fi-rr-eye end-icons"></i></button>
+                                {(Location.state === null)?
+                                        <button className='button'
+                                        onClick={()=>{Navigate("/ViewWorkShop" , 
+                                        {state:{check: "out" ,Product_id : key._id}})}}
+                                    >
+                                        VIEW
+                                        <i class="fi fi-rr-eye end-icons"></i>
+                                    </button>
+                                    :
+                                    <button className='button'
+                                        onClick={()=>{Navigate("/ViewWorkShop" , 
+                                        {state:{ check: "in" , status: Location.state.status, name : Location.state.name , user:Location.state.user , Product_id : key._id , type:Location.state.type , id:Location.state.id}})}}
+                                    >
+                                        VIEW
+                                        <i class="fi fi-rr-eye end-icons"></i>
+                                    </button>
+                                    }
+                                    {(Location.state!== null && Location.state.type === "admin")?
+                                        <>
+                                        <button className='delete-btn mx-2' onClick={() => {delete_product(key._id)}}><i class="fi fi-sr-trash"></i></button>
+                                        <button className='edit-btn mx-2' onClick={() => { 
+                                            Navigate('/editWorkshops' , 
+                                            {
+                                                state:{id : key._id , name: key.name , 
+                                                description : key.description , newprice : key.newprice , 
+                                                oldprice : key.oldprice ,
+                                                user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , Product_id : key._id , type:Location.state.type , user_id:Location.state.id}} 
+                                                )}
+                                            }
+                                        >
+                                        <i class="fi fi-sr-pencil"></i>
+                                        </button>
+                                        </>:
+                                        <></>
+                                    }
                                 </div>
                             </div>
-                            <button className="delete_float" onClick={() => {delete_product(key._id)}}>DELETE</button>
-                            <button onClick={() => { 
-                                Navigate('/editWorkshops' , 
-                                {
-                                    state:{id : key._id , name: key.name , 
-                                    description : key.description , newprice : key.newprice , 
-                                    oldprice : key.oldprice }} 
-                                    )}
-                                }
-                            >
-                                EDIT
-                            </button>
                             <div className='clear'></div>
                         </div>
                         );
@@ -86,13 +111,14 @@ function Workshop() {
             >
                 <i class="fa fa-whatsapp whatsapp-icon"></i>
             </a>
-            <a
-                href="/addWorkshops"
+            <Link
+                to="/addWorkshops"
                 class="add_float"
                 rel="noopener noreferrer"
+                state={ {user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id}}
             >
                 <i class="fi fi-br-plus add-icon"></i>
-            </a>
+            </Link>
         </>
     )
 }

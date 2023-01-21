@@ -90,10 +90,10 @@ function Cart(){
                                             VIEW
                                             <i class="fi fi-rr-eye end-icons"></i>
                                         </button>
-                                        <button className='general-button delete' onClick={() => {
+                                        <button className='delete-btn mx-2' onClick={() => {
 													Delete(key._id)
 												}}>
-                                                <i class="fi fi-rr-trash"></i>
+                                                <i class="fi fi-sr-trash"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -117,7 +117,7 @@ function Cart(){
             }
             <a
                 href="https://wa.me/2348100000000"
-                class="whatsapp_float"
+                class="whatsapp_float_cart"
                 target="_blank"
                 rel="noopener noreferrer"
             >
