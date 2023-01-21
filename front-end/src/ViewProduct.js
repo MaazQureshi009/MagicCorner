@@ -5,7 +5,6 @@ import './ViewProduct.css';
 import NavBar from './navbar';
 import './product_card.css';
 
-// import { FavoriteBorder } from "@mui/icons-material"
 const ProductView = () => {
 
     const Navigate = useNavigate();

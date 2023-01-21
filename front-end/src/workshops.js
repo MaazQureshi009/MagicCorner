@@ -7,7 +7,6 @@ import './product_card.css';
 import {useNavigate , useLocation , Link} from 'react-router-dom';
 
 function Workshop() {
-
     const [ Loading , setLoading ] = useState(false);
     const Navigate = useNavigate();
     const Location = useLocation();

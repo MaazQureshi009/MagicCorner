@@ -6,7 +6,6 @@ import './product_card.css';
 import './cart.css';
 
 function WishList(){
-
     const Delete = (id) => {
 		setLoading(true);
 		for(var i=0;i<OnCart.length;i++){

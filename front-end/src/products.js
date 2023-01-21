@@ -3,7 +3,6 @@ import { useNavigate  , useLocation} from 'react-router-dom';
 import Axios from 'axios';
 import { ref , uploadBytes , getDownloadURL } from 'firebase/storage';
 import { storage } from './cloud'
-
 import './users.css';
 
 function Products(){
@@ -119,6 +118,7 @@ function Products(){
                                 <br></br>
                                 <select className="input-attributes w-100" onChange={(event)=>{setMainCategory(event.target.value)}} required>
                                     <option className="option-attributes">SELECT</option>
+                                    <option className="option-attributes">HOME DECORS</option>
                                     <option className="option-attributes">NYLON</option>
                                     <option className="option-attributes">WOOLEN</option>
                                     <option className="option-attributes">LINEN</option>
@@ -131,6 +131,8 @@ function Products(){
                                 <br></br>
                                 <select className="input-attributes w-100" onChange={(event)=>{setSubCategory(event.target.value)}} required>
                                     <option className="option-attributes">SELECT</option>
+                                    <option className="option-attributes">CLOCKS</option>
+                                    <option className="option-attributes">WALL HANGINGS</option>
                                     <option className="option-attributes">CURTAIN</option>
                                     <option className="option-attributes">TABLE COVER</option>
                                 </select>
