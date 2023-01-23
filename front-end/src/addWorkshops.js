@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { useNavigate , useLocation } from 'react-router-dom';
 import Axios from 'axios';
 import { ref , uploadBytes , getDownloadURL } from 'firebase/storage';
@@ -16,19 +16,37 @@ function Products(){
     const [ Description , setDescription ] = useState(null);
     const [ NewPrice , setNewPrice ] = useState(0);
     const [ OldPrice , setOldPrice ] = useState(0);
-    const [ File , setFile ] = useState(null);
+    const [ File , setFile ] = useState([]);
+    const [ FileUrls , setFileUrls ] = useState([]);
 
     //const fileref = ref(storage, "Files/");
+    const FileStorer = (e) =>{
+        for(var i=0 ; i<e.target.files.length ; i++){
+            var file = e.target.files[i];
+            // eslint-disable-next-line no-loop-func
+            setFile((prevState) => [ ...prevState , file]);
+        }
+    }
 
     const upload = () => {
         setLoading(true);
-            if (File == null) return;
-            const FileReference = ref(storage , `Workshop_DP/${File.name+Name}`);
-            uploadBytes(FileReference , File).then((FileData) => {
+        if (File == null) return;
+        for(var j=0 ; j<File.length ; j++){
+            const FileReference = ref(storage , `Workshop_DP/${File[j].name+Name}`);
+            uploadBytes(FileReference , File[j]).then((FileData) => {
                 getDownloadURL(FileData.ref).then((url) => {
-                    Axios.put("http://localhost:3001/addWorkshop" , 
+                    setFileUrls((prev)=>[...prev , url]);
+                })
+            });
+        }
+    }
+
+    useEffect(() => {
+        if(FileUrls.length !== 0){
+            if(FileUrls.length === File.length){
+                Axios.put("http://localhost:3001/addWorkshop" , 
                     {
-                        image_url : url,
+                        image_url : FileUrls,
                         name : Name,
                         description : Description,
                         newprice : NewPrice,
@@ -38,9 +56,9 @@ function Products(){
                         alert("Workshop Added");
                         Navigate("/displayWorkshops" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
                     });
-                });
-            });
-        };
+                }
+            }
+    } , [FileUrls])
 
     return(
         <>
@@ -110,8 +128,8 @@ function Products(){
                                 </p>
                                 <br></br>
                                 <input type="file" accept='image/*' 
-                                    className="input-attributes w-100"
-                                    onChange={(event)=>{setFile(event.target.files[0])}} required>
+                                    className="input-attributes w-100" multiple
+                                    onChange={(event)=>{FileStorer(event)}} required>
                                 </input>
                             </div>
                         </div>

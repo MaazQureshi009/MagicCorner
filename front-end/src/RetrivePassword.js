@@ -3,10 +3,19 @@ import { useNavigate , Link } from "react-router-dom";
 import Axios from 'axios';
 import './users.css';
 
-function Login(){
+function RetrivePassword(){
     const [ Username , setUsername ] = useState (null );
-    const [ Password , setPassword ] = useState( [] );
     const Navigate = useNavigate();
+
+    let Captcha=0
+    let OTP = 0
+
+    const generator = () =>{
+        Captcha = Math.floor((Math.random()*9999)+1000);
+        OTP = Math.floor((Math.random()*9999)+1000);
+
+        console.log(Captcha,OTP);
+    }
 
     useEffect(
         () =>{
@@ -30,11 +39,9 @@ function Login(){
             if(Users_list.length !== 0){
                 for(var j = 0 ; j <= Users_list.length ; j++){
                     if( Users_list[j].email.toString() === Username.toString() ){
-                        if( Users_list[j].password.toString() === Password.toString() ){
-                            Navigate('/' , {state:{id:Users_list[j]._id, name : Users_list[j].full_name ,user:Username , status:"LoggedIn" , type : "user" }});
-                            break;
-                        }
-                        else{alert("Invalid Password")}
+                        generator()
+                        Navigate("/SendPassword" , {state:{type : "user" , captcha:Captcha , otp:OTP , email : Username}});
+                        break;
                     }
                     else if( j === Users_list.length-1 ){alert("Invalid Username!!");}
                 }
@@ -43,11 +50,9 @@ function Login(){
         else{
             for(var i = 0; i < Admins_list.length ; i++){
                 if( Admins_list[i].email.toString() === Username.toString() ){
-                    if( Admins_list[i].password.toString() === Password.toString() ){
-                        Navigate('/displayProducts' , {state:{id:Admins_list[i]._id , name : Admins_list[i].full_name ,user:Username ,status:"LoggedIn" , type : "admin" }});
-                        break;
-                    }
-                    else{alert("Invalid Password")}
+                    generator();
+                    Navigate("/SendPassword" , {state:{type : "admin" , captcha:Captcha , otp:OTP , email : Username}});
+                    break;
                 }
                 else if(i === Admins_list.length-1 && Users_list.length === 0){
                     alert("Invalid Username!!");
@@ -55,11 +60,9 @@ function Login(){
                 else if( i === Admins_list.length-1 ){
                     for( j = 0 ; j <= Users_list.length ; j++){
                         if( Users_list[j].email.toString() === Username.toString() ){
-                            if( Users_list[j].password.toString() === Password.toString() ){
-                                Navigate('/' , {state:{id:Users_list[j]._id, name : Users_list[j].full_name,user:Username ,status:"LoggedIn" , type : "user" }});
-                                break;
-                            }
-                            else{alert("Invalid Password")}
+                            generator();
+                            Navigate("/SendPassword" , {state:{type : "user" , captcha:Captcha , otp:OTP , email : Username}});
+                            break;
                         }
                         else if( j === Users_list.length-1 ){alert("Invalid Username!!");}
                     }
@@ -96,23 +99,14 @@ function Login(){
                                 className="input-log-attributes w-100"
                                 onChange={(event)=>{setUsername(event.target.value)}}>
                             </input>
-                            <br></br>
-                            <p className="label-log-attributes">
-                                PASSWORD:
-                            </p>
-                            <br></br>
-                            <input type="password" placeholder="Password......" 
-                                className="input-log-attributes w-100"
-                                onChange={(event)=>{setPassword(event.target.value)}}>
-                            </input>
                             <button className="final-button general-button"
                                 onClick={check} type="button">
                                 <p className="final-label">
-                                GET IN
+                                VERIFY
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
                                 </p>
                             </button>
-                            <Link to="/ForgotPassword" className='forgot-password'>Forgot Password ?</Link>
+                            <Link to="/users" className='forgot-password'>Forgot Password ?</Link>
                         </form>
                     </div>
                 </div>
@@ -123,4 +117,4 @@ function Login(){
     );
 }
 
-export default Login;
+export default RetrivePassword;

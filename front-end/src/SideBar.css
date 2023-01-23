@@ -1,0 +1,39 @@
+.floaticons {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+    float: right;
+    margin-top: 10%;
+    position: sticky;
+    top: 10%;
+}
+
+a{
+    color:black;
+}
+
+.whatsapp_float img {
+    width: 35px;
+    height: 35px;
+    color: #FFF;
+    text-align: center;
+    z-index: 100;
+  }
+  
+  .icon {
+    margin-top: 16px;
+  }
+  
+  /* for mobile */
+  @media screen and (max-width: 767px) {
+    .icon {
+        margin-top: 12px;
+    }
+  
+    .whatsapp_float img{
+        width: 25px;
+        height: 25px;
+        /* bottom: 20px; */
+        /* right: 10px; */
+    }
+  }

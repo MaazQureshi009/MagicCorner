@@ -1,6 +1,4 @@
 import Axios from 'axios';
-import { ref , uploadBytes , getDownloadURL } from 'firebase/storage';
-import { storage } from './cloud'
 import { useNavigate , useLocation } from 'react-router-dom';
 import { useEffect , useState } from 'react';
 
@@ -14,47 +12,22 @@ function Upload_User(){
 
     useEffect(
         ()=>{
-            Axios.post("http://localhost:3001/userMailer" , {
-                name : Location.state.name,
+            console.log("Running");
+            Axios.put("http://localhost:3001/OtpMailer" , {
+                type : Location.state.type,
                 otp : Location.state.otp,
-                mail : Location.state.email,
+                email : Location.state.email,
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
         } , []
     );
 
-    const Upload = () => {
-        if (Location.state.file == null) return;
-        const FileReference = ref(storage , `User_DP/${Location.state.file.name+Location.state.name+Location.state.email}`);
-        uploadBytes(FileReference , Location.state.file).then((FileData) => {
-            getDownloadURL(FileData.ref).then((url) => {
-                Axios.post("http://localhost:3001/addUser" , 
-                {
-                    image_url : url,
-                    name : Location.state.name,
-                    email : Location.state.email,
-                    mobile : Location.state.mobile,
-                    gender : Location.state.gender,
-                    dob : Location.state.dob,
-                    age : Location.state.age,
-                    house : Location.state.house,
-                    street : Location.state.street,
-                    area : Location.state.area,
-                    city : Location.state.city,
-                    state : Location.state.status,
-                    password : Location.state.password,
-                    pincode : Location.state.pinCode,
-                });
-            });
-        });
-        alert("User Added");
-        Navigate('/Login');
-    };
-
     const check = () => {
         if(Captchaa.toString() === Location.state.captcha.toString()){
             if(OOTP.toString() === Location.state.otp.toString()){
-                Upload();
+                Axios.put("http://localhost:3001/PasswordMailer" , {type : Location.state.type,email : Location.state.email}).then(()=> {
+                    Navigate("/Login");
+                })
             }
             else{
                 alert("OTP Miss Match");

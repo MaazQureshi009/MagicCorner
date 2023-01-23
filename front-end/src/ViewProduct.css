@@ -1,34 +1,97 @@
-.cart .btn {
-    color: #f9d486;
-    background-color: #184d47;
-    border-radius: 2em;
-    font-weight: 500;
-    border: none;
+.view-pop{
+    position:fixed;
+    top:10vh;
+    left:10px;
+    background:rgba(250, 250, 250, 0.99);
+    width:98%;
+    border-radius:0.5em;
+    box-shadow: 0 0 5em;
 }
 
-.card {
-    border: none;
-}
-.cart .heart-icon {
-    color: red;
-}
-
-.cart .wishlist-btn {
-    border: none;
-    background: white;
+.n-active-images{
+    height:50px;
+    width:70px;
+    border:solid 0.1em;
+    margin:0.5em;
 }
 
-.product .description {
-    font-weight: 500;
-    font-size: 1.2rem;
+.active-image{
+    height:400px;
+    max-width:100%;
+    
 }
 
-.product .price {
-    font-weight: 500;
-    font-size: 1.2rem;
+.active-image-div{
+    border:solid 0.1em;
 }
 
-.cart .btn:active {
-    background-color: #184d47;
-    color: #f9d486;
+.view-product-name{
+    font-size:2em;
+    margin-bottom: 0;
+}
+
+.product-description{
+    font-size:1.4em;
+}
+
+.content-div{
+    text-align:left;
+}
+
+.product-links{
+    color:black;
+}
+
+.product-extras{
+    margin-bottom:0;
+    font-size:1.4em;
+}
+
+.product-discount-price{
+    background-color:red;
+    color:white;
+    border-radius:2em;
+    padding: 0 1em;
+    width:5.5em;
+}
+
+.strike{
+    color:red;
+    opacity:0.75;
+    font-size:1.2em;
+    margin-bottom:0;
+    margin-top:1em;
+}
+
+.slashed-price{
+    color:black;
+    margin-bottom:0;
+}
+
+.live-price{
+    font-size:2em;
+    margin-top:0em;
+    padding-top:0em;
+}
+
+.cart-button{
+    border:none;
+    outline:none;
+    background-color:#82CD47;
+    color:white;
+    padding:0.5em;
+    float:left;
+}
+
+.wish-icon:hover{
+    color:#FF0032;
+}
+
+.full-wish-icon{
+    color:#FF0032;
+}
+
+.wish-button{
+    font-size:1.8em;
+    float:left;
 }

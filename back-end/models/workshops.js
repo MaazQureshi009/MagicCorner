@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const workshop_schema = new mongoose.Schema({
     image : {
-        type : String,
+        type : Array,
         required : true,
     },
     name : {

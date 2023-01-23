@@ -1,169 +1,78 @@
 import {useEffect , useState} from 'react';
 import Axios from 'axios';
-import { useNavigate , useLocation } from 'react-router-dom';
+import { useNavigate , useLocation , Link } from 'react-router-dom';
 import './ViewProduct.css';
 import NavBar from './navbar';
 import './product_card.css';
 
-const WorkShopView = () => {
+const ProductView = (Received) => {
 
     const Navigate = useNavigate();
     const Location = useLocation();
-
-    const [Final,setFinal] = useState(null);
-
-    const RelatedItems = [];
-
+    const [ ActiveImage , setActiveImage ] = useState("")
+    const [ NonActiveImage , setNonActiveImage ] = useState([])
     const [ Loading , setLoading ] = useState(true);
     const [ Item, setItem ] = useState([]);
 
     useEffect( () => {
+        console.log(Received.Received)
         setLoading(true);
-        Axios.put("http://localhost:3001/getSelectedWorkShops" , {id:Location.state.Product_id}).then((response) => {
-            setItem(response.data);
-            Axios.get("http://localhost:3001/getAllWorkshops" ).then((response1)=>{
-                setFinal(response1.data);
-                setLoading(false);
-            })
-        })
+        Axios.put("http://localhost:3001/getSelectedWorkShops" , {id:Received.Received.Product_id}).then((response) => {
+            setItem(response.data[0]);
+            setActiveImage(response.data[0].image[0]);
+            setNonActiveImage(response.data[0].image);
+            setLoading(false);
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     return (
-        <>
-            {
-            (Location.state.check === "out")?<NavBar Received={null}/>:
-            <NavBar Received={ {status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
-            }
+        <div className="view-pop">
             {
                 (Loading)?
                 <div class="loader"></div>
                 :
-                <>
-                <div className="container mt-5 mb-5">
-                <div className="row d-flex justify-content-center">
-                <div className="col-md-12">
-                <div className="card">
-                <div className="row">
-                <div className="col-md-6">
-                <div className="images p-3">
-                <div className="text-center p-4"> <img id="main-image" src={Item[0].image} alt='product' width="280" />
-                </div>
-                </div>
-                </div>
-
-                <div className="col-md-6">
-                <div className="product p-4">
-                                        
-                <div className="mt-2 mb-3 mr-0 ms-0">
-                <h3 className="flex-row d-flex">{Item[0].name}</h3>
-                </div>
-                <p className="description d-flex text-start">
-                {Item[0].description}
-                </p>
-
-                <div className="price d-flex flex-row align-items-center">
-                <span className="discout-price">Discount : {parseInt(((parseInt(Item[0].oldprice) - parseInt(Item[0].newprice))/parseInt(Item[0].oldprice))*100)} %</span>
-                </div>
-
-                <div className="price d-flex flex-row align-items-center">
-                <span className="act-price">Price : {Item[0].newprice} /-</span>
-                </div>
-                {
-                    (Location.state.check === "in")?
-                    <div className="cart mt-4 d-flex align-self-start mr-auto">
-                    <button className="btn btn-danger px-4"
-                        onClick={() =>{
-                            setLoading(true);
-                            Axios.put("http://localhost:3001/addToCart" , {type : Location.state.type , id:Location.state.id , user:Location.state.user , product_id:Item[0]._id}).then(() =>{
-                                setLoading(false);
-                                Navigate("/cart" , { state: {status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} })
-                            });
-                        }}
-                    >Enroll Now</button>
-                    <button className="wishlist-btn" 
-                        onClick={() =>{
-                            setLoading(true);
-                            Axios.put("http://localhost:3001/addToWishList" , {type : Location.state.type , id:Location.state.id , user:Location.state.user , product_id:Item[0]._id}).then(() =>{
-                                setLoading(false);
-                                Navigate("/WishList" , { state: {status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} })
-                            });
-                        }}
-                    ><i className='heart-icon fa fa-heart fa-2x px-3'></i></button>
+                < >
+                    <div className='container col-6 float-start  mt-2'>
+                        <div className="col-12 active-image-div">
+                            <img src={ActiveImage} alt="MainImage" className="active-image" />
+                        </div>
+                        <div className="row">
+                            {NonActiveImage.map((value) => {
+                                return(
+                                    <>
+                                        <img key={value} src={value} alt="SubImages" className='col-1 n-active-images' onClick={() => {setActiveImage(value)}} />
+                                    </>);
+                            })}
+                        </div>
                     </div>
-                    :
-                    <p>Login</p>
-                }                     
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                </div>
-                <p id='header'>Related Products</p>
-                <div className='rowww'>
-                    {
-                        (RelatedItems !== [])?<>
-                        {
-                        Final.map((key) => {
-                        return(
-                            <div className='col'>
-                                <div className='image'>
-                                    <img src={key.image} alt="Product" className='img-img'></img>
-                                </div>
-                                <div>
-                                    <div className='contents'>
-                                        <p className='product-name'>{key.name}</p>
-                                        <p className='product-price'>Price : {key.newprice} /-</p>
-                                    </div>
-                                    <div className='buttons'>
-                                        {(Location.state === null)?
-                                            <button className='button'
-                                            onClick={()=>{Navigate("/ViewProduct" , 
-                                            {state:{check: "out" ,Product_id : key._id}})
-                                            window.location.reload(true);
-                                            }
-                                            }
-                                        >
-                                            VIEW
-                                            <i class="fi fi-rr-eye end-icons"></i>
-                                        </button>
-                                        :
-                                        <button className='button'
-                                            onClick={()=>{Navigate("/ViewWorkShop" , 
-                                            {state:{ check: "in" , status: Location.state.status, name : Location.state.name , user:Location.state.user , Product_id : key._id , type:Location.state.type , id:Location.state.id}})
-                                            window.location.reload(true);
-                                            }}
-                                        >
-                                            VIEW
-                                            <i class="fi fi-rr-eye end-icons"></i>
-                                        </button>
-                                        }
-                                    </div>
-                                </div>
-                                <div className='clear'></div>
-                            </div>
-                            );
-                        }
-                        )}
+                    <div className='container col-6 float-start mt-2 content-div'>
+                        <p className="view-product-name">{Item.name}</p>
+                        <p className="product-description">{Item.description}</p>
+                        <p className="product-discount-price">{parseInt(((parseInt(Item.oldprice) - parseInt(Item.newprice))/parseInt(Item.oldprice))*100)}% off</p>
+                        <s className="strike"><p className="slashed-price">Rs: {Item.oldprice}</p></s>
+                        <p className="live-price">Rs: {Item.newprice}</p>
+                        {(Received.Received.check === "in")?
+                        <>
+                            <button className="cart-button" onClick={() =>{}}>ENROLL</button>
+                        </>:
+                        <>
+                        <button className="cart-button" onClick={() =>{Navigate("/Login")}}>ENROLL</button>
                         </>
-                        :
-                        <p>Empty</p>
-                    }
-                </div>
-                <a
-                    href="https://wa.me/2348100000000"
-                    class="whatsapp_float"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    <i class="fa fa-whatsapp whatsapp-icon"></i>
-                </a>
+                        }
+                    </div>
                 </>
             }
-        </>
+            <a
+                href="https://wa.me/2348100000000"
+                class="whatsapp_float"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                <i class="fa fa-whatsapp whatsapp-icon"></i>
+            </a>
+        </div>
     )
 }
 
-export default WorkShopView;
+export default ProductView;

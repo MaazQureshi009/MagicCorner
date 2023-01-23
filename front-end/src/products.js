@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
 import { useNavigate  , useLocation} from 'react-router-dom';
 import Axios from 'axios';
 import { ref , uploadBytes , getDownloadURL } from 'firebase/storage';
@@ -10,6 +10,14 @@ function Products(){
     const Navigate = useNavigate();
     const Location = useLocation();
 
+    const FileStorer = (e) =>{
+        for(var i=0 ; i<e.target.files.length ; i++){
+            var file = e.target.files[i];
+            // eslint-disable-next-line no-loop-func
+            setFile((prevState) => [ ...prevState , file]);
+        }
+    }
+
     console.log(Location.state);
 
     const [ Loading , setLoading ] = useState(false);
@@ -20,34 +28,51 @@ function Products(){
     const [ NewPrice , setNewPrice ] = useState(0);
     const [ OldPrice , setOldPrice ] = useState(0);
     const [ State , setState ] = useState(null);
-    const [ File , setFile ] = useState(null);
+    const [ File , setFile ] = useState([]);
+    const [ Infos , setInfos ] = useState(null);
+    const [ Length , setLength ] = useState(null);
+    const [ Breath , setBreath ] = useState(null);
+    const [ Height , setHeight ] = useState(null);
+    const [ FileUrls , setFileUrls ] = useState([]);
 
     //const fileref = ref(storage, "Files/");
 
     const upload = () => {
             setLoading(true);
             if (File == null) return;
-            const FileReference = ref(storage , `Product_DP/${File.name+Name}`);
-            uploadBytes(FileReference , File).then((FileData) => {
-                getDownloadURL(FileData.ref).then((url) => {
-                    Axios.put("http://localhost:3001/addProduct" , 
-                    {
-                        image_url : url,
-                        name : Name,
-                        description : Description,
-                        newprice : NewPrice,
-                        oldprice : OldPrice,
-                        category : MainCategory ,
-                        tags : SubCategory,
-                        state : State,
-                    });
-                }).then(() => {
-                    setLoading(false);
-                    alert("Product Added");
-                    Navigate("/displayProducts" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
+            for(var j=0 ; j<File.length ; j++){
+                const FileReference = ref(storage , `Product_DP/${File[j].name+Name}`);
+                uploadBytes(FileReference , File[j]).then((FileData) => {
+                    getDownloadURL(FileData.ref).then((url) => {
+                        setFileUrls((prev)=>[...prev , url]);
+                    })
                 });
-            });
-        };
+            }
+    }
+    useEffect(() =>{
+        if(FileUrls.length !== 0){
+            if(FileUrls.length === File.length){
+        Axios.put("http://localhost:3001/addProduct" , 
+            {
+                image_url : FileUrls,
+                name : Name.toUpperCase(),
+                description : Description,
+                newprice : NewPrice,
+                oldprice : OldPrice,
+                category : MainCategory ,
+                tags : SubCategory,
+                state : State,
+                infos : Infos,
+                length : Length,
+                breath : Breath,
+                height : Height,
+            }).then(() => {
+                setLoading(false);
+                alert("Product Added");
+                Navigate("/displayProducts" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
+            });}}
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [FileUrls])
 
     return(
         <>
@@ -137,6 +162,36 @@ function Products(){
                                     <option className="option-attributes">TABLE COVER</option>
                                 </select>
                             </div>
+                            <div className="col-4">
+                                <p className="label-attributes">
+                                    LENGTH(m):
+                                </p>
+                                <br></br>
+                                <input type="text" placeholder="3" 
+                                    className="input-attributes w-100"
+                                    onChange={(event)=>{setLength(event.target.value)}} required>
+                                </input>
+                            </div>
+                            <div className="col-4">
+                                <p className="label-attributes">
+                                    WIDTH(m):
+                                </p>
+                                <br></br>
+                                <input type="text" placeholder="3" 
+                                    className="input-attributes w-100"
+                                    onChange={(event)=>{setBreath(event.target.value)}} required>
+                                </input>
+                            </div>
+                            <div className="col-4">
+                                <p className="label-attributes">
+                                    HEIGHT(m):
+                                </p>
+                                <br></br>
+                                <input type="text" placeholder="3" 
+                                    className="input-attributes w-100"
+                                    onChange={(event)=>{setHeight(event.target.value)}} required>
+                                </input>
+                            </div>
                             <div className="col-12">
                                 <p className="label-attributes">
                                     FEATURE IT ON HOME SCREEN:
@@ -154,10 +209,20 @@ function Products(){
                                 </p>
                                 <br></br>
                                 <input type="file" accept='image/*' 
-                                    className="input-attributes w-100"
-                                    onChange={(event)=>{setFile(event.target.files[0])}} required>
+                                    className="input-attributes w-100" multiple
+                                    onChange={(event) =>{FileStorer(event)}} required>
                                 </input>
                             </div>
+                        </div>
+                        <div className="col-12 float-start">
+                            <p className="label-attributes">
+                                ADDITIONAL INFORMATION'S:
+                            </p>
+                            <br></br>
+                            <input type="text" placeholder="Eg: Makes Your Window Beautiful" 
+                                className="input-attributes w-100"
+                                onChange={(event)=>{setInfos(event.target.value)}} required>
+                            </input>
                         </div>
                         <button className="final-button general-button" onClick={upload}>
                             <p className="final-label">

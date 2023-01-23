@@ -1,15 +1,11 @@
-.navbar{
-  background-color:#184d47!important;
-}
-
 .nav-link{
-  color:#f9d486;
+  color:black;
   font-weight:600;
   cursor: pointer;
 }
 
 .nav-link:hover{
-  color: white;
+  color:gray;
 }
 
 .navbar-nav {

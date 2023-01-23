@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./navbar.css";
-import logo from './logo.png'
-import { Search, ShoppingCart, FavoriteBorder } from "@mui/icons-material"
+//import logo from './logo.png'
+//import { Search, ShoppingCart, FavoriteBorder } from "@mui/icons-material"
 function NavBar({Received}) {
   // const [click, setClick] = useState(false);
 
@@ -10,7 +10,6 @@ function NavBar({Received}) {
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/"><img className="logo" src={logo} alt="" /></Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
@@ -18,53 +17,38 @@ function NavBar({Received}) {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
             {(Received === null)?
               <li className="nav-item">
-                <Link className="nav-link" to="/" state={Received}>Home</Link>
+                <Link className="nav-link" to="/" state={Received}>Top Products</Link>
               </li>:(Received.type === "user")?
               <li className="nav-item">
-                <Link className="nav-link" to="/" state={Received}>Home</Link>
+                <Link className="nav-link" to="/" state={Received}>Top Products</Link>
               </li>:
               <li className="nav-item">
-                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
+                <Link className="nav-link" to="/" state={Received}>Dash Board</Link>
               </li>
               }
               {
                 (Received === null)?
                 <li className="nav-item">
-                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
-              </li>:(Received.type === "user")?
-              <li className="nav-item">
-                <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
-              </li>:
-              <li className="nav-item">
-                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
-              </li>
+                  <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
+                </li>:
+                <li className="nav-item">
+                  <Link className="nav-link" to="/displayProducts" state={Received}>Products</Link>
+                </li>
               }
               {
                 (Received === null)?
                 <li className="nav-item">
-                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
-              </li>:(Received.type === "user")?
-              <li className="nav-item">
-                <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
-              </li>:
-              <li className="nav-item">
-                <Link className="nav-link" to="/" state={Received}>Queries</Link>
-              </li>
-              }
-              {
-                (Received !== null)?(Received.type === "admin")?
+                  <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
+                </li>:
                 <li className="nav-item">
-                <Link className="nav-link" to="/" state={Received}>Orders</Link>
-              </li>:
-              <li className="nav-item">
-              </li>:
-              <li className="nav-item">
-              </li>
+                  <Link className="nav-link" to="/displayWorkshops" state={Received}>Workshops</Link>
+                </li>
               }
+              {/*
               <li className="nav-item ">
               <Link className="nav-link" to="/search" state={Received}><Search/></Link>
-              </li>
-              {
+              </li>*/}
+              {/*
                 (Received !== null)?
                 <>
                   <li className="nav-item">
@@ -82,7 +66,7 @@ function NavBar({Received}) {
                 <li className="nav-item">
                   <Link className="nav-link" to="/Login">Login</Link>
                 </li>
-
+*/
               }
               {/*
                 (Received === null )?

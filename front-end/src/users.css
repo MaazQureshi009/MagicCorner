@@ -1,31 +1,21 @@
-.overall-log{
-    background-color: #184d47;
-    height: 100vh;
-}
-
-.overall{
-    background-color: #184d47;
-    height: auto;
-}
-
 .clear{
     clear: both;
 }
 
 .main-container{
-    background-color: #184d47;
     margin: 0 auto;
     padding:1em;
-    background-color: rgba(255, 255, 255,0.01);
     border-radius: 0.19em;
     width: 50%;
+    box-shadow: 0 0 0.2em;
+    margin-top: 4em;
 }
 
 .sub-container-1{
     margin-top: 0em;
     padding: 1em 2em 1em 1em;
     border-radius: 0 0.19em 0.19em 0.19em;
-    background: rgba(255, 255, 255,0.01)
+    background: rgba(0, 0, 0 ,0.01)
 }
 
 .sub-container-2{
@@ -38,10 +28,19 @@
     outline: 0;
 }
 
+.forgot-password{
+    color:black;
+}
+
+.forgot-password:hover{
+    color:black;
+    text-decoration:underline solid 0.1em;
+}
+
 .disabled-button{
     border-radius: 0.19em 0.19em 0 0;
-    color: #f9d486;
-    background: rgba(255, 255, 255,0.01);
+    color: black;
+    background: rgba(0,0,0,0.01);
     padding: 0.56em 0.5em;
 }
 
@@ -52,10 +51,12 @@
     margin: 0.5em;
 }
 
+/*
 .active-button:hover {
     background-color: #ffbf00;
     box-shadow: 0 0 1em #ffbf00;
 }
+*/
 
 .final-button{
     background-color: #008037;
@@ -64,10 +65,12 @@
     margin: 0.5em;
 }
 
+/*
 .final-button:hover{
     background-color: #008037;
     box-shadow: 0 0 1em #008037;
 }
+*/
 
 .final-label{
     margin: auto;
@@ -89,14 +92,14 @@
     margin-left: 1em;
     margin-bottom: 0.5em;
     padding: 0em;
-    color: #f9d486;
+    color: black;
     font-size: 1.2em;
     float: left;
     display: block;
 }
 
 .admin-label-attributes{
-    color: #f9d486;
+    color: black;
     display: inline;
     margin-left: 1em;
 }
@@ -105,7 +108,7 @@
     margin-left: 0.5em;
     margin-bottom: 0.5em;
     padding: 0em;
-    color: #f9d486;
+    color: black;
     font-size: 1.2em;
     float: left;
     display: block;
@@ -117,9 +120,9 @@
     padding: 0;
     border: 0;
     outline: 0;
-    border-bottom:0.1em solid #f9d486;
+    border-bottom:0.1em solid black;
     background: transparent;
-    color: #f9d486;
+    color: black;
     font-size: 1em;
     float: left;
 }
@@ -130,9 +133,9 @@
     padding: 0;
     border: 0;
     outline: 0;
-    border-bottom:0.1em solid #f9d486;
+    border-bottom:0.1em solid black;
     background: transparent;
-    color: #f9d486;
+    color: black;
     font-size: 1em;
     float: left;
 }
@@ -148,7 +151,7 @@
 }
 
 .header{
-    color: #f9d486;
+    color: black;
     font-family: 'Allison', cursive;
     font-size: 5em;
 }

@@ -1,17 +1,132 @@
-.edit-btn {
+.expanded{
+    overflow:hidden;
+}
+.display-column{
+    -ms-flex: 22%; /* IE10 */
+    flex: 20%;
+    max-height:auto;
+    max-width:20%;
+    float: left;
+    margin: 1em;
+}
+
+.display-row{
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 0px;
+    margin-top:1em;
+}
+
+.display-column:hover{
+    box-shadow: 0 0 0.75em;
+}
+
+.strike{
+    opacity:0.5;
+    color: red;
+}
+
+.wish-icon:hover{
+    color:#FF0032;
+}
+
+.full-wish-icon{
+    color:#FF0032;
+}
+
+.view-icon:hover{
+    color:#FF7000;
+}
+
+.text-color{
+    color: black;
+}
+
+.image-div{
+    padding: 1em 1em 0 1em;
+    border-radius: 0.5em 0.5em  0 0;
+    max-height: 68%;
+    width: 100%;
+    position: relative;
+}
+
+.product-discount-div{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    color: white;
+    background-color: rgba(250,0,0,0.80);
+    border-radius: 10em;
+    font-size: 0.75em;
+    padding: 1em;
+}
+
+.contents-div{
+    text-align: left;
+    padding: 1em;
+}
+
+.image{
+    height: 250px;
+    max-width: 100%;
+    margin: auto;
+    margin: 0;
+}
+
+.content{
+    text-align: left;
+    margin-top: 0;
+    padding: 0;
+}
+
+.product-name{
+    font-size: 1.2em;
+    margin: 0;
+}
+.product-price{
+    font-size: 1em;
+    margin: 0;
+}
+
+.product-discount{
+    margin: 0;
+    padding: 0;
+}
+
+.edit-button {
+    position: absolute;
+    bottom: 35px;
+    right: 2px;
     background-color:transparent;
     color: green;
     border: none;
-    border-radius: 5px;
-    transform: scale(1.1);
+    outline:none;
+    font-size:1.5em;
 }
 
-.delete-btn {
+.remove-button{
+    float: left;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    font-size: 1em;
+    margin-top: 0.1em;
+    color:white;
+    background-color:red;
+    padding:0 0.5em;
+}
+
+.delete-button {
+    position: absolute;
+    bottom: 0px;
+    right: 2px;
     background-color:transparent;
     border: none;
     color:red;
-    border-radius: 5px;
-    transform: scale(1.1);
+    outline:none;
+    font-size:1.5em;
 }
 
 .clear{
@@ -24,46 +139,52 @@
     border: #f9d486 solid 1em;
 }
 
-.img-img{
-    height: 200px;
-    max-width: 100%;
-    margin: auto;
-    margin: 0;
-}
-
-.content{
-    margin-top: 0;
-    padding: 0;
-}
-
-.product-name{
-    color: #184d47;
-    font-size: 2.5em;
-    margin: 0;
-}
-.product-price{
-    color: #184d47;
-    font-size: 2em;
-    margin: 0;
-}
-
 .end-icons{
     margin-left: 0.5em;
 }
 
-.button{
-    color: #f9d486;
-    background-color: #184d47;
+.Terminator{
+    position:fixed;
+    top:6vh;
+    right:10px;
+    background:transparent;
+    border:none;
+    outline:none;
+}
+
+.pop{
+    position:fixed;
+    top:0;
+    background-color:rgba(0,0,0,0.01);
+    height:100vh;
+}
+
+.add-button{
+    float: left;
+    background-color:#82CD47;
+    color:white;
     border: 0;
     outline: 0;
-    padding: auto;
-    border-radius: 0.5em;
-    text-align: center;
-    padding-bottom: 0;
-    padding-left: 0.7em;
-    padding-right: 0.7em;
-    justify-items: center;
+    padding: 0;
+    font-size: 1em;
+    margin-top: 0.1em;
+    padding:0 0.5em;
+}
+
+.view-button{
+    float: right;
+    background: transparent;
+    border: 0;
+    outline: 0;
     font-size: 1.3em;
+}
+
+.wish-button{
+    float: right;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    font-size: 1.2em;
 }
 
 #header{
@@ -71,59 +192,16 @@
     font-size: 3em;
     text-decoration: underline 0.05em;
 }
-
-.col{
-    max-width:25%;
-    text-align: center;
-    padding: 50px 0;
-    margin: 1em;
-    float: left;
-    padding:0.7em;
-    border-radius:1em;
-    padding-bottom: 0;
-}
-
-.rowww{
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-    padding: 0 0px;
-    margin-top:1em;
-}
-
-.col{
-    -ms-flex: 22%; /* IE10 */
-    flex: 20%;
-    max-width: 22%;
-    max-height:auto;
-    padding:1em;
-    background-color: #f9d486;
-}
-
-/*   */
-
-.image{
-    padding: 1em 1em 0 1em;
-    border-radius: 0.5em 0.5em  0 0;
-    /* height: 50%;
-    min-height: 50%; */
-    width: 100%;
-    background-color: #f9d486;
-}
-
 .contents{
     width: 100%;
     align-self: baseline;
     display: inline-block;
-    background-color: #f9d486;
 }
 
 .buttons{
     width: 100%;
     align-self:center;
     margin-bottom: 0;
-    background-color: #f9d486;
     padding-bottom: 1em;
     border-radius: 0 0 0.5em 0.5em;
 

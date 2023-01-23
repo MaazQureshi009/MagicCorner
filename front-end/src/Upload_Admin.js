@@ -66,7 +66,7 @@ function Upload_User(){
     };
 
     return(
-        <div className="overall-log">
+        <div className="overall-log" id="Home">
             <p className="header">Magic Corner</p>
             <div className="main-container">
                 <div className="container">

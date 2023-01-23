@@ -28,6 +28,84 @@ const product_model = require('./models/data1');
 const workshop_model = require('./models/workshops');
 const admin_model = require('./models/admin');
 
+//-------------------------------------------------------------------Password_Mailer--------------------------------------------------------------
+
+app.put('/PasswordMailer' , async (req , res) => {
+    if(req.body.type == 'user'){
+        await user_model.find({email : req.body.email}, (err , result) => {
+            if(err){console.log(err);}
+            let details = {
+                from :"manageladen01@gmail.com",
+                to: req.body.email,
+                subject : "Password of your magic corner account.",
+                text : "Hi "+result[0].full_name+","+"."+result[0].password+" is your Password."
+            };
+            mailTransporter.sendMail( details , (err) =>{
+                if(err){
+                    console.log(err);
+                }
+            } )
+            res.send("Done");
+        }).clone();
+    }
+    else{
+        await admin_model.find({email : req.body.email}, (err , result) => {
+            if(err){console.log(err);}
+            let details = {
+                from :"manageladen01@gmail.com",
+                to: req.body.email,
+                subject : "Password of your magic corner account.",
+                text : "Hi "+result[0].full_name+","+"."+result[0].password+" is your Password."
+            };
+            mailTransporter.sendMail( details , (err) =>{
+                if(err){
+                    console.log(err);
+                }
+            } )
+            res.send("Done");
+        }).clone();
+    }
+})
+
+//------------------------------------------------------------------OTP_Mailer---------------------------------------------------------------------
+
+app.put('/OtpMailer' , async (req , res) => {
+    console.log(req.body);
+    if(req.body.type == 'user'){
+        await user_model.find({email : req.body.email}, (err , result) => {
+            if(err){console.log(err);}
+            let details = {
+                from :"manageladen01@gmail.com",
+                to: req.body.email,
+                subject : "OTP To verify your magic corner account.",
+                text : "Hi "+result[0].full_name+", Use "+req.body.otp+" To get your Magic Corner Account Password."
+            };
+            mailTransporter.sendMail( details , (err) =>{
+                if(err){
+                    console.log(err);
+                }
+            } )
+        }).clone();
+    }
+    else{
+        await admin_model.find({email : req.body.email}, (err , result) => {
+            if(err){console.log(err);}
+            console.log(result);
+            let details = {
+                from :"manageladen01@gmail.com",
+                to: req.body.email,
+                subject : "OTP To verify your magic corner account.",
+                text : "Hi "+result[0].full_name+", Use "+req.body.otp+" To get your Magic Corner Account Password."
+            };
+            mailTransporter.sendMail( details , (err) =>{
+                if(err){
+                    console.log(err);
+                }
+            } )
+        }).clone();
+    }
+})
+
 //--------------------------------------------------------------------User_Mailer----------------------------------------------------------------------
 
 app.post('/userMailer' , (req , res ) => {
@@ -137,7 +215,6 @@ app.post("/addAdmin" , async (req,res) => {
 //---------------------------------------------------------------Create_Product--------------------------------------------------------------------
 
 app.put("/addProduct" , async (req , res) => {
-    console.log("Running");
     const Product = new product_model(
         {
             image :req.body.image_url,
@@ -148,6 +225,10 @@ app.put("/addProduct" , async (req , res) => {
             category : req.body.category,
             tags : req.body.tags,
             status : req.body.state,
+            length : req.body.length,
+            width : req.body.breath,
+            height : req.body.height,
+            extras : req.body.infos,
         }
     );
     try{
@@ -396,7 +477,7 @@ app.put("/addToWishList" , async(req , res) => {
         console.log(req.body);
         await admin_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {wishlist : req.body.product_id}} , (err,result) =>{
             res.send("Done");
-        });
+        }).clone();
     }
 });
 

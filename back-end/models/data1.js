@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const product_schema = new mongoose.Schema({
     image : {
-        type : String,
+        type : Array,
         required : true,
     },
     name : {
@@ -31,6 +31,18 @@ const product_schema = new mongoose.Schema({
     status : {
         type : String,
         required : true,
+    },
+    length : {
+        type : Number,
+    },
+    width : {
+        type : Number,
+    },
+    height : {
+        type : Number,
+    },
+    extras : {
+        type : String,
     }
 });
 
