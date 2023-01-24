@@ -92,7 +92,7 @@ function Cart(){
         },[]);
 
     return(
-        <>
+        <div id="Home">
             {
                 (Location.state === null)?<NavBar Received={null}/>:
                 <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
@@ -183,7 +183,9 @@ function Cart(){
                     }
                     <div className="checkout">
                         <div className="checkout-btn">
-                            <button type="button">Checkout</button>
+                            <button type="button" onClick={()=>{
+                                Navigate("/Confirmation" , {state:{status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id}})
+                            }}>Checkout</button>
                         </div>
                         <div className="show_price">
                             <h4>Sub Total : Rs <span className='price'>{Total} /-</span></h4>
@@ -241,7 +243,7 @@ function Cart(){
                 </div>}
                 </>:<></>
             }
-        </>
+        </div>
     )
 }
 

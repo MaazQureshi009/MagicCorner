@@ -25,6 +25,7 @@ import ViewProduct from './ViewProduct';
 import ViewWorkShop from './ViewWorkshops';
 import Cart from './cart';
 import WishList from './WishList';
+import Confirmation from './CheckoutConfirmation'
 
 function App() {
   return (
@@ -35,10 +36,11 @@ function App() {
               <div className="content">
                 <h2>Magic Corner</h2>
                 <p>A complete spot to all your handmade products.</p>
-                <a href="#Home"><button>Shop Now</button></a>
+                <a href="/#Home"><button>Shop Now</button></a>
               </div>
         </div>
       </div>
+      <div id="ok"></div>
       <div className="App" id="App">
         <Router>
           <Routes>
@@ -58,6 +60,7 @@ function App() {
             <Route path='/cart' element={<Cart/>}/>
             <Route path="/Login" element={<Login/>} />
             <Route path="/WishList" element={<WishList/>} />
+            <Route path="/Confirmation" element={<Confirmation/>} />
             <Route path="/ForgotPassword" element={<ForgotPassword/>} />
             <Route path="/SendPassword" element={<SendPassword/>} />
           </Routes>

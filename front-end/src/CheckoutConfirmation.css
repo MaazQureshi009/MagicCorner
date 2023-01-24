@@ -1,0 +1,53 @@
+.general-input{
+    border : none ;
+    outline : none ;
+    margin : 0.5em ;
+    border-bottom : solid 0.05em ;
+}
+
+.bill{
+    text-decoration: solid underline 0.1em ;
+}
+
+.confirmation-text{
+    float : left ;
+    font-size : 1.3em ;
+    text-decoration : solid underline 0.1em ;
+}
+
+.bill-box{
+    border : solid 0.1em ;
+}
+
+.name-th{
+    width : 60% ;
+}
+
+.p-th{
+    width : 20% ;
+}
+
+.p-td{
+    float : left ;
+}
+
+.discount{
+    float: right;
+}
+
+.clear{
+    clear: both ;
+}
+
+.check-box-text{
+    display: inline ;
+    margin-right: 1em ;
+    margin-left: 0.1em ;
+}
+
+.final-button-cc{
+    width: 95% ;
+    border: none ;
+    outline: none ;
+    background-color: green ;
+}

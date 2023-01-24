@@ -269,7 +269,7 @@ function Products()
         }
     }
     return(
-        <div className='overall'>
+        <div className='overall' id="Home">
             <p className="header">Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
