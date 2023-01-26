@@ -45,7 +45,10 @@ function EditProducts(){
         <>
         {
             (Loading)?
-            <div class="loader"></div>
+            <>
+                <p>Hold Tight , We are Working On it</p>
+                <div class="loader"></div>
+            </>
             :
             <div className='overall'>
                 <p className='header'>Magic Corner</p>

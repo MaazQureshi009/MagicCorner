@@ -44,7 +44,7 @@ function Login(){
             for(var i = 0; i < Admins_list.length ; i++){
                 if( Admins_list[i].email.toString() === Username.toString() ){
                     if( Admins_list[i].password.toString() === Password.toString() ){
-                        Navigate('/displayProducts' , {state:{id:Admins_list[i]._id , name : Admins_list[i].full_name ,user:Username ,status:"LoggedIn" , type : "admin" }});
+                        Navigate('/Dashboard' , {state:{id:Admins_list[i]._id , name : Admins_list[i].full_name ,user:Username ,status:"LoggedIn" , type : "admin" }});
                         break;
                     }
                     else{alert("Invalid Password")}

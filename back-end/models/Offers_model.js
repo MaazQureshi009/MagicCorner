@@ -10,10 +10,10 @@ const offer_schema = new mongoose.Schema({
     discount : {
         type : String,
     },
-    status : {
+    method : {
         type : String,
-    }
+    },
 });
 
 const Offers = mongoose.model("Offers" , offer_schema);
-module.export = Offers;
+module.exports = Offers;

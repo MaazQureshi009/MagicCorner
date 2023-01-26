@@ -6,6 +6,10 @@ import './CheckoutConfirmation.css';
 function Confirmation(){
     const Location = useLocation();
 
+    const [ Id , setId ] = useState(null)
+    const [ Name , setName ] = useState(null)
+    const [ Mobile , setMobile ] = useState(null)
+    const [ Email , setEmail ] = useState(null)
     const [ House , setHouse ] = useState(null)
     const [ Street , setStreet ] = useState(null)
     const [ Area , setArea ] = useState(null)
@@ -35,7 +39,11 @@ function Confirmation(){
             alert("Verify your address");
         }
         if(PaymentMode === "COD"){
-            alert("Order Placed");
+            Axios.put("http://localhost:3001/addOrder" , { type : Location.state.type , id : Id , name : Name , mobile : Mobile , email : Email , address : House+", Street "+Street+","+City+","+State , products : OnCart , pm : "COD" , total : Total }).then(
+                (response)=>{
+                    alert("Order Placed");
+                }
+            )
         }
         else if(PaymentMode === "PN"){
             alert("Thank you for choosing Pay Now");
@@ -46,7 +54,6 @@ function Confirmation(){
     }
 
     useEffect(()=>{
-        if(Location.state.type === "user"){
             setLoading(true);
             Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                 setHouse(response.data[0].address.house_no);
@@ -54,12 +61,15 @@ function Confirmation(){
                 setArea(response.data[0].address.area);
                 setCity(response.data[0].address.city);
                 setState(response.data[0].address.state);
+                setName(response.data[0].full_name);
+                setMobile(response.data[0].mobile_no);
+                setEmail(response.data[0].email);
+                setId(response.data[0]._id);
                 Axios.put("http://localhost:3001/getSelectedProducts" , {id:response.data[0].on_cart}).then((response1) => {
                     setOnCart(response1.data);
                     Calculation(response1.data);
                 })
         });
-        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [])
 

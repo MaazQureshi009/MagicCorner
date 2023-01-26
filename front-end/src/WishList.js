@@ -67,7 +67,12 @@ function WishList(){
                 <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             {
-                (Loading)?<div class="loader"></div>:
+                (Loading)?
+                <div className='loader-main'>
+                    <div className="loader"></div>
+                    <p className='loader-text'>Loading...</p>
+                </div>
+                :
                 <div style={{'height':'60vh'}}>
                 {
                     (OnCart.length === 0)?

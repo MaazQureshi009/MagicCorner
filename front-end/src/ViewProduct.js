@@ -63,7 +63,10 @@ const ProductView = (Received) => {
         <div className="view-pop">
             {
                 (Loading)?
-                <div class="loader"></div>
+                <div className='loader-main'>
+                    <div className="loader"></div>
+                    <p className='loader-text'>Loading...</p>
+                </div>
                 :
                 < >
                     <div className='container col-6 float-start  mt-2'>

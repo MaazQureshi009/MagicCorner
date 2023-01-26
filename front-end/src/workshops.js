@@ -49,8 +49,12 @@ function Workshop() {
         }
         <div className='display-row'>
                 {
-                    (Loading)?<div class="loader"></div>:
-
+                    (Loading)?
+                    <div className='loader-main'>
+                        <div className="loader"></div>
+                        <p className='loader-text'>Loading...</p>
+                    </div>
+                    :
                     (Products === [])?
                     <p>NOTHING FOUND</p>
                     :

@@ -1,0 +1,231 @@
+.clear{
+    clear : both ;
+}
+
+.data{
+    margin-top: 0.5em ;
+}
+
+.profile{
+    margin: 1em 0em;
+    max-width: 200px ;
+    max-height: 200px ;
+}
+
+.personal-data{
+    padding: 2em 0.5em;
+    text-align : left ;
+}
+
+.admin-name{
+    margin-bottom: 0;
+    font-size: 1.3em;
+}
+
+.admin{
+    margin-top: 0;
+}
+
+.admin-mail{
+    margin-bottom: 0;
+}
+
+.in-progress-div-one{
+    background-color: #30E3CA;
+    border-radius: 1em;
+    padding: 1em 0.9em;
+    margin-left: 2em;
+    margin-right: 1em;
+    box-shadow: 0 0 0.3em;
+}
+
+.in-progress-div-two{
+    background-color: #5BC0F8;
+    border-radius: 1em;
+    padding: 1em 0.9em;
+    margin-left: 0.5em;
+    box-shadow: 0 0 0.3em;
+}
+
+.admin-mobile{
+    margin-top: 0;
+}
+
+.main-orders-div{
+    text-align : center ;
+    width : 100% ;
+    margin : 0em ;
+    margin-top: 1em;
+}
+
+.offers{
+    text-align: center;
+    width : 100% ;
+    margin : 0em ;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.add-offer-input{
+    border: none;
+    outline: none;
+    border-bottom: solid 0.1em;
+    float: left;
+    margin: 0.5em 0;
+}
+
+.popup-main{
+    position: absolute;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.popup{
+    position: relative;
+}
+
+.offer-name{
+    font-size: 1.5em;
+    margin-bottom: 0;
+}
+
+.offer-value{
+    font-size: 1.8em;
+    margin-bottom: 0;
+}
+
+.offer-min{
+    font-size: 1.5em;
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.offer-rest{
+    font-size: 1.4em;
+    margin: 0;
+}
+
+.offer-delete-button{
+    border: none;
+    outline: none;
+    background: transparent;
+    color: red;
+    float: right;
+    padding: 0;
+    margin: 0;
+}
+
+.offer-div{
+    border-radius: 1em ;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0.5em black;
+    height: 30vh;
+    text-align: center;
+    padding-top: 2.5em;
+    margin: 0.5em 0;
+    margin-left: 0.5em ;
+}
+
+.offer-div-valid{
+    border-radius: 1em ;
+    box-shadow: 0 0 0.5em;
+    height: 30vh;
+    text-align: center;
+    margin: 0.5em 0;
+    margin-left: 0.5em ;
+}
+
+.opened-offer-div{
+    border-radius: 1em ;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 0.5em;
+    height: 30vh;
+    text-align: center;
+    padding-top: 0;
+    margin: 0.5em 0;
+    margin-left: 0.5em;
+}
+
+.close-button{
+    border: none;
+    outline: none;
+    background: transparent;
+    float: right;
+    margin: 0.5em 0;
+}
+
+.offer-add-button{
+    border: none;
+    outline: none;
+    background-color: #82CD47;
+    margin: 0.5em 0.5em;
+    float: right;
+}
+
+.offer-icon{
+    font-size: 4em;
+}
+
+.offer-button{
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.order-id{
+    text-align : left;
+    padding-left: 2em ;
+}
+.order-details{
+    text-align : left;
+    padding-left: 3em ;
+}
+
+.order-row{
+    border-radius : 1em ;
+    text-align : center ;
+    padding: 1em 0em ;
+    padding-bottom : 0 ;
+    margin: 0.5em 0;
+    box-shadow: 0 0 0.3em;
+}
+
+.order-column{
+    background : transparent ;
+}
+
+.end-icon{
+    margin-left : 0.3em ;
+}
+
+.expand-button{
+    border : none ;
+    outline : none ;
+    background : transparent ;
+}
+
+.button-div{
+    padding: 1em 0;
+    float:right;
+}
+
+.update-button{
+    border : none ;
+    outline : none ;
+    background : rgba(255, 255, 255, 0.5) ;
+    margin: 0 0.5em;
+}
+
+.select{
+    border: none;
+    outline: none;
+    border-bottom: solid 0.1em;
+    background: transparent;
+}
+
+.button-text{
+    display : inline ;
+}

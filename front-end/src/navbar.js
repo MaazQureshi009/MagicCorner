@@ -23,7 +23,7 @@ function NavBar({Received}) {
                 <Link className="nav-link" to="/" state={Received}>Top Products</Link>
               </li>:
               <li className="nav-item">
-                <Link className="nav-link" to="/" state={Received}>Dash Board</Link>
+                <Link className="nav-link" to="/Dashboard" state={Received}>Dash Board</Link>
               </li>
               }
               {

@@ -23,10 +23,12 @@ mongoose.connect("mongodb://Rishichaary:rishi12345@ac-hqr0iex-shard-00-00.lfw6do
     useNewUrlParser:true,
 });
 
-const user_model = require('./models/data');
-const product_model = require('./models/data1');
-const workshop_model = require('./models/workshops');
-const admin_model = require('./models/admin');
+const user_model = require('./models/user_model');
+const product_model = require('./models/product_model');
+const order_model = require('./models/orders_model');
+const offer_model = require('./models/Offers_model');
+const workshop_model = require('./models/workshops_model');
+const admin_model = require('./models/admin_model');
 
 //-------------------------------------------------------------------Password_Mailer--------------------------------------------------------------
 
@@ -67,10 +69,118 @@ app.put('/PasswordMailer' , async (req , res) => {
     }
 })
 
+//------------------------------------------------------------------Add_Offers--------------------------------------------------------------------
+
+app.put("/addOffers" , async (req , res)=>{
+    const Offer = new offer_model({
+        name : req.body.name,
+        min_price : req.body.min,
+        discount : req.body.discount,
+        method : req.body.type,
+    });
+    try{
+        await Offer.save();
+        res.send("Done");
+    }
+    catch{
+        console.log("Error");
+    }
+});
+
+//----------------------------------------------------------------Delete_Offer-------------------------------------------------------------------
+
+app.put("/deleteOffers" , (req , res)=>{
+    offer_model.deleteOne({_id : req.body.id} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send("Done");
+    });
+});
+
+//------------------------------------------------------------------Get_Offers-------------------------------------------------------------------
+
+app.get("/getOffers" ,async (req , res) => {
+    await offer_model.find((err , result)=>{
+        if(err){console.log(err)}
+        res.send(result)
+    }).clone();
+});
+
+//------------------------------------------------------------------Add_Orders--------------------------------------------------------------------
+
+app.put("/addOrder" , async ( req , res )=>{
+    const order = new order_model({
+        name : req.body.name,
+        mobile : req.body.mobile,
+        email : req.body.email,
+        products : req.body.products,
+        payment_mode : req.body.pm,
+        status : "ORDERED",
+        total : req.body.total,
+        address : req.body.address,
+    });
+    try{
+        await order.save();
+        if(req.body.type == "user"){
+            user_model.updateOne({_id : req.body.id} , {$push : {orders : req.body.products} , $set : {on_cart : []}} , (err , result ) =>{
+                if(err){console.log(err)}
+                let details = {
+                    from :"manageladen01@gmail.com",
+                    to: req.body.email,
+                    subject : "Magic Corner Order Confirmation",
+                    text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
+                };
+                mailTransporter.sendMail( details , (err) =>{
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                res.send("Done");
+            })
+        }
+        else{
+            admin_model.updateOne({_id : req.body.id} , {$push : {orders : req.body.products} , $set : {on_cart : []}} , (err , result ) =>{
+                if(err){console.log(err)}
+                let details = {
+                    from :"manageladen01@gmail.com",
+                    to: req.body.email,
+                    subject : "Magic Corner Order Confirmation",
+                    text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
+                };
+                mailTransporter.sendMail( details , (err) =>{
+                    if(err){
+                        console.log(err);
+                    }
+                })
+                res.send("Done");
+                }
+            )
+        }
+    }catch(err){
+        console.log(err);
+    }
+});
+
+//---------------------------------------------------------------Update_Orders-------------------------------------------------------------------
+
+app.put("/updateOrder" , (req , res)=>{
+    order_model.updateOne({_id : req.body.id} , {$set : {status : req.body.status}} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+    });
+});
+
+//-----------------------------------------------------------------Get_Orders---------------------------------------------------------------------
+
+app.get("/getOrders" , (req , res) => {
+    order_model.find((err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+    })
+})
+
 //------------------------------------------------------------------OTP_Mailer---------------------------------------------------------------------
 
 app.put('/OtpMailer' , async (req , res) => {
-    console.log(req.body);
     if(req.body.type == 'user'){
         await user_model.find({email : req.body.email}, (err , result) => {
             if(err){console.log(err);}
@@ -84,13 +194,13 @@ app.put('/OtpMailer' , async (req , res) => {
                 if(err){
                     console.log(err);
                 }
-            } )
+            })
+            res.send("Done");
         }).clone();
     }
     else{
         await admin_model.find({email : req.body.email}, (err , result) => {
             if(err){console.log(err);}
-            console.log(result);
             let details = {
                 from :"manageladen01@gmail.com",
                 to: req.body.email,
@@ -101,7 +211,8 @@ app.put('/OtpMailer' , async (req , res) => {
                 if(err){
                     console.log(err);
                 }
-            } )
+            })
+            res.send("Done");
         }).clone();
     }
 })
@@ -427,7 +538,6 @@ app.put("/UpdateWorkshops" , async (req , res) => {
 //----------------------------------------------------------------------------Delete_Product--------------------------------------------------------------------------
 
 app.put("/DeleteProduct" , async (req , res) => {
-    console.log("Running");
     await product_model.deleteOne({_id : req.body.id} , (err , result) => {
         if(err){console.log(err);}
         res.send("Done");
@@ -457,7 +567,6 @@ app.put("/addToCart" , async(req , res) => {
         res.send("Done");
     }
     else{
-        console.log(req.body);
         await admin_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {on_cart : req.body.product_id}});
         res.send("Done");
     }
@@ -466,7 +575,6 @@ app.put("/addToCart" , async(req , res) => {
 //---------------------------------------------------------------------Add_to_Wish_List----------------------------------------------------------
 
 app.put("/addToWishList" , async(req , res) => {
-    console.log(req.body);
     if(req.body.type == "user"){
         await user_model.updateOne({email:req.body.user , _id:req.body.id} , {$push : {wishlist : req.body.product_id}} , (err , result)=>{
             if(err){console.log(err);}
@@ -521,7 +629,6 @@ app.put("/deleteMe" , (req , res)=>{
     else{
         admin_model.updateOne({_id:req.body.id} , {$set:{on_cart:req.body.file}} , (err , result)=>{
             if(err){console.log(err)}
-            console.log(result);
             res.send("Done");
         })
     }

@@ -114,8 +114,12 @@ function Filter() {
         </div>
         <div className='display-row'>
                 {
-                    (Loading)?<div class="loader"></div>:
-
+                    (Loading)?
+                    <div className='loader-main'>
+                        <div className="loader"></div>
+                        <p className='loader-text'>Loading...</p>
+                    </div>
+                    :
                     (Products.length === 0)?
                     <p>NOTHING FOUND</p>
                     :

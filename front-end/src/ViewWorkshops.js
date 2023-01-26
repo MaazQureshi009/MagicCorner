@@ -1,14 +1,12 @@
 import {useEffect , useState} from 'react';
 import Axios from 'axios';
-import { useNavigate , useLocation , Link } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import './ViewProduct.css';
-import NavBar from './navbar';
 import './product_card.css';
 
 const ProductView = (Received) => {
 
     const Navigate = useNavigate();
-    const Location = useLocation();
     const [ ActiveImage , setActiveImage ] = useState("")
     const [ NonActiveImage , setNonActiveImage ] = useState([])
     const [ Loading , setLoading ] = useState(true);
@@ -30,7 +28,10 @@ const ProductView = (Received) => {
         <div className="view-pop">
             {
                 (Loading)?
-                <div class="loader"></div>
+                <div className='loader-main'>
+                    <div className="loader"></div>
+                    <p className='loader-text'>Loading...</p>
+                </div>
                 :
                 < >
                     <div className='container col-6 float-start  mt-2'>

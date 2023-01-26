@@ -65,7 +65,10 @@ function Display(){
             <div className='display-row tp'>
                 {
                     (Loading)?
-                    <div class="loader"></div>
+                    <div className='loader-main'>
+                        <div className="loader"></div>
+                        <p className='loader-text'>Loading...</p>
+                    </div>
                     :
                     Products.map((value) => {
                     return(
