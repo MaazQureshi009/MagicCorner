@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 
+require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST)
+
 let mailTransporter = nodemailer.createTransport(
     {
         service : "gmail",
@@ -26,9 +29,11 @@ mongoose.connect("mongodb://Rishichaary:rishi12345@ac-hqr0iex-shard-00-00.lfw6do
 const user_model = require('./models/user_model');
 const product_model = require('./models/product_model');
 const order_model = require('./models/orders_model');
+const enrollment_model = require('./models/enrollment_model');
 const offer_model = require('./models/Offers_model');
 const workshop_model = require('./models/workshops_model');
 const admin_model = require('./models/admin_model');
+const question_model = require('./models/qustion_model');
 
 //-------------------------------------------------------------------Password_Mailer--------------------------------------------------------------
 
@@ -67,6 +72,31 @@ app.put('/PasswordMailer' , async (req , res) => {
             res.send("Done");
         }).clone();
     }
+});
+//------------------------------------------------------------------Payment----------------------------------------------------------------------
+
+app.post("/payment", async (req, res) => {
+	let { amount, id } = req.body
+	try {
+		const payment = await stripe.paymentIntents.create({
+			amount,
+			currency: "INR",
+			description: req.body.name,
+			payment_method: id,
+			confirm: true
+		})
+		console.log("Payment", payment)
+		res.json({
+			message: "Payment successful",
+			success: true
+		})
+	} catch (error) {
+		console.log("Error", error)
+		res.json({
+			message: "Payment failed",
+			success: false
+		})
+	}
 })
 
 //------------------------------------------------------------------Add_Offers--------------------------------------------------------------------
@@ -102,7 +132,7 @@ app.get("/getOffers" ,async (req , res) => {
     await offer_model.find((err , result)=>{
         if(err){console.log(err)}
         res.send(result)
-    }).clone();
+    }).sort({min_price : -1}).clone();
 });
 
 //------------------------------------------------------------------Add_Orders--------------------------------------------------------------------
@@ -116,45 +146,108 @@ app.put("/addOrder" , async ( req , res )=>{
         payment_mode : req.body.pm,
         status : "ORDERED",
         total : req.body.total,
+        stotal : req.body.sTotal,
+        discount : req.body.discount,
         address : req.body.address,
     });
     try{
+        var order_id = "";
         await order.save();
-        if(req.body.type == "user"){
-            user_model.updateOne({_id : req.body.id} , {$push : {orders : req.body.products} , $set : {on_cart : []}} , (err , result ) =>{
-                if(err){console.log(err)}
-                let details = {
-                    from :"manageladen01@gmail.com",
-                    to: req.body.email,
-                    subject : "Magic Corner Order Confirmation",
-                    text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
-                };
-                mailTransporter.sendMail( details , (err) =>{
-                    if(err){
-                        console.log(err);
-                    }
+        order_model.find((err , result)=>{
+            if(err){console.log(err)}
+            order_id = result[Object.keys(result).length-1]._id;
+            if(req.body.type == "user"){
+                user_model.updateOne({_id : req.body.id} , {$push : {orders : order_id} , $set : {on_cart : []}} , (err , result ) =>{
+                    if(err){console.log(err)}
+                    let details = {
+                        from :"manageladen01@gmail.com",
+                        to: req.body.email,
+                        subject : "Magic Corner Order Confirmation",
+                        text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
+                    };
+                    mailTransporter.sendMail( details , (err) =>{
+                        if(err){
+                            console.log(err);
+                        }
+                    })
+                    res.send("Done");
                 })
-                res.send("Done");
-            })
-        }
-        else{
-            admin_model.updateOne({_id : req.body.id} , {$push : {orders : req.body.products} , $set : {on_cart : []}} , (err , result ) =>{
-                if(err){console.log(err)}
-                let details = {
-                    from :"manageladen01@gmail.com",
-                    to: req.body.email,
-                    subject : "Magic Corner Order Confirmation",
-                    text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
-                };
-                mailTransporter.sendMail( details , (err) =>{
-                    if(err){
-                        console.log(err);
+            }
+            else{
+                admin_model.updateOne({_id : req.body.id} , {$push : {orders : order_id} , $set : {on_cart : []}} , (err , result ) =>{
+                    if(err){console.log(err)}
+                    let details = {
+                        from :"manageladen01@gmail.com",
+                        to: req.body.email,
+                        subject : "Magic Corner Order Confirmation",
+                        text : "Hi!! your order has been placed successfully. Further information's will be sent in fore coming mails."
+                    };
+                    mailTransporter.sendMail( details , (err) =>{
+                        if(err){
+                            console.log(err);
+                        }
+                    })
+                    res.send("Done");
                     }
-                })
-                res.send("Done");
+                )
+            }
+        })
+    }catch(err){
+        console.log(err);
+    }
+});
+
+//--------------------------------------------------------------Add_Enrollments-----------------------------------------------------------------
+
+app.put("/addEnrollment" , async ( req , res )=>{
+    const order = new enrollment_model({
+        name : req.body.name,
+        mobile : req.body.mobile,
+        email : req.body.email,
+        wn : req.body.wn,
+        total : req.body.total,
+    });
+    try{
+        var order_id = "";
+        await order.save();
+        enrollment_model.find((err , result)=>{
+            if(err){console.log(err)}
+            order_id = result[Object.keys(result).length-1]._id;
+            if(req.body.type == "user"){
+                user_model.updateOne({_id : req.body.id} , {$push : {workshops : order_id}} , (err , result ) =>{
+                    if(err){console.log(err)}
+                        let details = {
+                            from :"manageladen01@gmail.com",
+                            to: req.body.email,
+                            subject : "Magic Corner workshop enrollment Confirmation",
+                            text : "Hi!! "+ req.body.name +" you have been successfully enrolled to the workshop '"+ req.body.wn +"'. Further information's will be sent in fore coming mails."
+                        };
+                        mailTransporter.sendMail( details , (err) =>{
+                            if(err){
+                                console.log(err);
+                            }
+                        })
+                        res.send("Done");
+                    })
                 }
-            )
-        }
+            else{
+                admin_model.updateOne({_id : req.body.id} , {$push : {workshops : order_id}} , (err , result ) =>{
+                    if(err){console.log(err)}
+                    let details = {
+                        from :"manageladen01@gmail.com",
+                        to: req.body.email,
+                        subject : "Magic Corner workshop enrollment Confirmation",
+                        text : "Hi!! "+ req.body.name +" you have been successfully enrolled to the workshop '"+ req.body.wn +"'. Further information's will be sent in fore coming mails."
+                    };
+                    mailTransporter.sendMail( details , (err) =>{
+                        if(err){
+                            console.log(err);
+                        }
+                    })
+                    res.send("Done");
+                })
+                    }
+                })
     }catch(err){
         console.log(err);
     }
@@ -169,14 +262,52 @@ app.put("/updateOrder" , (req , res)=>{
     });
 });
 
-//-----------------------------------------------------------------Get_Orders---------------------------------------------------------------------
+//---------------------------------------------------------------get_User_Orders----------------------------------------------------------------
 
-app.get("/getOrders" , (req , res) => {
-    order_model.find((err , result)=>{
+app.put("/userOrders" , (req , res)=>{
+    order_model.find({_id : {$in : req.body.id}} , (err , result)=>{
         if(err){console.log(err)}
         res.send(result);
     })
 })
+
+//---------------------------------------------------------------get_User_Workshops----------------------------------------------------------------
+
+app.put("/userWorkshops" , (req , res)=>{
+    console.log(req.body.id)
+    enrollment_model.find({_id : {$in : req.body.id}} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+        console.log(result);
+    })
+})
+
+//-----------------------------------------------------------------Get_Orders---------------------------------------------------------------------
+
+app.get("/getOrders" , (req , res) => {
+    order_model.find( { status : {$ne : "CLOSED"} },(err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+    }).sort({status:-1})
+})
+
+//-----------------------------------------------------------------Get_Enrollments---------------------------------------------------------------------
+
+app.get("/getEnrollments" , (req , res) => {
+    enrollment_model.find((err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+    }).sort({wn:1})
+})
+
+//-----------------------------------------------------------------Delete_Orders------------------------------------------------------------------
+
+app.put("/deleteOrder" , (req , res) => {
+    order_model.updateOne({id : req.body.id} , {status : "CLOSED"} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send("Done");
+    })
+});
 
 //------------------------------------------------------------------OTP_Mailer---------------------------------------------------------------------
 
@@ -340,6 +471,7 @@ app.put("/addProduct" , async (req , res) => {
             width : req.body.breath,
             height : req.body.height,
             extras : req.body.infos,
+            cod : req.body.cod,
         }
     );
     try{
@@ -461,6 +593,198 @@ app.put("/getProducts" , (req , res) => {
             });
         }
     }
+);
+
+app.put("/getProductsSPA" , (req , res) => {
+    Selected_Product_Category = req.body.Category;
+    Selected_Product_Tag = req.body.Tag;
+    if(Selected_Product_Category == "All"){Selected_Product_Category = null}
+    if(Selected_Product_Tag == "All"){Selected_Product_Tag = null}
+    if(Selected_Product_Category  != null && Selected_Product_Tag != null){
+        product_model.find({category : Selected_Product_Category , tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({newprice : 1});
+    }
+    else if(Selected_Product_Category != null && Selected_Product_Tag == null ){
+        product_model.find({category : Selected_Product_Category} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({newprice : 1});
+    }
+    else if(Selected_Product_Tag != null && Selected_Product_Category == null){
+        console.log(Selected_Product_Tag);
+        product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(result);
+                res.json(result);
+            }
+        }).sort({newprice : 1});
+    }
+    else{
+        product_model.find({ name : {$ne : null} }, (err , result) => {
+            if(err){
+                console.log(err);
+            }
+            res.send(result);
+        }).sort({newprice : 1});
+    }
+}
+);
+
+app.put("/getProductsSPD" , (req , res) => {
+    Selected_Product_Category = req.body.Category;
+    Selected_Product_Tag = req.body.Tag;
+    if(Selected_Product_Category == "All"){Selected_Product_Category = null}
+    if(Selected_Product_Tag == "All"){Selected_Product_Tag = null}
+    if(Selected_Product_Category  != null && Selected_Product_Tag != null){
+        product_model.find({category : Selected_Product_Category , tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({newprice : -1});
+    }
+    else if(Selected_Product_Category != null && Selected_Product_Tag == null ){
+        product_model.find({category : Selected_Product_Category} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({newprice : -1});
+    }
+    else if(Selected_Product_Tag != null && Selected_Product_Category == null){
+        console.log(Selected_Product_Tag);
+        product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(result);
+                res.json(result);
+            }
+        }).sort({newprice : -1});
+    }
+    else{
+        product_model.find({ name : {$ne : null} }, (err , result) => {
+            if(err){
+                console.log(err);
+            }
+            res.send(result);
+        }).sort({newprice : -1});
+    }
+}
+);
+
+app.put("/getProductsSNA" , (req , res) => {
+    Selected_Product_Category = req.body.Category;
+    Selected_Product_Tag = req.body.Tag;
+    if(Selected_Product_Category == "All"){Selected_Product_Category = null}
+    if(Selected_Product_Tag == "All"){Selected_Product_Tag = null}
+    if(Selected_Product_Category  != null && Selected_Product_Tag != null){
+        product_model.find({category : Selected_Product_Category , tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({name : 1});
+    }
+    else if(Selected_Product_Category != null && Selected_Product_Tag == null ){
+        product_model.find({category : Selected_Product_Category} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({name : 1});
+    }
+    else if(Selected_Product_Tag != null && Selected_Product_Category == null){
+        console.log(Selected_Product_Tag);
+        product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(result);
+                res.json(result);
+            }
+        }).sort({name : 1});
+    }
+    else{
+        product_model.find({ name : {$ne : null} }, (err , result) => {
+            if(err){
+                console.log(err);
+            }
+            res.send(result);
+        }).sort({name : 1});
+    }
+}
+);
+
+app.put("/getProductsSND" , (req , res) => {
+    Selected_Product_Category = req.body.Category;
+    Selected_Product_Tag = req.body.Tag;
+    if(Selected_Product_Category == "All"){Selected_Product_Category = null}
+    if(Selected_Product_Tag == "All"){Selected_Product_Tag = null}
+    if(Selected_Product_Category  != null && Selected_Product_Tag != null){
+        product_model.find({category : Selected_Product_Category , tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({name : -1});
+    }
+    else if(Selected_Product_Category != null && Selected_Product_Tag == null ){
+        product_model.find({category : Selected_Product_Category} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                res.json(result);
+            }
+        }).sort({name : -1});
+    }
+    else if(Selected_Product_Tag != null && Selected_Product_Category == null){
+        console.log(Selected_Product_Tag);
+        product_model.find({tags : Selected_Product_Tag} ,(err , result) =>{
+            if(err){
+                console.log(err);
+            }
+            else{
+                console.log(result);
+                res.json(result);
+            }
+        }).sort({name : -1});
+    }
+    else{
+        product_model.find({ name : {$ne : null} }, (err , result) => {
+            if(err){
+                console.log(err);
+            }
+            res.send(result);
+        }).sort({name : -1});
+    }
+}
 );
 
 //---------------------------------------------------------------Select_Users----------------------------------------------------------------------
@@ -676,6 +1000,61 @@ app.put("/getSelectedWorkShops" , async (req , res) => {
         if(err){console.log(err)}
         res.send(result);
     }).clone();
+})
+
+//------------------------------------------------------------Add_Query--------------------------------------------------------------------------
+
+app.put("/addQuery" , async (req , res) => {
+    const query = new question_model({
+        question : req.body.question,
+        posted_by : req.body.user,
+    });
+
+    try{
+        await query.save()
+        res.send("Done");
+    }
+    catch(err){
+        console.log(err);
+    }
+})
+
+//-------------------------------------------------------------Get_Query--------------------------------------------------------------------------
+
+app.put("/getQuery" , async (req , res) => {
+    question_model.find({posted_by : req.body.id} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send(result);
+    })
+})
+
+//-------------------------------------------------------------All_Queries----------------------------------------------------------------------
+
+app.get("/entireQueries" , async (req , res)=> {
+    question_model.find((err, result) => {
+        if(err){console.log(err)}
+        res.send(result);
+        console.log(result);
+    })
+})
+
+//--------------------------------------------------------------Queries--------------------------------------------------------------------------
+
+app.get("/allQueries" , async (req , res)=> {
+    question_model.find({answer : undefined}, (err, result) => {
+        if(err){console.log(err)}
+        res.send(result);
+        console.log(result);
+    })
+})
+
+//------------------------------------------------------------Add_Reply--------------------------------------------------------------------------
+
+app.put("/addReply" , (req , res)=>{
+    question_model.updateOne({_id : req.body.id} , {$set : {answer : req.body.answer , answered_by : req.body.sender }} , (err , result)=>{
+        if(err){console.log(err)}
+        res.send("Done");
+    })
 })
 
 //--------------------------------------------------------------Server----------------------------------------------------------------------------

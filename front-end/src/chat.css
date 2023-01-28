@@ -1,0 +1,96 @@
+.space{
+    width: 95%;
+    box-shadow: 0 0 10em #FCFDF2;
+    border-radius: 0.5em;
+    padding: 0;
+    background-color: #FCFDF2;
+}
+
+.chat-space{
+    margin: 0;
+    height:65vh;
+    overflow-y: hidden;
+}
+
+.default-chats{
+    padding: 0.15em;
+}
+
+.default-space{
+    margin: 0;
+    height: 12vh;
+}
+
+.type-space{
+    margin: 0;
+    height:10vh;
+    background-color: black;
+    border-radius: 0 0 0.5em 0.5em;
+}
+
+.default-chat-sub-space{
+    padding: 0 0.25em;
+    display: inline;
+}
+
+.default-chat{
+    background-color: beige;
+    border-radius: 1em;
+    border:none;
+    outline: none;
+    transition-duration: 0.1s;
+    font-size: 0.8em;
+    height: 100%;
+    width: 100%;
+}
+
+.default-chat:hover{
+    box-shadow: 0 0 0.2em;
+}
+
+.message-input{
+    width: 80%;
+    border: 0;
+    outline: 0;
+    border-radius: 1em;
+    padding: 0.2em 1em;
+}
+
+.send-button{
+    background: transparent;
+    color: beige;
+    border: none;
+    outline: none;
+    transition-duration: 0.1s;
+    font-size: 1.2em;
+}
+
+.send-button:hover{
+    color:white;
+}
+
+.sent-message{
+    max-width: 75%;
+    min-width: 15%;
+    width: fit-content;
+    background-color: beige;
+    border-radius: 0.5em;
+    text-align: left;
+    padding: 0.3em;
+    display: block;
+}
+
+.received-message{
+    max-width: 75%;
+    min-width: 15%;
+    width: fit-content;
+    background-color: bisque;
+    border-radius: 0.5em;
+    text-align: right;
+    padding: 0.3em;
+    display: block;
+}
+
+.clear{
+    clear: both;
+}

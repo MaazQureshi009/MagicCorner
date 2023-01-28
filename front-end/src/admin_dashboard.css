@@ -47,6 +47,24 @@
     box-shadow: 0 0 0.3em;
 }
 
+.add-buttons{
+    border:none;
+    outline:none;
+    background-color:black;
+    color:white;
+    transition-duration:0.5s;
+    margin-right:0.5em;
+}
+
+.order-total{
+    text-align: right;
+    padding-right: 3em;
+}
+
+.add-buttons:hover{
+    background-color:grey;
+}
+
 .admin-mobile{
     margin-top: 0;
 }
@@ -88,8 +106,14 @@
 }
 
 .offer-name{
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin-bottom: 0;
+    text-decoration: underline solid 0.1em;
+}
+
+.off{
+    display: inline;
+    font-size: 0.4em;
 }
 
 .offer-value{
@@ -104,8 +128,9 @@
 }
 
 .offer-rest{
-    font-size: 1.4em;
+    font-size: 1em;
     margin: 0;
+    display: inline;
 }
 
 .offer-delete-button{
@@ -116,6 +141,7 @@
     float: right;
     padding: 0;
     margin: 0;
+    display: inline;
 }
 
 .offer-div{
@@ -136,6 +162,7 @@
     text-align: center;
     margin: 0.5em 0;
     margin-left: 0.5em ;
+    padding-top: 1.7em;
 }
 
 .opened-offer-div{
@@ -215,8 +242,14 @@
 .update-button{
     border : none ;
     outline : none ;
-    background : rgba(255, 255, 255, 0.5) ;
+    background-color : black ;
     margin: 0 0.5em;
+    color:white;
+    transition-duration: 0.5s;
+}
+
+.update-button:hover{
+    background-color: grey;
 }
 
 .select{
@@ -228,4 +261,24 @@
 
 .button-text{
     display : inline ;
+}
+
+.query-input{
+    border: none;
+    outline: none;
+    border-bottom: solid 0.1em black;
+    margin: 0.5em;
+}
+
+.send--button{
+    background: transparent;
+    border: none;
+    outline: none;
+    color: black;
+    width: fit-content;
+    transition-duration: 0.1s;
+}
+
+.send--button:hover{
+    color:grey
 }

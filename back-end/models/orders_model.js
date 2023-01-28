@@ -25,7 +25,15 @@ const order_schema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    stotal : {
+        type : String,
+        required : true,
+    },
     total : {
+        type : String,
+        required : true,
+    },
+    discount : {
         type : String,
         required : true,
     },

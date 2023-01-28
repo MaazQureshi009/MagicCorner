@@ -84,6 +84,11 @@ const ProductView = (Received) => {
                     </div>
                     <div className='container col-6 float-start mt-2 content-div'>
                         <p className="view-product-name">{Item.name}</p>
+                        {
+                            (Item.cod !== "YES")?
+                            <p className='view-warning'>NO CASH ON DELIVER AVAILABLE</p>
+                            :<></>
+                        }
                         <p className="product-description">{Item.description}</p>
                         <p className="product-description">Dimensions : {Item.length} X {Item.width} X {Item.height} M(L x B x H)</p>
                         <p className="product-extras">Seller Tell's:</p>

@@ -32,6 +32,10 @@ const product_schema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    cod : {
+        type : String,
+        required : true,
+    },
     length : {
         type : Number,
     },

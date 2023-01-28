@@ -5,7 +5,7 @@ const offer_schema = new mongoose.Schema({
         type : String,
     },
     min_price : {
-        type : String,
+        type : Number,
     },
     discount : {
         type : String,

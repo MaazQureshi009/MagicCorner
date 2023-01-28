@@ -1,10 +1,14 @@
-.filter {
-  background-color: #f9d486;
-}
-
 .filter-bar {
   padding: 10px 0;
   color: #184d47;
+}
+
+.secondary-bar{
+  width: 50%;
+}
+
+.search-div{
+  display: inline;
 }
 
 .heading {
@@ -14,26 +18,83 @@
 }
 
 .filter-button {
-  background-color: #184d47;
-  color: #f9d486;
-  border-radius: 20px;
-  height: 30px;
-  width: 10%;
+  background: transparent;
+  color: black;
+  border-radius: 0.1em;
+  border: none;
+  outline: none;
   font-size: large;
-  font-weight: 600;
-  cursor: pointer;
+  text-align: center;
+  transition-duration: 0.5s;
+
+}
+
+.expanded{
+  width: 35%;
+}
+
+.sort-button {
+  background: transparent;
+  color:black;
+  border-radius: 0.1em;
+  border: none;
+  outline: none;
+  font-size: large;
+  text-align: center;
+  transition-duration: 0.5s;
+  display: inline;
+
+}
+
+.search-input{
+  border: solid 0.1em black;
+  width: 60%;
+  display: inline;
+}
+
+.search-button {
+  background-color: black;
+  color: white;
+  border-radius: 0.1em;
+  border: none;
+  outline: none;
+  font-size: large;
+  text-align: center;
+  font-size: 1.1em;
+  padding-top: 0.09em;
+  padding-bottom: 0.1em;
+  transition-duration: 0.5s;
+  display: inline;
+}
+
+.filter-button:hover{
+  color: grey;
+}
+
+.sort-button:hover{
+  color: grey;
+}
+
+.search-button:hover{
+  background-color: grey;
+}
+
+.container{
+  padding: 1em 0.5em;
+}
+
+.filter-dropdown{
+  border: none;
+  outline: none;
+  border-bottom: solid 0.1em black;
+  margin: 0 0.5em;
   text-align: center;
 }
 
-.apply-button {
-  background-color: #008037;
-  color: #f9d486;
-  border-radius: 20px;
-  height: 32px;
-  width: 6%;
-  font-size: large;
-  font-weight: 600;
+.close-button{
   border: none;
+  outline: none;
+  background: transparent;
 }
 
 @media (max-width: 1150px) {

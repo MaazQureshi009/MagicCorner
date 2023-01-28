@@ -1,5 +1,5 @@
 import { useState , useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation , useNavigate } from 'react-router-dom';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Axios from 'axios';
@@ -11,8 +11,10 @@ import './admin_dashboard.css';
 
 function AdminDashBoard(){
     const Location = useLocation();
+    const Navigate = useNavigate();
 
     const [ Orders , setOrders ] = useState([]);
+    const [ Enrollments , setEnrollments ] = useState([]);
     const [ Status , setStatus ] = useState(null);
     const [ InProgress , setInProgress ] = useState("0");
     const [ UserData , setUserData ] = useState([]);
@@ -22,9 +24,46 @@ function AdminDashBoard(){
     const [ OfferValue , setOfferValue ] = useState(null);
     const [ OfferType , setOfferType ] = useState(null);
     const [ Expand , setExpand ] = useState("");
+    const [ ExpandEnrolls , setExpandEnrolls ] = useState("");
+    const [ ExpandQueries , setExpandQueries ] = useState("");
     const [ Loading , setLoading ] = useState(false);
     const [ Colors ,setColors ] = useState([]);
-    const [ Open , setOpen ] = useState(false);  
+    const [ Open , setOpen ] = useState(false);
+    const [ Queries , setQueries ] = useState([]);
+    const [ Reply , setReply ] = useState("");
+    const [ QueryPercentage , setQueryPercentage ] = useState("0");
+
+    const AddReply = (id) => {
+        setLoading(true);
+        Axios.put("http://localhost:3001/addReply" , { id : id , answer : Reply  , sender : Location.state.id }).then(()=>{
+            Axios.get("http://localhost:3001/getOrders").then((response)=>{
+            setOrders(response.data);
+            Calculations(response.data);
+            Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                setUserData(response.data[0]);
+                Axios.get("http://localhost:3001/getOffers").then((response)=>{
+                    setOffers(response.data);
+                    Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                        setEnrollments(response.data)
+                        Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                            setQueries(response.data);
+                            setOpen(false);
+                            setLoading(false);
+                        } )
+                    })
+                });
+            });
+        });
+        })
+    }
+
+    const QueryCheck =(Received) =>{
+        Axios.get("http://localhost:3001/entireQueries").then((response)=>{
+            console.log((String(parseFloat(parseFloat(Received.length)/parseFloat(response.data.length))*100)));
+            setQueryPercentage(String(parseFloat(parseFloat(Received.length)/parseFloat(response.data.length))*100));
+            setLoading(false);
+        });
+    }
 
     const Calculations = (response) => {
         let Sum = 0;
@@ -33,7 +72,12 @@ function AdminDashBoard(){
                 Sum=Sum+1;
             }
         }
-        setInProgress(String(parseFloat(parseFloat(Sum)/parseFloat(response.length))*100))
+        if(response.length!==0){
+            setInProgress(String(parseFloat(parseFloat(Sum)/parseFloat(response.length))*100));
+        }
+        else{
+            setInProgress(0);
+        }
     }
 
     const AddOffer = () => {
@@ -47,13 +91,37 @@ function AdminDashBoard(){
                         setUserData(response.data[0]);
                         Axios.get("http://localhost:3001/getOffers").then((response)=>{
                             setOffers(response.data);
-                            setLoading(false);
-                            setOpen(false);
+                            Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                                setEnrollments(response.data)
+                                setLoading(false);
+                                setOpen(false);
+                            });
                         });
                     });
                 });
             }
         )
+    }
+
+    const DeleteOrder = (id) => {
+        setLoading(true);
+        Axios.put("http://localhost:3001/deleteOrder" , {id : id}).then(()=>{
+            Axios.get("http://localhost:3001/getOrders").then((response)=>{
+                setOrders(response.data);
+                Calculations(response.data);
+                Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                    setUserData(response.data[0]);
+                    Axios.get("http://localhost:3001/getOffers").then((response)=>{
+                        setOffers(response.data);
+                        Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                                setEnrollments(response.data)
+                                setLoading(false);
+                                setOpen(false);
+                        });
+                    });
+                });
+            });
+        })
     }
 
     const UpdateOrder = (id) => {
@@ -65,10 +133,10 @@ function AdminDashBoard(){
                     Calculations(response.data);
                     Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                         setUserData(response.data[0]);
-                        Axios.get("http://localhost:3001/getOffers").then((response)=>{
-                            setOffers(response.data);
-                            setLoading(false);
-                            setOpen(false);
+                        Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                                setEnrollments(response.data)
+                                setLoading(false);
+                                setOpen(false);
                         });
                     });
                 });
@@ -87,8 +155,11 @@ function AdminDashBoard(){
                         setUserData(response.data[0]);
                         Axios.get("http://localhost:3001/getOffers").then((response)=>{
                             setOffers(response.data);
-                            setLoading(false);
-                            setOpen(false);
+                            Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                                setEnrollments(response.data)
+                                setLoading(false);
+                                setOpen(false);
+                            })
                         });
                     });
                 });
@@ -109,7 +180,13 @@ function AdminDashBoard(){
                 setUserData(response.data[0]);
                 Axios.get("http://localhost:3001/getOffers").then((response)=>{
                     setOffers(response.data);
-                    setLoading(false);
+                    Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
+                        setEnrollments(response.data)
+                        Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                            setQueries(response.data);
+                            QueryCheck(response.data);
+                        } )
+                    })
                 });
             });
         });
@@ -121,7 +198,7 @@ function AdminDashBoard(){
         <div id="Home">
             {
                 (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
+                <NavBar Received={ {page : "D" , status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             {
                 (Location.state === null)?<SideBar Received={null}/>:
@@ -143,15 +220,17 @@ function AdminDashBoard(){
                             <p className='admin-mail'>{UserData.email}</p>
                             <p className='admin-mobile'>{UserData.mobile_no}</p>
                             <p>{UserData._id}</p>
+                            <button className='add-buttons' onClick={()=>{Navigate("/products" , { state:{user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id}})}}><i class="fa-solid fa-plus me-1"></i>ADD PRODUCTS</button>
+                            <button className='add-buttons' onClick={()=>{Navigate("/addWorkshops" , { state:{user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id} })}}><i class="fa-solid fa-plus me-1"></i>ADD WORKSHOPS</button>
                         </div>
                         <div className='col-2 in-progress-div-one'>
-                            <CircularProgressbar value={InProgress} text={`${InProgress}%`} 
+                            <CircularProgressbar value={parseInt(InProgress)} text={`${parseInt(InProgress)}%`} 
                                 styles={buildStyles({pathTransitionDuration: 1000, trailColor: '#D6EFC7',textColor: '#40514E', backgroundColor: 'white', pathColor: '#40514E'})} 
                             />
                             <p>Order's On Progress</p>
                         </div>
                         <div className='col-2 in-progress-div-two'>
-                            <CircularProgressbar value={70} text={`70%`} 
+                            <CircularProgressbar value={parseInt(QueryPercentage)} text={`${parseInt(QueryPercentage)}%`} 
                                 styles={buildStyles({pathTransitionDuration: 1000, trailColor: '#E4F9F5',textColor: '#355C7D', backgroundColor: 'white', pathColor: '#355C7D'})} 
                             />
                             <p>Queries Pending</p>
@@ -191,11 +270,11 @@ function AdminDashBoard(){
                                         <p className='offer-name'>{value.name}</p>
                                         {
                                             (value.method === "P")?
-                                            <p className='offer-value'>{value.discount}% off</p>
+                                            <p className='offer-value'>{value.discount}%<p className='off'>off</p></p>
                                             :
-                                            <p className='offer-value'><i class="fa-solid fa-indian-rupee-sign"></i>{value.discount} off</p>
+                                            <p className='offer-value'><i class="fa-solid fa-indian-rupee-sign"></i>{value.discount}<p className='off'>off</p></p>
                                         }
-                                        <p className='offer-rest'>on shopping</p>
+                                        <p className='offer-rest'>on shopping</p><br></br>
                                         <p className='offer-rest'><i class="fa-solid fa-indian-rupee-sign"></i>{value.min_price} & Above</p>
                                         <button onClick={()=>{DeleteOffer(value._id)}} className='offer-delete-button'><i class="fi fi-sr-trash"></i></button>
                                     </div>
@@ -206,12 +285,15 @@ function AdminDashBoard(){
                     <div className='main-orders-div container-fluid'>
                         <h1>ORDER'S</h1>
                         {
+                            (Orders.length === 0)?
+                            <p>No Orders</p>
+                            :
                             Orders.map((value)=>{
                                 return(
                                     <div className='container w-100 row order-row'>
-                                        <p className='col-5 order-column order-id'>Order Id : {value._id}</p>
+                                        <p className='col-4 order-column order-id'>Order Id : {value._id}</p>
                                         <p className='col-3 order-column'>Order Status : {value.status}</p>
-                                        <p className='col-2 order-column'>Payment Status : {value.payment_mode}</p>
+                                        <p className='col-3 order-column'>Payment Status : {value.payment_mode}</p>
                                         {
                                             (Expand === value._id)?
                                             <>
@@ -223,8 +305,21 @@ function AdminDashBoard(){
                                                         <i class="fa-solid fa-chevron-up end-icon"></i>
                                                     </button>
                                                 </p>
-                                                <p className='col-10 order-column order-id'> Ordered By :</p>
-                                                <p className='col-2 order-column'> TOTAL : Rs {value.total}/-</p>
+                                                <p className='col-12 order-column order-id'> Ordered Details :</p>
+                                                {
+                                                    value.products.map((test)=>{
+                                                        return(
+                                                            <>
+                                                                <p className='col-10 order-column order-details'>{test.name}</p>
+                                                                <p className='col-2  order-column order-total'>Rs {test.newprice}/-</p>
+                                                            </>
+                                                        )
+                                                    })
+                                                }
+                                                <p className='col-12 order-column order-total'> SUB TOTAL : Rs {value.stotal}/-</p>
+                                                <p className='col-12 order-column order-total'> DISCOUNT : {value.discount}/-</p>
+                                                <p className='col-12 order-column order-total'> TOTAL : Rs {value.total}/-</p>
+                                                <p className='col-12 order-column order-id'> Ordered By :</p>
                                                 <p className='col-12 order-column order-details'>Name : {value.name}</p>
                                                 <p className='col-12 order-column order-details'>Email : {value.email}</p>
                                                 <p className='col-12 order-column order-details'>Contact : {value.mobile}</p>
@@ -244,7 +339,13 @@ function AdminDashBoard(){
                                                             <i class="fa-solid fa-pen end-icon"></i>
                                                         </button>
                                                     </div>
-                                                    :<></>
+                                                    :<>
+                                                        <button onClick={()=>{
+                                                            DeleteOrder(value._id);
+                                                        }}
+                                                            className='offer-delete-button'><i class="fi fi-sr-trash"></i>
+                                                        </button>
+                                                    </>
                                                 }
                                             </>
                                             :
@@ -253,6 +354,96 @@ function AdminDashBoard(){
                                                     onClick={()=>{setExpand(value._id)}}
                                                 >
                                                     <p className='button-text'>Show Details</p>
+                                                    <i class="fa-solid fa-chevron-down end-icon"></i>
+                                                </button>
+                                            </p>
+                                        }
+                                        <div className='clear'></div>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                    <div className='main-orders-div container-fluid'>
+                        <h1>ENROLLMENT'S</h1>
+                        {
+                            (Enrollments.length === 0)?
+                            <p>No Enrollments</p>
+                            :
+                            Enrollments.map((value)=>{
+                                return(
+                                    <div className='container w-100 row order-row'>
+                                        <p className='col-6 order-column order-id'>Order Id : {value._id}</p>
+                                        <p className='col-4 order-column'>Order Course : {value.wn}</p>
+                                        {
+                                            (ExpandEnrolls === value._id)?
+                                            <>
+                                                <p className='col-2 order-column'>
+                                                    <button className='expand-button'
+                                                        onClick={()=>{setExpandEnrolls("")}}
+                                                    >
+                                                        <p className='button-text'>Hide Details</p>
+                                                        <i class="fa-solid fa-chevron-up end-icon"></i>
+                                                    </button>
+                                                </p>
+                                                <p className='col-12 order-column order-id'> Ordered By :</p>
+                                                <p className='col-12 order-column order-details'>Name : {value.name}</p>
+                                                <p className='col-12 order-column order-details'>Email : {value.email}</p>
+                                                <p className='col-12 order-column order-details'>Contact : {value.mobile}</p>
+                                            </>
+                                            :
+                                            <p className='col-2 order-column'>
+                                                <button className='expand-button'
+                                                    onClick={()=>{setExpandEnrolls(value._id)}}
+                                                >
+                                                    <p className='button-text'>Show Details</p>
+                                                    <i class="fa-solid fa-chevron-down end-icon"></i>
+                                                </button>
+                                            </p>
+                                        }
+                                        <div className='clear'></div>
+                                    </div>
+                                );
+                            })
+                        }
+                    </div>
+                    <div className='main-orders-div container-fluid'>
+                        <h1>QUERIES</h1>
+                        {
+                            (Queries.length === 0)?
+                            <p>No Queries</p>
+                            :
+                            Queries.map((value)=>{
+                                return(
+                                    <div className='container w-100 row order-row'>
+                                        <p className='col-10 order-column order-id'>{value.question}</p>
+                                        {
+                                            (ExpandQueries === value._id)?
+                                            <>
+                                                <p className='col-2 order-column'>
+                                                    <button className='expand-button'
+                                                        onClick={()=>{setExpandQueries("")}}
+                                                    >
+                                                        <p className='button-text'>Hide</p>
+                                                        <i class="fa-solid fa-chevron-up end-icon"></i>
+                                                    </button>
+                                                </p>
+                                                {
+                                                    (value.answer === undefined)?
+                                                    <>
+                                                        <input type="text" onChange={(e)=>{setReply(e.target.value)}} className='col-11 order-column query-input' placeholder='Reply...'/>
+                                                        <button className='col-1 send--button' onClick={()=>{AddReply(value._id)}}><i class="fa-solid fa-paper-plane"></i></button>
+                                                    </>
+                                                    :
+                                                    <p className='col-12 order-column'>{value.answer}</p>
+                                                }
+                                            </>
+                                            :
+                                            <p className='col-2 order-column'>
+                                                <button className='expand-button'
+                                                    onClick={()=>{setExpandQueries(value._id)}}
+                                                >
+                                                    <p className='button-text'>Answer Query</p>
                                                     <i class="fa-solid fa-chevron-down end-icon"></i>
                                                 </button>
                                             </p>

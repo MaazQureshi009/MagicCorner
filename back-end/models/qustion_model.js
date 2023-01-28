@@ -16,4 +16,4 @@ const question_schema = new mongoose.Schema({
 });
 
 const Question = mongoose.model("Queries" , question_schema);
-module.export = Question;
+module.exports = Question;

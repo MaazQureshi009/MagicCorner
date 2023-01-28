@@ -6,7 +6,7 @@ import NavBar from './navbar';
 import SideBar from './SideBar';
 import './product_card.css';
 import ProductView from './ViewProduct';
-import {useNavigate , useLocation , Link} from 'react-router-dom';
+import {useNavigate , useLocation } from 'react-router-dom';
 
 function Filter() {
     const Navigate = useNavigate();
@@ -20,6 +20,96 @@ function Filter() {
     const [ Expand , setExpand ] = useState(false);
     const [ CartItems , setCartItems ] = useState([]);
     const [ OnPageCart , setOnPageCart ] = useState([]);
+    const [ ExpandFilter , setExpandFilter ] = useState(false);
+    const [ ExpandSort , setExpandSort ] = useState(false);
+    const [ SearchThis , setSearchThis ] = useState(null);
+    const [ SortThis , setSortThis ] = useState(null);
+
+    const Search = () => {
+        setLoading(true);
+        Axios.put("http://localhost:3001/getSearch" , {name : SearchThis.toUpperCase()}).then((response)=> {
+            setProducts(response.data);
+            setLoading(false);
+        })
+    }
+
+    const Sort = () => {
+        if(SortThis === null){
+            setLoading(true);
+            Axios.put('http://localhost:3001/getProducts' , {Category : Category , Tag : Tag}).then((response) => {
+                setProducts(response.data);
+                    if(Location.state.user !== undefined){
+                        Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                            setCartItems(response.data[0].wishlist);
+                            setLoading(false);
+                        })
+                    }
+                    else{
+                        setLoading(false);
+                    }
+            })
+        }
+        else if(SortThis === "1"){
+            setLoading(true);
+            Axios.put('http://localhost:3001/getProductsSPA' , {Category : Category , Tag : Tag}).then((response) => {
+                setProducts(response.data);
+                    if(Location.state.user !== undefined){
+                        Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                            setCartItems(response.data[0].wishlist);
+                            setLoading(false);
+                        })
+                    }
+                    else{
+                        setLoading(false);
+                    }
+            })
+        }
+        else if(SortThis === "2"){
+            setLoading(true);
+            Axios.put('http://localhost:3001/getProductsSPD' , {Category : Category , Tag : Tag}).then((response) => {
+                setProducts(response.data);
+                    if(Location.state.user !== undefined){
+                        Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                            setCartItems(response.data[0].wishlist);
+                            setLoading(false);
+                        })
+                    }
+                    else{
+                        setLoading(false);
+                    }
+            })
+        }
+        else if(SortThis === "3"){
+            setLoading(true);
+            Axios.put('http://localhost:3001/getProductsSNA' , {Category : Category , Tag : Tag}).then((response) => {
+                setProducts(response.data);
+                    if(Location.state.user !== undefined){
+                        Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                            setCartItems(response.data[0].wishlist);
+                            setLoading(false);
+                        })
+                    }
+                    else{
+                        setLoading(false);
+                    }
+            })
+        }
+        else if(SortThis === "4"){
+            setLoading(true);
+            Axios.put('http://localhost:3001/getProductsSND' , {Category : Category , Tag : Tag}).then((response) => {
+                setProducts(response.data);
+                    if(Location.state.user !== undefined){
+                        Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                            setCartItems(response.data[0].wishlist);
+                            setLoading(false);
+                        })
+                    }
+                    else{
+                        setLoading(false);
+                    }
+            })
+        }
+    }
 
     const Delete = (id) => {
 		setLoading(true);
@@ -35,7 +125,6 @@ function Filter() {
                 OnPageCart.splice(j,1);
             }
         }
-        console.log(CartItems);
 		Axios.put("http://localhost:3001/deleteWishList" , {id:Location.state.id , type : Location.state.type , file : CartItems}).then(()=>{
 			Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                 setCartItems(response.data[0].wishlist);
@@ -43,8 +132,6 @@ function Filter() {
             })
 		});
 	};
-
-    console.log(Location.state);
 
     const delete_product = (id) => {
         setLoading(true);
@@ -68,10 +155,12 @@ function Filter() {
     }
 
     useEffect( () => {
+        console.log();
+        console.log(Object.keys(Location.state).length);
         setLoading(true);
         Axios.put('http://localhost:3001/getProducts' , {Category : Category , Tag : Tag}).then((response) => {
             setProducts(response.data);
-                if(Location.state !== null){
+                if(Location.state.user !== undefined){
                     Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                         setCartItems(response.data[0].wishlist);
                         setLoading(false);
@@ -87,31 +176,58 @@ function Filter() {
     return (
         <div id="Home">
         {
-            (Location.state === null)?<NavBar Received={null}/>:
-            <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
+            (Location.state === null)?<NavBar Received={{page : "P"}}/>:
+            <NavBar Received={ {page : "P",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         {
             (Location.state === null)?<SideBar Received={null}/>:
             <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
-        <div className='filter'>
-            <div className="filter-bar">
-                <label for="dropdown" className='heading'>Filters : &nbsp;</label>
-                <select id="dropdown" className='filter-button' onChange={(e) => {setCategory(e.target.value)}}>
-                    <option value= {Null} >All</option>
-                    <option>NYLON</option>
-                    <option>WOOLEN</option>
-                    <option>LINEN</option>
-                </select>
-
-                <select id="dropdown" className='filter-button' onChange={(e) => {setTag(e.target.value)}}>
-                    <option value= {Null}>All</option>
-                    <option>CURTAIN</option>
-                    <option>TABLE COVER</option>
-                </select>
-                <button type='button' className='apply-button' onClick={Filter}>Apply</button>
-            </div>
+        <div className='container w-50'>
+            <button className='filter-button' onClick={()=>{setExpandFilter(true)}}><i class="fa-solid fa-filter"></i></button>
+            <form className="search-div">
+                <input
+                    type="text"
+                    className='search-input'
+                    placeholder="Search..."
+                    onChange={(e)=>{setSearchThis(e.target.value)}}
+                />
+                <button type="button" className='search-button' onClick={Search}><i class="fi fi-rr-search"></i></button>
+            </form>
+            <button className='sort-button' onClick={()=>{setExpandSort(true)}}><i class="fa-solid fa-arrow-up-wide-short"></i></button>
         </div>
+        {
+            (ExpandFilter)?
+            <div className='container expanded'>
+                <button className='close-button float-start' onClick={()=>{setExpandFilter(false)}}><i class="fi fi-rr-cross"></i></button>
+                <select id="dropdown" className='filter-dropdown' onChange={(e) => {setCategory(e.target.value)}}>
+                    <option value= {Null} >All</option>
+                    <option>HOME DECORS</option>
+                </select>
+                <select id="dropdown" className='filter-dropdown' onChange={(e) => {setTag(e.target.value)}}>
+                    <option value= {Null}>All</option>
+                    <option>WALL HANGINGS</option>
+                    <option>CLOCKS</option>
+                </select>
+                <button type='button' className='search-button' onClick={Filter}>APPLY</button>
+            </div>
+            :<div></div>
+        }
+        {
+            (ExpandSort)?
+            <div className='container w-25'>
+                <button className='close-button float-start' onClick={()=>{setExpandSort(false)}}><i class="fi fi-rr-cross"></i></button>
+                <select id="dropdown" className='filter-dropdown' onChange={(e) => {setSortThis(e.target.value)}}>
+                    <option value= {Null} >CUSTOM</option>
+                    <option value= "1">PRICE LOW-HIGH</option>
+                    <option value= "2">PRICE HIGH-LOW</option>
+                    <option value= "3">NAME A-Z</option>
+                    <option value= "4">NAME Z-A</option>
+                </select>
+                <button type='button' className='search-button' onClick={Sort}>APPLY</button>
+            </div>
+            :<div></div>
+        }
         <div className='display-row'>
                 {
                     (Loading)?
@@ -127,7 +243,7 @@ function Filter() {
                     return(
                         <div className='display-column' key={value._id} >
                             <div className='image-div'>
-                                <img src={value.image[0]} alt="Product" className='image'></img>
+                                <img src={value.image[Math.floor((Math.random()*(value.image.length))+0)]} alt="Product" className='image'></img>
                                 <div className='product-discount-div'>
                                     <p className='product-discount'>{parseInt(((parseInt(value.oldprice) - parseInt(value.newprice))/parseInt(value.oldprice))*100)}%</p>
                                     <p className='product-discount'>OFF</p>
@@ -255,17 +371,6 @@ function Filter() {
                     </>:<></>
                 }
             </div>
-            {(Location.state !== null && Location.state.type === "admin")?
-                <Link
-                    to="/products"
-                    class="add_float"
-                    rel="noopener noreferrer"
-                    state={ {user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id}}
-                >
-                    <i class="fi fi-br-plus add-icon"></i>
-                </Link>:
-                <></>
-            }
         </div>
     )
 }

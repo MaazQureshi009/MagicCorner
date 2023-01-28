@@ -26,7 +26,11 @@ import ViewWorkShop from './ViewWorkshops';
 import Cart from './cart';
 import WishList from './WishList';
 import AdminDashBoard from './admin_dashboard';
-import Confirmation from './CheckoutConfirmation'
+import Confirmation from './CheckoutConfirmation';
+import WorkshopConfirmation from './workshopenrollment';
+import Confirm from './confirmationpage';
+import Chat from './chat';
+import Account from './account';
 
 function App() {
   return (
@@ -62,9 +66,13 @@ function App() {
             <Route path="/Login" element={<Login/>} />
             <Route path="/WishList" element={<WishList/>} />
             <Route path="/Confirmation" element={<Confirmation/>} />
+            <Route path="/WorkshopConfirmation" element={<WorkshopConfirmation/>} />
             <Route path="/ForgotPassword" element={<ForgotPassword/>} />
             <Route path="/SendPassword" element={<SendPassword/>} />
             <Route path="/Dashboard" element={<AdminDashBoard/>} />
+            <Route path="/Confirmed" element={<Confirm/>} />
+            <Route path="/Chat" element={<Chat/>} />
+            <Route path="/Account" element={<Account/>} />
           </Routes>
         </Router>
       </div>

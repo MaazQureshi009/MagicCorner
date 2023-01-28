@@ -11,7 +11,8 @@ const ProductView = (Received) => {
     const [ NonActiveImage , setNonActiveImage ] = useState([])
     const [ Loading , setLoading ] = useState(true);
     const [ Item, setItem ] = useState([]);
-
+    const Location = Received.Received;
+    console.log(Location);
     useEffect( () => {
         console.log(Received.Received)
         setLoading(true);
@@ -55,7 +56,9 @@ const ProductView = (Received) => {
                         <p className="live-price">Rs: {Item.newprice}</p>
                         {(Received.Received.check === "in")?
                         <>
-                            <button className="cart-button" onClick={() =>{}}>ENROLL</button>
+                            <button className="cart-button" onClick={() =>{
+                                Navigate("/WorkshopConfirmation" , {state:Location})
+                            }}>ENROLL</button>
                         </>:
                         <>
                         <button className="cart-button" onClick={() =>{Navigate("/Login")}}>ENROLL</button>
@@ -64,14 +67,6 @@ const ProductView = (Received) => {
                     </div>
                 </>
             }
-            <a
-                href="https://wa.me/2348100000000"
-                class="whatsapp_float"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <i class="fa fa-whatsapp whatsapp-icon"></i>
-            </a>
         </div>
     )
 }

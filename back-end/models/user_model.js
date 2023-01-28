@@ -63,13 +63,8 @@ const user_schema = new mongoose.Schema(
         orders : {
             type : Array,
         },
-        questions :{
-            Question : {
-                type : Array,
-            },
-            answer : {
-                type : Array,
-            }
+        workshops : {
+            type : Array,
         },
     }
 );

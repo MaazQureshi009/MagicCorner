@@ -63,6 +63,9 @@ const admin_schema = new mongoose.Schema(
         orders : {
             type : Array,
         },
+        workshops : {
+            type : Array,
+        },
     }
 );
 

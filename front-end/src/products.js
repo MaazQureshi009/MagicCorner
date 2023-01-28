@@ -18,7 +18,6 @@ function Products(){
         }
     }
 
-    console.log(Location.state);
 
     const [ Loading , setLoading ] = useState(false);
     const [ Name , setName ] = useState(null);
@@ -33,18 +32,23 @@ function Products(){
     const [ Length , setLength ] = useState(null);
     const [ Breath , setBreath ] = useState(null);
     const [ Height , setHeight ] = useState(null);
+    const [ COD , setCOD ] = useState(null);
     const [ FileUrls , setFileUrls ] = useState([]);
 
     //const fileref = ref(storage, "Files/");
 
     const upload = () => {
             setLoading(true);
+            console.log(File);
             if (File == null) return;
             for(var j=0 ; j<File.length ; j++){
-                const FileReference = ref(storage , `Product_DP/${File[j].name+Name}`);
+                console.log(j);
+                console.log(File[j]);
+                const FileReference = ref(storage , `Product_DP/${File[j].name+Name+j}`);
                 uploadBytes(FileReference , File[j]).then((FileData) => {
                     getDownloadURL(FileData.ref).then((url) => {
                         setFileUrls((prev)=>[...prev , url]);
+                        console.log(url);
                     })
                 });
             }
@@ -52,6 +56,7 @@ function Products(){
     useEffect(() =>{
         if(FileUrls.length !== 0){
             if(FileUrls.length === File.length){
+                console.log(FileUrls)
         Axios.put("http://localhost:3001/addProduct" , 
             {
                 image_url : FileUrls,
@@ -66,6 +71,7 @@ function Products(){
                 length : Length,
                 breath : Breath,
                 height : Height,
+                cod : COD,
             }).then(() => {
                 setLoading(false);
                 alert("Product Added");
@@ -192,9 +198,20 @@ function Products(){
                                     onChange={(event)=>{setHeight(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-12">
+                            <div className="col-6">
                                 <p className="label-attributes">
-                                    FEATURE IT ON HOME SCREEN:
+                                    COD STATUS:
+                                </p>
+                                <br></br>
+                                <select className="input-attributes w-100" onChange={(event)=>{setCOD(event.target.value)}} required>
+                                    <option className="option-attributes">SELECT</option>
+                                    <option className="option-attributes">YES</option>
+                                    <option className="option-attributes">NO</option>
+                                </select>
+                            </div>
+                            <div className="col-6">
+                                <p className="label-attributes">
+                                    HOME SCREEN DISPLAY:
                                 </p>
                                 <br></br>
                                 <select className="input-attributes w-100" onChange={(event)=>{setState(event.target.value)}} required>
@@ -209,7 +226,8 @@ function Products(){
                                 </p>
                                 <br></br>
                                 <input type="file" accept='image/*' 
-                                    className="input-attributes w-100" multiple
+                                    className="input-attributes w-100"
+                                    multiple="multiple"
                                     onChange={(event) =>{FileStorer(event)}} required>
                                 </input>
                             </div>

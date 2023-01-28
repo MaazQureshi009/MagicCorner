@@ -6,7 +6,7 @@ import NavBar from './navbar';
 import WorkshopView from './ViewWorkshops';
 import './product_card.css';
 import SideBar from './SideBar';
-import {useNavigate , useLocation , Link} from 'react-router-dom';
+import {useNavigate , useLocation } from 'react-router-dom';
 
 function Workshop() {
     const [ Loading , setLoading ] = useState(false);
@@ -40,8 +40,8 @@ function Workshop() {
     return (
         <div id="Home">
         {
-            (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
+            (Location.state === null)?<NavBar Received={{page : "W"}}/>:
+                <NavBar Received={ {page : "W",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         {
             (Location.state === null)?<SideBar Received={null}/>:
@@ -62,7 +62,7 @@ function Workshop() {
                     return(
                         <div className='display-column' key={value._id} >
                             <div className='image-div'>
-                                <img src={value.image[0]} alt="Product" className='image'></img>
+                                <img src={value.image[Math.floor((Math.random()*(value.image.length))+0)]} alt="Product" className='image'></img>
                                 <div className='product-discount-div'>
                                     <p className='product-discount'>{parseInt(((parseInt(value.oldprice) - parseInt(value.newprice))/parseInt(value.oldprice))*100)}%</p>
                                     <p className='product-discount'>OFF</p>
@@ -110,11 +110,7 @@ function Workshop() {
                                     <>
                                         <button className='add-button'
                                         onClick={() =>{
-                                            setLoading(true);
-                                            Axios.put("http://localhost:3001/addToCart" , {type : Location.state.type , id:Location.state.id , user:Location.state.user , product_id:value._id}).then(() =>{
-                                                setLoading(false);
-                                                Navigate("/cart" , { state: {status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} })
-                                            });
+                                            Navigate("/WorkshopConfirmation" , {state:{ check: "in" , Product_id : value._id , status: Location.state.status, name : Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id}})
                                         }}>ENROLL</button>
                                         <button className='view-button'
                                             onClick={()=>{
@@ -153,16 +149,6 @@ function Workshop() {
                 </>:<></>
             }
             </div>
-            {(Location.state !== null && Location.state.type === "admin") ?
-                <Link
-                    to="/addWorkshops"
-                    class="add_float"
-                    rel="noopener noreferrer"
-                    state={ {user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id}}
-                >
-                    <i class="fi fi-br-plus add-icon"></i>
-                </Link>:<></>
-            }
         </div>
     )
 }

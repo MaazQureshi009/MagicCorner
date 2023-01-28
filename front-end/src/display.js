@@ -38,13 +38,22 @@ function Display(){
 
     useEffect( () => {
         setLoading(true);
+        console.log(Location.state);
         Axios.get('http://localhost:3001/getAllFeaturedProducts').then((response) => {
             setProducts(response.data);
             if(Location.state !== null){
-            Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
-                    setCartItems(response.data[0].wishlist);
-                    setLoading(false);
-            })}
+                console.log(Location.state);
+                Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                        setCartItems(response.data[0].wishlist);
+                        setLoading(false);
+                })
+                if(Location.state.user !== undefined){
+                    Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
+                        setCartItems(response.data[0].wishlist);
+                        setLoading(false);
+                    })
+                }
+            }
             else{
                 setLoading(false);
             }
@@ -55,8 +64,8 @@ function Display(){
     return(
         <div id="Home">
             {
-                (Location.state === null)?<NavBar Received={null}/>:
-                <NavBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
+                (Location.state === null)?<NavBar Received={{page : "H"}}/>:
+                <NavBar Received={ {page : "H", status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             {
                 (Location.state === null)?<SideBar Received={null}/>:
@@ -74,7 +83,7 @@ function Display(){
                     return(
                         <div className='display-column' key={value._id} >
                             <div className='image-div'>
-                                <img src={value.image[0]} alt="Product" className='image'></img>
+                                <img src={value.image[Math.floor((Math.random()*(value.image.length))+0)]} alt="Product" className='image'></img>
                                 <div className='product-discount-div'>
                                     <p className='product-discount'>{parseInt(((parseInt(value.oldprice) - parseInt(value.newprice))/parseInt(value.oldprice))*100)}%</p>
                                     <p className='product-discount'>OFF</p>
