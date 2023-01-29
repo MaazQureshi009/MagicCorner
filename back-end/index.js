@@ -814,6 +814,11 @@ app.put("/updateProducts" , async (req , res) => {
         var newCategory = req.body.category;
         var newTags = req.body.tags;
         var newStatus = req.body.state;
+        var newLength = req.body.length;
+        var newWidth = req.body.breath;
+        var newHeight = req.body.height;
+        var newCOD = req.body.cod;
+        var newInfos = req.body.infos;
         if(newDescription != null){
             await product_model.updateOne({_id : req.body.id} , {$set : {description : newDescription}});
         }
@@ -830,6 +835,11 @@ app.put("/updateProducts" , async (req , res) => {
             await product_model.updateOne({_id : req.body.id} , {$set : {tags : newTags}});
         }
         if(newStatus != null){await product_model.updateOne({_id : req.body.id} , {$set : {status : newStatus}});}
+        if(newLength != null){await product_model.updateOne({_id : req.body.id} , {$set : {length : newLength}});}
+        if(newHeight != null){await product_model.updateOne({_id : req.body.id} , {$set : {height : newHeight}});}
+        if(newWidth != null){await product_model.updateOne({_id : req.body.id} , {$set : {width: newWidth}});}
+        if(newCOD != null){await product_model.updateOne({_id : req.body.id} , {$set : {cod : newCOD}});}
+        if(newInfos != null){await product_model.updateOne({_id : req.body.id} , {$set : {extras : newInfos}});}
         res.send("Done");
 
     }catch(err){
@@ -1034,7 +1044,6 @@ app.get("/entireQueries" , async (req , res)=> {
     question_model.find((err, result) => {
         if(err){console.log(err)}
         res.send(result);
-        console.log(result);
     })
 })
 
@@ -1044,7 +1053,6 @@ app.get("/allQueries" , async (req , res)=> {
     question_model.find({answer : undefined}, (err, result) => {
         if(err){console.log(err)}
         res.send(result);
-        console.log(result);
     })
 })
 

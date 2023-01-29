@@ -8,6 +8,7 @@ function Upload_User(){
 
     const [ Captchaa , setCaptchaa ] = useState("");
     const [ OOTP , setOOTP ] = useState("");
+    const [ Loading , setLoading ] = useState(false);
 
     const  Navigate = useNavigate();
     const Location = useLocation();
@@ -25,6 +26,7 @@ function Upload_User(){
 
     const Upload = () => {
         if (Location.state.file == null) return;
+        setLoading(true);
         const FileReference = ref(storage , `Admin_DP/${Location.state.file.name+Location.state.name+Location.state.email}`);
         uploadBytes(FileReference , Location.state.file).then((FileData) => {
             getDownloadURL(FileData.ref).then((url) => {
@@ -44,11 +46,12 @@ function Upload_User(){
                     state : Location.state.status,
                     password : Location.state.password,
                     pincode : Location.state.pinCode,
-                });
+                }).then(()=>{
+                    setLoading(false);
+                    Navigate('/Login');
+                })
             });
         });
-        alert("Admin Added");
-        Navigate('/Login');
     };
 
     const check = () => {
@@ -66,47 +69,56 @@ function Upload_User(){
     };
 
     return(
-        <div className="overall-log" id="Home">
-            <p className="header">Magic Corner</p>
-            <div className="main-container">
-                <div className="container">
-                    <button className="float-start general-button disabled-button" disabled>
-                        VERIFICATION
-                        <i className="fi fi-ss-user end-icons" ></i>
-                    </button>
-                    <div className="container sub-container-1 float-start">
-                        <form>
-                            <p className="label-log-attributes">
-                                CAPTCHA: <s>{Location.state.captcha}</s>
-                            </p>
-                            <br></br>
-                            <input type="text" placeholder="CAPTCHA" 
-                                className="input-log-attributes w-100"
-                                onChange={(event)=>{setCaptchaa(event.target.value)}}>
-                            </input>
-                            <br></br>
-                            <p className="label-log-attributes">
-                                OTP:
-                            </p>
-                            <br></br>
-                            <input type="text" placeholder="OTP" 
-                                className="input-log-attributes w-100"
-                                onChange={(event)=>{setOOTP(event.target.value)}}>
-                            </input>
-                            <button className="final-button general-button"
-                                onClick={check} type="button">
-                                <p className="final-label">
-                                VERIFY
-                                <i className="fi fi-br-angle-right end-icons-err"></i>
+        <>
+        {
+            (Loading)?
+            <div className='loader-main'>
+                <div className="loader"></div>
+                <p className='loader-text'>Getting You In...</p>
+            </div>
+            :
+            <div className="overall-log" id="Home">
+                <div className="main-container">
+                    <div className="container">
+                        <button className="float-start general-button disabled-button" disabled>
+                            VERIFICATION
+                            <i className="fi fi-ss-user end-icons" ></i>
+                        </button>
+                        <div className="container sub-container-1 float-start">
+                            <form>
+                                <p className="label-log-attributes">
+                                    CAPTCHA: <s>{Location.state.captcha}</s>
                                 </p>
-                            </button>
-                        </form>
+                                <br></br>
+                                <input type="text" placeholder="CAPTCHA" 
+                                    className="input-log-attributes w-100"
+                                    onChange={(event)=>{setCaptchaa(event.target.value)}}>
+                                </input>
+                                <br></br>
+                                <p className="label-log-attributes">
+                                    OTP:
+                                </p>
+                                <br></br>
+                                <input type="text" placeholder="OTP" 
+                                    className="input-log-attributes w-100"
+                                    onChange={(event)=>{setOOTP(event.target.value)}}>
+                                </input>
+                                <button className="final-button general-button"
+                                    onClick={check} type="button">
+                                    <p className="final-label">
+                                    VERIFY
+                                    <i className="fi fi-br-angle-right end-icons-err"></i>
+                                    </p>
+                                </button>
+                            </form>
+                        </div>
                     </div>
+                    <div className="clear"></div>
                 </div>
                 <div className="clear"></div>
             </div>
-            <div className="clear"></div>
-        </div>
+        }
+        </>
     );
 }
 

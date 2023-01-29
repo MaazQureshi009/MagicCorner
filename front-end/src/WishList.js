@@ -11,9 +11,8 @@ function WishList(){
 
     const Delete = (id) => {
 		setLoading(true);
-        console.log(id);
-        console.log(OnCart);
-		for(var i=0;i<OnCart.length;i++){
+        var i = CartItems;
+		for(i=0;i<OnCart.length;i++){
 			if(OnCart[i] === id){
 				OnCart.splice(i,2);
 			}

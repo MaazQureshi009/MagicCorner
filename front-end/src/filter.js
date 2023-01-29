@@ -259,7 +259,7 @@ function Filter() {
                                             description : value.description , newprice : value.newprice , 
                                             oldprice : value.oldprice , category : value.category , 
                                             tags : value.tags , status : value.status, infos : value.extras, length : value.length , 
-                                            height : value.height , width : value.width,
+                                            height : value.height , width : value.width, cod : value.cod,
                                             user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , 
                                             Product_id : value._id , type:Location.state.type , user_id:Location.state.id}} )}
                                         }

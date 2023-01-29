@@ -102,7 +102,12 @@ function Cart(){
                 <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             {
-                (Loading)?<div class="loader"></div>:
+                (Loading)?
+                <div className='loader-main'>
+                    <div className="loader"></div>
+                    <p className='loader-text'>Loading...</p>
+                </div>
+                :
                 <>
                 {
                     (CartItems.length === 0)?

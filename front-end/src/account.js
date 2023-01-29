@@ -27,7 +27,7 @@ function Account(){
         var Sum = 0;
         setQueryPercentage(response.orders.length);
         for(var j=0;j<response.orders.length;j++){
-            if(response.orders[j].status === "DELIVERED" || response.orders[j].status === "CLOSED"){
+            if(response.orders[j].status !== "DELIVERED" || response.orders[j].status !== "CLOSED"){
                 Sum = Sum+1;
             }
         }

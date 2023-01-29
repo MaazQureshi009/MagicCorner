@@ -28,7 +28,6 @@ function EditWorkshops(){
             newprice : NewPrice,
             oldprice : OldPrice,
         }).then(() =>{
-            alert("Workshop Edited");
             setLoading(false);
             Navigate("/displayWorkshops" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
         });
@@ -39,8 +38,10 @@ function EditWorkshops(){
         {
         (Loading)?
         <>
-            <p>Hold Tight , We are Working On it</p>
-            <div class="loader"></div>
+            <div className='loader-main'>
+                <div className="loader"></div>
+                <p className='loader-text'>Saving Changes...</p>
+            </div>
         </>
         :
         <div className='overall-log'>

@@ -39,16 +39,12 @@ function Products(){
 
     const upload = () => {
             setLoading(true);
-            console.log(File);
             if (File == null) return;
             for(var j=0 ; j<File.length ; j++){
-                console.log(j);
-                console.log(File[j]);
                 const FileReference = ref(storage , `Product_DP/${File[j].name+Name+j}`);
                 uploadBytes(FileReference , File[j]).then((FileData) => {
                     getDownloadURL(FileData.ref).then((url) => {
                         setFileUrls((prev)=>[...prev , url]);
-                        console.log(url);
                     })
                 });
             }
@@ -74,7 +70,6 @@ function Products(){
                 cod : COD,
             }).then(() => {
                 setLoading(false);
-                alert("Product Added");
                 Navigate("/displayProducts" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
             });}}
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,8 +80,10 @@ function Products(){
             {
                 (Loading)?
                 <>
-                <p>Hold Tight , We are Working On it</p>
-                <div class="loader"></div>
+                    <div className='loader-main'>
+                        <div className="loader"></div>
+                        <p className='loader-text'>Adding Product...</p>
+                    </div>
                 </>
                 :
                 <div className='overall'>
@@ -237,7 +234,7 @@ function Products(){
                                 ADDITIONAL INFORMATION'S:
                             </p>
                             <br></br>
-                            <input type="text" placeholder="Eg: Makes Your Window Beautiful" 
+                            <input type="text" placeholder="Eg: Aged for 3+." 
                                 className="input-attributes w-100"
                                 onChange={(event)=>{setInfos(event.target.value)}} required>
                             </input>

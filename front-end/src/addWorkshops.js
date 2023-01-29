@@ -53,11 +53,11 @@ function Products(){
                         oldprice : OldPrice,
                     }).then(()=>{
                         setLoading(false);
-                        alert("Workshop Added");
                         Navigate("/displayWorkshops" , {state:{check: "in" , status: Location.state.user_status, name : Location.state.user_name , user:Location.state.user , type:Location.state.type , id:Location.state.user_id}});
                     });
                 }
             }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     } , [FileUrls])
 
     return(
@@ -65,8 +65,10 @@ function Products(){
             {
                 (Loading)?
                 <>
-                <p>Hold Tight , We are Working On it</p>
-                <div class="loader"></div>
+                    <div className='loader-main'>
+                        <div className="loader"></div>
+                        <p className='loader-text'>Adding Workshop...</p>
+                    </div>
                 </>
                 :
                 <div className='overall-log'>
