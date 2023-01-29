@@ -303,7 +303,7 @@ app.get("/getEnrollments" , (req , res) => {
 //-----------------------------------------------------------------Delete_Orders------------------------------------------------------------------
 
 app.put("/deleteOrder" , (req , res) => {
-    order_model.updateOne({id : req.body.id} , {status : "CLOSED"} , (err , result)=>{
+    order_model.updateOne({_id : req.body.id} , {status : "CLOSED"} , (err , result)=>{
         if(err){console.log(err)}
         res.send("Done");
     })

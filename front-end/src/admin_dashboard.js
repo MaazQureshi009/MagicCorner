@@ -47,8 +47,7 @@ function AdminDashBoard(){
                         setEnrollments(response.data)
                         Axios.get("http://localhost:3001/allQueries").then( (response)=>{
                             setQueries(response.data);
-                            setOpen(false);
-                            setLoading(false);
+                            QueryCheck(response.data);
                         } )
                     })
                 });
@@ -62,6 +61,7 @@ function AdminDashBoard(){
             console.log((String(parseFloat(parseFloat(Received.length)/parseFloat(response.data.length))*100)));
             setQueryPercentage(String(parseFloat(parseFloat(Received.length)/parseFloat(response.data.length))*100));
             setLoading(false);
+            setOpen(false);
         });
     }
 
@@ -93,8 +93,10 @@ function AdminDashBoard(){
                             setOffers(response.data);
                             Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
                                 setEnrollments(response.data)
-                                setLoading(false);
-                                setOpen(false);
+                                Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                                    setQueries(response.data);
+                                    QueryCheck(response.data);
+                            })
                             });
                         });
                     });
@@ -115,8 +117,10 @@ function AdminDashBoard(){
                         setOffers(response.data);
                         Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
                                 setEnrollments(response.data)
-                                setLoading(false);
-                                setOpen(false);
+                                Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                                    setQueries(response.data);
+                                    QueryCheck(response.data);
+                            })
                         });
                     });
                 });
@@ -135,8 +139,10 @@ function AdminDashBoard(){
                         setUserData(response.data[0]);
                         Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
                                 setEnrollments(response.data)
-                                setLoading(false);
-                                setOpen(false);
+                                Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                                    setQueries(response.data);
+                                    QueryCheck(response.data);
+                            })
                         });
                     });
                 });
@@ -157,8 +163,9 @@ function AdminDashBoard(){
                             setOffers(response.data);
                             Axios.get("http://localhost:3001/getEnrollments").then((response)=>{
                                 setEnrollments(response.data)
-                                setLoading(false);
-                                setOpen(false);
+                                Axios.get("http://localhost:3001/allQueries").then( (response)=>{
+                                    setQueries(response.data);
+                                    QueryCheck(response.data);})
                             })
                         });
                     });

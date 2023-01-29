@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-pascal-case */
 import {BrowserRouter as Router , Route , Routes} from 'react-router-dom';
+import Axios from 'axios';
+import {useEffect,useState} from 'react';
 
 import "/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "/node_modules/bootstrap/dist/js/bootstrap.bundle";
@@ -33,6 +35,15 @@ import Chat from './chat';
 import Account from './account';
 
 function App() {
+
+  const [ Offers , setOffers ]= useState([])
+
+  useEffect(()=>{
+    Axios.get("http://localhost:3001/getOffers").then((response)=>{
+      setOffers(response.data);
+    })
+  },[])
+
   return (
     <>
       <div className='home' id='home'>
@@ -41,6 +52,15 @@ function App() {
               <div className="content">
                 <h2>Magic Corner</h2>
                 <p>A complete spot to all your handmade products.</p>
+                {
+                  Offers.map((value)=>{
+                    return(
+                      <>
+                        <p key={value} >-{value.discount} off on Shopping {value.min_price} & Above.</p>
+                      </>
+                    );
+                  })
+                }
                 <a href="/#App"><button>Shop Now</button></a>
               </div>
         </div>

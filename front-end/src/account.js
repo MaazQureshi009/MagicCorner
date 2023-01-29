@@ -23,16 +23,16 @@ function Account(){
     const [ InProgress , setInProgress ] = useState("0");
     const [ QueryPercentage , setQueryPercentage ] = useState("0");
 
-    const Calculations = (response) => {
+    const Calculations = (response1,response) => {
         var Sum = 0;
-        setQueryPercentage(response.orders.length);
-        for(var j=0;j<response.orders.length;j++){
-            if(response.orders[j].status !== "DELIVERED" || response.orders[j].status !== "CLOSED"){
+        setQueryPercentage(response1.orders.length);
+        for(var j=0;j<response.length;j++){
+            if(response[j].status !== "DELIVERED" && response[j].status !== "CLOSED"){
                 Sum = Sum+1;
             }
         }
-        if(response.orders.length!==0){
-            setInProgress(String(parseFloat(parseFloat(Sum)/parseFloat(response.orders.length))*100));
+        if(response1.orders.length!==0){
+            setInProgress(String(parseFloat(parseFloat(Sum)/parseFloat(response1.orders.length))*100));
         }
         else{
             setInProgress("0");
@@ -42,9 +42,9 @@ function Account(){
         setLoading(true);
         Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response1)=>{
             setUserData(response1.data[0]);
-            Calculations(response1.data[0])
             Axios.put("http://localhost:3001/userOrders" , {id : response1.data[0].orders}).then((response)=>{
                 setUserOrders(response.data);
+                Calculations(response1.data[0] , response.data)
                 Axios.put("http://localhost:3001/userWorkshops" , {id : response1.data[0].workshops}).then((response)=>{
                     setUserWorkshops(response.data);
                 setLoading(false);
