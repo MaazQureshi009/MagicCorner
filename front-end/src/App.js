@@ -64,7 +64,7 @@ function App() {
                   Offers.map((value)=>{
                     return(
                       <>
-                        <p key={value} >-{value.discount} off on Shopping {value.min_price} & Above.</p>
+                        <p key={value.discount} >-{value.discount} off on Shopping {value.min_price} & Above.</p>
                       </>
                     );
                   })

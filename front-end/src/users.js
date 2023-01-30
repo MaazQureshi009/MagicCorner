@@ -52,9 +52,22 @@ function Products()
 
     //const fileref = ref(storage, "Files/");
 
+    const filled = () =>{
+        if(Name === null){alert("Fill Name");return}
+            if(Email === null){alert("Fill Email");return}
+            if(Mobile === null){alert("Fill Mobile");return}
+            if(Gender === null){alert("Select Gender");return}
+            if(Age === null){alert("Fill Age");return}
+            if(DOB === null){alert("Fill DOB");return}
+            if(File === null){alert("Select Image");return}
+            if(Password === null){alert("Enter Password");return}
+    }
+
     const Decide = ()=>{
 
         if(Decision === null){
+
+            filled()
             if(ExistingUsers.length === 0){
                 if(ExistingAdmins.length === 0){
                     generator();

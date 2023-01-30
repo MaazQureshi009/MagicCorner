@@ -5,7 +5,7 @@ function NavBar({Received}) {
     <>
       <nav id="navbar">
             <ul>
-            {(Object.keys(Received).length === 1)?
+            {(Received.user === undefined)?
               <li>
                 {
                   (Received.page === "H")?
@@ -21,7 +21,7 @@ function NavBar({Received}) {
                   :
                   <Link className="nav-link" to="/" state={Received}>Top Products</Link>
                 }
-              </li>:
+              </li>:(Received.type === "admin")?
               <li>
                 {
                   (Received.page === "D")?
@@ -29,7 +29,7 @@ function NavBar({Received}) {
                   :
                   <Link className="nav-link" to="/Dashboard" state={Received} >Dash Board</Link>
                 }
-              </li>
+              </li>:<></>
               }
               {
                 (Object.keys(Received).length === 1)?

@@ -40,11 +40,11 @@ function Workshop() {
     return (
         <div id="Home">
         {
-            (Location.state === null)?<NavBar Received={{page : "W"}}/>:
+            (Location.state.user === undefined)?<NavBar Received={{page : "W"}}/>:
                 <NavBar Received={ {page : "W",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         {
-            (Location.state === null)?<SideBar Received={null}/>:
+            (Location.state.user === undefined)?<SideBar Received={null}/>:
             <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         <div className='display-row'>

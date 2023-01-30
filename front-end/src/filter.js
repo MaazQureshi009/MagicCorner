@@ -26,7 +26,9 @@ function Filter() {
     const [ SortThis , setSortThis ] = useState(null);
 
 
-    const Search = () => {
+    const Search = (event) => {
+        event.preventDefault();
+        if(SearchThis === null){return;}
         setLoading(true);
         Axios.put("http://localhost:3001/getSearch" , {name : SearchThis.toUpperCase()}).then((response)=> {
             setProducts(response.data);
@@ -181,7 +183,7 @@ function Filter() {
             <NavBar Received={ {page : "P",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         {
-            (Location.state === null)?<SideBar Received={null}/>:
+            (Location.state.user === undefined)?<SideBar Received={null}/>:
             <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
         <div className='container w-50'>
@@ -191,9 +193,9 @@ function Filter() {
                     type="text"
                     className='search-input'
                     placeholder="Search..."
+                    onKeyDown={(e)=>{if(e.key === "Enter"){Search(e);}}}
                     onChange={(e)=>{setSearchThis(e.target.value)}}
                 />
-                <button type="button" className='search-button' onClick={Search}><i class="fi fi-rr-search"></i></button>
             </form>
             <button className='sort-button' onClick={()=>{setExpandSort(true)}}><i class="fa-solid fa-arrow-up-wide-short"></i></button>
         </div>

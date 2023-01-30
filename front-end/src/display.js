@@ -42,16 +42,14 @@ function Display(){
         Axios.get('http://localhost:3001/getAllFeaturedProducts').then((response) => {
             setProducts(response.data);
             if(Location.state !== null){
-                console.log(Location.state);
-                Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
-                        setCartItems(response.data[0].wishlist);
-                        setLoading(false);
-                })
                 if(Location.state.user !== undefined){
                     Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                         setCartItems(response.data[0].wishlist);
                         setLoading(false);
                     })
+                }
+                else{
+                    setLoading(false);
                 }
             }
             else{
@@ -64,11 +62,11 @@ function Display(){
     return(
         <div id="Home">
             {
-                (Location.state === null)?<NavBar Received={{page : "H"}}/>:
+                (Location.state === null)?<NavBar Received={{page : "H"}}/>:(Location.state.user === undefined)?<NavBar Received={{page : "H"}}/>:
                 <NavBar Received={ {page : "H", status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             {
-                (Location.state === null)?<SideBar Received={null}/>:
+                (Location.state === null)?<SideBar Received={null}/>:(Location.state.user === undefined)?<SideBar Received={null}/>:
                 <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
             <div className='display-row tp'>

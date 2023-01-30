@@ -37,7 +37,19 @@ function Products(){
 
     //const fileref = ref(storage, "Files/");
 
+    const filled = () =>{
+        if(Name === null){alert("Fill Name");return}
+            if(Description === null){alert("Fill Description");return}
+            if( NewPrice === null){alert("Fill NewPrice");return}
+            if(MainCategory === null){alert("Select Category");return}
+            if(SubCategory === null){alert("Select tags");return}
+            if(COD === null){alert("Select COD Status");return}
+            if(State === null){alert("Select Display Status");return}
+            if(File === null){alert("Select Image");return}
+    }
+
     const upload = () => {
+        filled()
             setLoading(true);
             if (File == null) return;
             for(var j=0 ; j<File.length ; j++){

@@ -19,8 +19,16 @@ function Products(){
     const [ File , setFile ] = useState([]);
     const [ FileUrls , setFileUrls ] = useState([]);
 
+    const filled = () =>{
+        if(Name === null){alert("Fill Name");return}
+            if(Description === null){alert("Fill Description");return}
+            if( NewPrice === null){alert("Fill NewPrice");return}
+            if(File === null){alert("Select Image");return}
+    }
+
     //const fileref = ref(storage, "Files/");
     const FileStorer = (e) =>{
+        filled()
         for(var i=0 ; i<e.target.files.length ; i++){
             var file = e.target.files[i];
             // eslint-disable-next-line no-loop-func
