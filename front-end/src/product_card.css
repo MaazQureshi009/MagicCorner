@@ -239,7 +239,7 @@
 }
 
 @media screen and (max-width: 1030px) {
-.col {
+.display-column {
     -ms-flex: 46%;
     flex: 46%;
     max-width: 46%;
@@ -248,7 +248,7 @@
 }
 
 @media screen and (max-width: 800px) {
-    .col {
+    .display-column {
         -ms-flex: 40%;
         flex: 40%;
         max-width: 46%;
@@ -257,7 +257,7 @@
     }
 
 @media screen and (max-width: 540px) {
-.col {
+.display-column {
     -ms-flex: 100%;
     flex: 100%;
     float: none;

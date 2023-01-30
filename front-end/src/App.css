@@ -192,6 +192,66 @@ a:hover{
 	width: 100%;
 	padding: 11px 15px 11px 0;
 }
+
+.PopUp{
+  background-color:white;
+  border-radius:0.2em;
+  position:relative;
+  top:30vh;
+  left:25%;
+  min-height:50vh;
+  max-width:50%;
+  box-shadow: 0 0 0.5em;
+  text-align:center;
+}
+
+.pb{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.1);
+  height:100%;
+  overflow-y:hidden;
+}
+
+.close{
+  background: transparent;
+  border:none;
+  outline:none;
+  float:right;
+  margin-top:0.5em;
+  margin-right:0.5em;
+}
+
+.h1{
+  text-decoration:underline solid 0.1em;
+}
+
+.offers{
+  font-size:1.2em;
+}
+
+
+@media screen and (max-width: 540px) {
+  .pb{
+    max-height:40vh;
+  }
+  .PopUp{
+    top:15%;
+    left:5%;
+    min-height:15vh;
+    max-width:90%;
+  }
+  .h1{
+    display:block;
+    font-size:1em;
+  }
+  .offers{
+    font-size:0.7em;
+  }
+}
+
 /*
 button {
 	display: block;

@@ -1,14 +1,12 @@
 import {useEffect , useState} from 'react';
 import Axios from 'axios';
-import { useNavigate , useLocation , Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './ViewProduct.css';
-import NavBar from './navbar';
 import './product_card.css';
 
 const ProductView = (Received) => {
 
     const Navigate = useNavigate();
-    const Location = useLocation();
     const [ ActiveImage , setActiveImage ] = useState("")
     const [ NonActiveImage , setNonActiveImage ] = useState([])
     const [ Loading , setLoading ] = useState(true);
@@ -18,8 +16,6 @@ const ProductView = (Received) => {
 
     const Delete = (id) => {
 		setLoading(true);
-        console.log(id);
-        console.log(CartItems);
 		for(var i=0;i<CartItems.length;i++){
 			if(CartItems[i] === id){
 				CartItems.splice(i,2);
@@ -43,11 +39,9 @@ const ProductView = (Received) => {
         setLoading(true);
         Axios.put("http://localhost:3001/getSelectedProducts" , {id:Received.Received.Product_id}).then((response) => {
             setItem(response.data[0]);
-            console.log(response.data);
             setActiveImage(response.data[0].image[0])
             setNonActiveImage(response.data[0].image)
-            console.log(Received.Received.check)
-            if(Received.Received.check !== "out"){
+            if(Received.Received.check === "in"){
                 Axios.put("http://localhost:3001/getCart" , {type : Received.Received.type , id:Received.Received.id}).then((response)=>{
                     setCartItems(response.data[0].wishlist);
                     setLoading(false);
@@ -84,11 +78,6 @@ const ProductView = (Received) => {
                     </div>
                     <div className='container col-6 float-start mt-2 content-div'>
                         <p className="view-product-name">{Item.name}</p>
-                        {
-                            (Item.cod !== "YES")?
-                            <p className='view-warning'>NO CASH ON DELIVER AVAILABLE</p>
-                            :<></>
-                        }
                         <p className="product-description">{Item.description}</p>
                         <p className="product-description">Dimensions : {Item.length} X {Item.width} X {Item.height} M(L x B x H)</p>
                         <p className="product-extras">Seller Tell's:</p>

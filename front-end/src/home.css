@@ -29,7 +29,7 @@
   text-align:center;
 }
 .content {
-    width: 500px;
+    width: 100%px;
     position:absolute;
     top:40%;
     left:32.5%;
@@ -70,3 +70,40 @@
 .content button:hover{
     background-color: grey;
 }
+
+@media screen and (max-width: 1030px) {
+    .display-column {
+        -ms-flex: 46%;
+        flex: 46%;
+        max-width: 46%;
+        max-height:auto;
+    }
+    }
+    
+    @media screen and (max-width: 800px) {
+        .display-column {
+            -ms-flex: 40%;
+            flex: 40%;
+            max-width: 46%;
+            max-height:auto;
+        }
+        }
+    
+    @media screen and (max-width: 540px) {
+        .home{
+            min-height:40vh;
+        }
+        .home img{
+            height:40vh;
+        }
+        .content{
+            left:0;
+            top:5%;
+        }
+        .content h2{
+            font-size:25px;
+        }
+        .content p{
+            font-size:15px;
+        }
+    }

@@ -36,7 +36,8 @@ import Account from './account';
 
 function App() {
 
-  const [ Offers , setOffers ]= useState([])
+  const [ Offers , setOffers ]= useState([]);
+  const [ PopUp , setPopUp ] = useState(true);
 
   useEffect(()=>{
     Axios.get("http://localhost:3001/getOffers").then((response)=>{
@@ -49,7 +50,7 @@ function App() {
       <div className='home' id='home'>
         <div className="home-section">
               <img src={homeimage} alt="home" />
-              <div className="content">
+              <div className="container content">
                 <h2>Magic Corner</h2>
                 <p>A complete spot to all your handmade products.</p>
                 {
@@ -65,7 +66,27 @@ function App() {
               </div>
         </div>
       </div>
-      <div id="ok"></div>
+      {
+        (PopUp)?
+        <div className="pb" id="pb">
+        <div className="PopUp">
+          <button onClick={()=>{setPopUp(false)}} className="close"><i class="fi fi-rr-cross"></i></button>
+          <br></br>
+          <h1 className="h1">MAGIC OFFERS</h1>
+          {
+            Offers.map((value)=>{
+              return(
+                <>
+                  <p key={value} className="offers" >Flat {(value.method === "P")?value.discount+"%":"Rs "+value.discount} off on Shopping {value.min_price} & Above.</p>
+                </>
+              );
+            })
+          }
+          <div className="shape1"></div>
+        </div>
+        </div>
+        :<></>
+      }
       <div className="App" id="App">
         <Router>
           <Routes>
@@ -96,7 +117,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <div className="footer my-5">
+      <div className="footer my-0">
         <footer className="bg-light text-center text-white">
           <div className="container ">
             <section className="mb-4">

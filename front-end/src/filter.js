@@ -338,12 +338,12 @@ function Filter() {
                 }
                 {
                     (Expand)?<>
-                    {(Location.state !== null)?
+                    {(Location.state.user !== undefined)?
                     <div className="pop w-100">
                     <button className='Terminator' onClick={()=>{
                     setExpand(false)
                     setLoading(true);
-                    if(Location.state !== null){
+                    if(Location.state.user !== undefined){
                         Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                                 setCartItems(response.data[0].wishlist);
                                 setLoading(false);
@@ -358,7 +358,7 @@ function Filter() {
                     <button className='Terminator' onClick={()=>{
                     setExpand(false)
                     setLoading(true);
-                    if(Location.state !== null){
+                    if(Location.state.user !== undefined){
                         Axios.put("http://localhost:3001/getCart" , {type : Location.state.type , id:Location.state.id}).then((response)=>{
                                 setCartItems(response.data[0].wishlist);
                                 setLoading(false);
