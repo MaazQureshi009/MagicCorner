@@ -15,8 +15,6 @@ function Products()
     const generator = () =>{
         Captcha = Math.floor((Math.random()*9999)+1000);
         OTP = Math.floor((Math.random()*9999)+1000);
-
-        console.log(Captcha,OTP);
     }
 
     const [ Name , setName ] = useState(null);
@@ -270,7 +268,6 @@ function Products()
     }
     return(
         <div className='overall' id="Home">
-            <p className="header">Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
                     <button className="float-start general-button active-button" 

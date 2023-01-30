@@ -30,7 +30,7 @@ function Upload_User(){
         const FileReference = ref(storage , `User_DP/${Location.state.file.name+Location.state.name+Location.state.email}`);
         uploadBytes(FileReference , Location.state.file).then((FileData) => {
             getDownloadURL(FileData.ref).then((url) => {
-                Axios.post("http://localhost:3001/addUser" , 
+                Axios.put("http://localhost:3001/addUser" , 
                 {
                     image_url : url,
                     name : Location.state.name,

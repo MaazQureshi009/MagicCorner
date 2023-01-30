@@ -382,7 +382,7 @@ app.post('/adminMailer' , (req , res ) => {
 
 //---------------------------------------------------------------Create_User-----------------------------------------------------------------------
 
-app.post("/addUser" , async (req,res) => {
+app.put("/addUser" , async (req,res) => {
     const user = new user_model({
         image : req.body.image_url,
         full_name : req.body.name ,
@@ -401,6 +401,7 @@ app.post("/addUser" , async (req,res) => {
     });
     try{
         await user.save();
+        res.send("Done");
         let details = {
             from :"manageladen01@gmail.com",
             to: req.body.email,
@@ -419,7 +420,7 @@ app.post("/addUser" , async (req,res) => {
 
 //---------------------------------------------------------------Create_Admin-----------------------------------------------------------------------
 
-app.post("/addAdmin" , async (req,res) => {
+app.put("/addAdmin" , async (req,res) => {
     const user = new admin_model({
         image : req.body.image_url,
         full_name : req.body.name ,

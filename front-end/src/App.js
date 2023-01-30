@@ -39,6 +39,13 @@ function App() {
   const [ Offers , setOffers ]= useState([]);
   const [ PopUp , setPopUp ] = useState(true);
 
+  if(PopUp){
+    document.body.style.overflowY = "hidden";
+  }
+  else{
+    document.body.style.overflowY = "scroll";
+  }
+
   useEffect(()=>{
     Axios.get("http://localhost:3001/getOffers").then((response)=>{
       setOffers(response.data);
@@ -46,7 +53,7 @@ function App() {
   },[])
 
   return (
-    <>
+    <div>
       <div className='home' id='home'>
         <div className="home-section">
               <img src={homeimage} alt="home" />
@@ -117,7 +124,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <div className="footer my-0">
+      <div className="footer mb-0 mt-0">
         <footer className="bg-light text-center text-white">
           <div className="container ">
             <section className="mb-4">
@@ -158,7 +165,7 @@ function App() {
           </div>
         </footer>  
       </div>
-    </>
+    </div>
   );
 }
 
