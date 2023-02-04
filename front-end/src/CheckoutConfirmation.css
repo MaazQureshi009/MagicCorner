@@ -6,20 +6,25 @@
 }
 
 .bill{
-    text-decoration: solid underline 0.1em ;
+    text-align: center;
+    /* margin-bottom: 10px; */
+    /* text-decoration: solid underline 0.1em ; */
 }
 
 .confirmation-text{
     float : left ;
     font-size : 1.3em ;
-    text-decoration : solid underline 0.1em ;
+    font-weight: 500;
+    /* text-decoration : solid underline 0.1em ; */
 }
 
 .radio{
+    margin-left: 1em;
     accent-color: black;
 }
 
 .form-div{
+    margin-top: 1em;
     text-align: center;
     width: 50%;
 }
@@ -40,31 +45,54 @@
 
 .p-td{
     float : left ;
+    font-weight: 500;
 }
 
 .discount{
     float: right;
+    /* display: inline; */
 }
 
 .clear{
     clear: both ;
 }
 
+.paynow {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
 .check-box-text{
+    text-align: center;
+    display: inline ;
+    /* margin-right: 1em ; */
+    margin-left: 0.3em ;
+    font-weight: 500;
+}
+
+.terms-conditions
+
+.check-text{
     display: inline ;
     margin-right: 1em ;
     margin-left: 0.3em ;
+    /* font-weight: 500;     */
 }
 
 .final-button-cc{
     display: block;
     margin: 0 auto;
     margin-top: 20px;
-    height: 35px;
     width: 160px ;
-    border: none ;
-    outline: none ;
-    background-color: green ;
+    height: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border:none;
+    outline:none;
+    color:white;
+    background-color:black;
+    border-radius: 0.2em;
 }
 
 .full-width-line {
@@ -78,7 +106,7 @@
 .notice {
     /* width: 80%; */
     /* display: flex; */
-    text-align: center;
+    text-align: left;
 }
 
 .notice .information {
@@ -90,6 +118,32 @@
 }
 
 .notice .information h2 {
+    text-align: center;
     font-size: 28px;
     
+}
+
+.prices-div {
+    /* float: right; */
+    flex-direction: column;
+    display: flex;
+    /* justify-content: right; */
+    align-items: flex-end;
+}
+
+.pay-now {
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+@media screen and (max-width: 1200px) {
+    .form-div{
+        width: 80%;
+    }   
+}
+
+@media screen and (max-width: 650px) {
+    .form-div{
+        width: 100%;
+    }   
 }

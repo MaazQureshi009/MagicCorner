@@ -8,7 +8,6 @@ import './chat.css';
 
 function Chat(){
     const Location = useLocation();
-
     const [ Message , setMessage ] = useState("");
     const [ Conversations , setConversations ] = useState([]);
 
@@ -38,8 +37,8 @@ function Chat(){
                 (Location.state === null)?<SideBar Received={null}/>:
                 <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
             }
-            <div className='container space'>
-                <div className='container chat-space'>
+            <div className='container py-0 space'>
+                <div className='chat-space'>
                     {
                         Conversations.map( (value)=>{
                             return (
@@ -53,45 +52,48 @@ function Chat(){
                             );
                         } )
                     }
+                    <div className='clear'></div>
                 </div>
                 <div className='container default-space'>
                     <div className='default-chats row'>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage("Where can I track my order?")}}>
                                 Where can I track my order?
                             </button>
                         </div>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage("Is Debit Card accepted at cash on delivery?")}}>
                                 Is Debit Card accepted at cash on delivery?
                             </button>
                         </div>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage(" Is Credit Card accepted at cash on delivery?")}}>
                                 Is Credit Card accepted at cash on delivery?
                             </button>
                         </div>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage("Is UPI accepted at cash on delivery?")}}>
                                 Is UPI accepted at cash on delivery?
                             </button>
                         </div>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage("Is the product returnable?")}}>
                                 Is the product returnable?
                             </button>
                         </div>
-                        <div className='default-chat-sub-space col-2'>
+                        <div className='default-chat-sub-space'>
                             <button className='default-chat' onClick={()=>{setMessage("What happens when i'm not able to take the delivery?")}}>
                                 What happens when i'm not able to take the delivery?
                             </button>
                         </div>
+                        <div className="clear"></div>
                     </div>
                 </div>
                 <div className='container type-space'>
-                    <input type="text" className='message-input' onChange={(e)=>{setMessage(e.target.value)}} placeholder='Message...' defaultValue={Message} />
+                    <input type="text" className='message-type-input' onChange={(e)=>{setMessage(e.target.value)}} placeholder='Message...' defaultValue={Message} />
                     <button className='send-button' onClick={()=>{AddQuery();setMessage("")}}><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
+                <div className='clear'></div>
             </div>
         </>
     );

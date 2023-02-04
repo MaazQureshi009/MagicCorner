@@ -79,8 +79,10 @@
   background-color: grey;
 }
 
-.container{
+.top-bar{
+  text-align: center;
   padding: 1em 0.5em;
+  
 }
 
 .filter-dropdown{
@@ -91,26 +93,78 @@
   text-align: center;
 }
 
-.close-button{
+.filter-close-button{
   border: none;
   outline: none;
   background: transparent;
+  text-align: center;
+  /* float: right; */
+    /* margin: 0.5em 0; */
 }
 
-@media (max-width: 1150px) {
-  .filter-button {
-    width: 15%;
-  }
-  .apply-button {
-    width: 15%;
+.nothing-content {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  min-height: 90vh;
+  text-align: center;
+  /* position: relative; */
+  /* padding: 2rem; */
+  /* display: flex; */
+  animation: fadeIn .5s ease;
+  /* box-sizing: border-box; */
+}
+
+.noprouduct-img {
+  margin-top: 6%;
+  /* height: 400px;
+  width: 350px; */
+}
+
+.noproduct-text {
+  margin-top: 1em;
+}
+
+/* .nothing-loader {
+width: 100%;
+height: inherit;
+background: #f2f2f2;
+position: relative;
+padding: 1.6rem;
+display: flex;
+justify-content: center;
+align-items: center;
+flex-direction: column;
+animation: fadeIn .3s ease;
+} */
+
+@media (max-width: 1200px) {
+  .top-bar{
+    width: 70%;
   }
 }
 
 @media (max-width: 650px) {
-  .filter-button {
-    width: 20%;
+  .top-bar{
+    width: 92%!important;
   }
-  .apply-button {
+
+  .filter-button {
+    width: 10%;
+  }
+
+  .first-apply-btn {
+    margin-top: 1em;
+  }
+  /* .apply-button {
+    margin-top: 1em;
     width: 20%;
+  } */
+
+  .noprouduct-img {
+    margin-top: 20%;
+    height: 165px;
+    width: 220px;
   }
 }

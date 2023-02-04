@@ -6,6 +6,7 @@ import SideBar from './SideBar';
 import ProductView from './ViewProduct';
 import './product_card.css';
 import './cart.css';
+import wishlistempty from './wishlistempty.png'
 
 function WishList(){
 
@@ -69,13 +70,18 @@ function WishList(){
                 (Loading)?
                 <div className='loader-main'>
                     <div className="loader"></div>
-                    <p className='loader-text'>Loading...</p>
+                    {/* <p className='loader-text'>Loading...</p> */}
                 </div>
                 :
-                <div style={{'height':'60vh'}}>
+                <div style={{'height':'100vh'}}>
                 {
                     (OnCart.length === 0)?
-                        <p>Nothing Here</p>:
+                    <main class="nothing-content">
+                    {/* <div class="nothing-loader"><h2 class="text text-center">No product found.</h2><br></br></div> */}
+                    <img className='nowishlist-img' src={wishlistempty} alt="no product here" />
+                    <h2 className='noproduct-text'>Empty Wishlist</h2>
+                    </main>
+                        :
                         <div className='display-row'>
                     {
                         Wishlist.map((value) => {

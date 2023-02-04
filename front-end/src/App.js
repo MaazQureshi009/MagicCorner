@@ -8,7 +8,7 @@ import "/node_modules/bootstrap/dist/js/bootstrap.bundle";
 import './home.css'
 import './App.css';
 
-import homeimage from './home.jpg'
+// import homeimage from './home.jpg'
 import Display from './display';
 import Products from './products';
 import Users from './users';
@@ -37,7 +37,7 @@ import Account from './account';
 function App() {
 
   const [ Offers , setOffers ]= useState([]);
-  const [ PopUp , setPopUp ] = useState(true);
+  const [ PopUp , setPopUp ] = useState(false);
 
   if(PopUp){
     document.body.style.overflowY = "hidden";
@@ -56,10 +56,10 @@ function App() {
     <div>
       <div className='home' id='home'>
         <div className="home-section">
-              <img src={homeimage} alt="home" />
+              {/* <img src={homeimage} alt="home" /> */}
               <div className="container content">
-                <h2>Magic Corner</h2>
-                <p>A complete spot to all your handmade products.</p>
+                <h2 className='magic-corner'>Magic Corner</h2>
+                <p className='home-description'>A complete spot to all your handmade products.</p>
                 {
                   Offers.map((value)=>{
                     return(
@@ -79,12 +79,12 @@ function App() {
         <div className="PopUp">
           <button onClick={()=>{setPopUp(false)}} className="close"><i class="fi fi-rr-cross"></i></button>
           <br></br>
-          <h1 className="h1">MAGIC OFFERS</h1>
+          <h1 className="h1">Magic Corner Offers</h1>
           {
             Offers.map((value)=>{
               return(
                 <>
-                  <p key={value} className="offers" >Flat {(value.method === "P")?value.discount+"%":"Rs "+value.discount} off on Shopping {value.min_price} & Above.</p>
+                  <p key={value} className="offers" >FLAT <p className='offer-rate'>{(value.method === "P")?value.discount+"%":"Rs "+value.discount} OFF <br /></p> ON MINIMUM PURCHASE OF {value.min_price} & ABOVE.</p>
                 </>
               );
             })
@@ -124,7 +124,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-      <div className="footer mb-0 mt-0">
+      <div className="footer h-20 mb-0 mt-0">
         <footer className="bg-light text-center text-white">
           <div className="container ">
             <section className="mb-4">
@@ -161,7 +161,7 @@ function App() {
           </div>
           <div className="text-center p-3" style={{background: "rgba(0, 0, 0, 0.2)"}}>
             {/* © 2022 Copyright: */}
-            <a href="#!" className="text-black">MagicCorner.com</a>
+            <b><a href="#!" className="text-black">MagicCorner.com</a></b>
           </div>
         </footer>  
       </div>

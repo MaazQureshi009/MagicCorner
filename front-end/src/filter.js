@@ -7,6 +7,7 @@ import SideBar from './SideBar';
 import './product_card.css';
 import ProductView from './ViewProduct';
 import {useNavigate , useLocation } from 'react-router-dom';
+import noproduct from './noproduct.png'
 
 function Filter() {
     const Navigate = useNavigate();
@@ -177,7 +178,7 @@ function Filter() {
  , [] );
 
     return (
-        <div id="Home">
+        <div id="Home" className='full-height'>
         {
             (Location.state === null)?<NavBar Received={{page : "P"}}/>:
             <NavBar Received={ {page : "P",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
@@ -186,7 +187,8 @@ function Filter() {
             (Location.state.user === undefined)?<SideBar Received={null}/>:
             <SideBar Received={ {status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
         }
-        <div className='container w-50'>
+        {/* Search */}
+        <div className='container top-bar w-50'>
             <button className='filter-button' onClick={()=>{setExpandFilter(true)}}><i class="fa-solid fa-filter"></i></button>
             <form className="search-div">
                 <input
@@ -201,8 +203,8 @@ function Filter() {
         </div>
         {
             (ExpandFilter)?
-            <div className='container expanded'>
-                <button className='close-button float-start' onClick={()=>{setExpandFilter(false)}}><i class="fi fi-rr-cross"></i></button>
+            <div className='container top-bar expanded'>
+                <button className='filter-close-button' onClick={()=>{setExpandFilter(false)}}><i class="fi fi-rr-cross"></i></button>
                 <select id="dropdown" className='filter-dropdown' onChange={(e) => {setCategory(e.target.value)}}>
                     <option value= {Null} >All</option>
                     <option>HOME DECORS</option>
@@ -212,14 +214,14 @@ function Filter() {
                     <option>WALL HANGINGS</option>
                     <option>CLOCKS</option>
                 </select>
-                <button type='button' className='search-button' onClick={Filter}>APPLY</button>
+                <button type='button' className='search-button first-apply-btn' onClick={Filter}>APPLY</button>
             </div>
             :<div></div>
         }
         {
             (ExpandSort)?
-            <div className='container w-25'>
-                <button className='close-button float-start' onClick={()=>{setExpandSort(false)}}><i class="fi fi-rr-cross"></i></button>
+            <div className='container top-bar'>
+                <button className='filter-close-button' onClick={()=>{setExpandSort(false)}}><i class="fi fi-rr-cross"></i></button>
                 <select id="dropdown" className='filter-dropdown' onChange={(e) => {setSortThis(e.target.value)}}>
                     <option value= {Null} >CUSTOM</option>
                     <option value= "1">PRICE LOW-HIGH</option>
@@ -236,11 +238,15 @@ function Filter() {
                     (Loading)?
                     <div className='loader-main'>
                         <div className="loader"></div>
-                        <p className='loader-text'>Loading...</p>
+                        {/* <p className='loader-text'>Loading...</p> */}
                     </div>
                     :
                     (Products.length === 0)?
-                    <p>NOTHING FOUND</p>
+                    <main class="nothing-content">
+                        {/* <div class="nothing-loader"><h2 class="text text-center">No product found.</h2><br></br></div> */}
+                        <img className='noprouduct-img' src={noproduct} alt="no product" />
+                        <h2 className='noproduct-text'>No Products found</h2>
+                        </main>
                     :
                     Products.map((value) => {
                     return(

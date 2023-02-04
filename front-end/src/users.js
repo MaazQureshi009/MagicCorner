@@ -281,9 +281,9 @@ function Products()
     }
     return(
         <div className='overall' id="Home">
-            <div className=" main-container">
+            <div className=" main-container-login">
                 <div className="container">
-                    <button className="float-start general-button active-button" 
+                    <button className="float-start login-button active-button" 
                         onClick={()=>{Navigate("/Login");}}>
                         LOGIN
                         <i className="fi fi-ss-user end-icons" ></i>
@@ -304,7 +304,7 @@ function Products()
                                     onChange={(event)=>{setName(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 min-input">
                                 <p className="label-attributes">
                                     GENDER:
                                 </p>
@@ -317,7 +317,7 @@ function Products()
                                     <option className="option-attributes">NOT PREFER TO TELL</option>
                                 </select>
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 min-input">
                                 <p className="label-attributes">
                                     AGE:
                                 </p>
@@ -326,7 +326,7 @@ function Products()
                                     onChange={(event)=>{setAge(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-4">
+                            <div className="col-4 min-input">
                                 <p className="label-attributes">
                                     DOB:
                                 </p>
@@ -334,7 +334,7 @@ function Products()
                                 <input type="date" className="input-attributes w-100" onChange={(event)=>{setDOB(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-6 float-start">
+                            <div className="col-6 min-input-2 float-start">
                                 <p className="label-attributes">
                                     E-MAIL:
                                 </p>
@@ -343,7 +343,7 @@ function Products()
                                     onChange={(event)=>{setEmail(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-6 float-end">
+                            <div className="col-6 min-input-2 float-end">
                                 <p className="label-attributes">
                                     MOBILE NO:
                                 </p>
@@ -353,7 +353,7 @@ function Products()
                                     onChange={(event)=>{setMobile(event.target.value)}} required>
                                 </input>
                             </div>
-                            <div className="col-4 float-end">
+                            <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 HOUSE NO:
                             </p>
@@ -362,7 +362,7 @@ function Products()
                                 onChange={(event)=>{setHouse(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 STREET:
                             </p>
@@ -371,7 +371,7 @@ function Products()
                                 onChange={(event)=>{setStreet(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 AREA:
                             </p>
@@ -380,7 +380,7 @@ function Products()
                                 onChange={(event)=>{setArea(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 CITY:
                             </p>
@@ -389,7 +389,7 @@ function Products()
                                 onChange={(event)=>{setCity(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 STATE:
                             </p>
@@ -398,7 +398,7 @@ function Products()
                                 onChange={(event)=>{setState(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 PINCODE:
                             </p>
@@ -428,7 +428,7 @@ function Products()
                             </div>
                         </div>
                         <div>
-                            <div className='col-12'>
+                            <div className='col-12 verify-admin'>
                                 <input type='checkbox' value="Admin" 
                                     onChange={(e) =>{ setDecision(e.target.value) }} 
                                 />
@@ -438,10 +438,8 @@ function Products()
                             </div>
                         </div>
                         <button className="final-button general-button" onClick={Decide}>
-                            <p className="final-label">
                                 REGISTER
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
-                            </p>
                         </button>
                     </div>
                 </div>
@@ -455,7 +453,7 @@ function Products()
 export default Products;
 
 /*
-<div className="col-4 float-end">
+<div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 HOUSE NO:
                             </p>
@@ -464,7 +462,7 @@ export default Products;
                                 onChange={(event)=>{setHouse(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 STREET NO:
                             </p>
@@ -473,7 +471,7 @@ export default Products;
                                 onChange={(event)=>{setStreet(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 AREA:
                             </p>
@@ -482,7 +480,7 @@ export default Products;
                                 onChange={(event)=>{setArea(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 CITY:
                             </p>
@@ -491,7 +489,7 @@ export default Products;
                                 onChange={(event)=>{setCity(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 STATE:
                             </p>
@@ -500,7 +498,7 @@ export default Products;
                                 onChange={(event)=>{setState(event.target.value)}} required>
                             </input>
                         </div>
-                        <div className="col-4 float-end">
+                        <div className="col-4 min-input float-end">
                             <p className="label-attributes">
                                 PINCODE:
                             </p>

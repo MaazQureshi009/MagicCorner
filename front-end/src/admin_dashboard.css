@@ -7,8 +7,9 @@
 }
 
 .profile{
-    margin: 1em 0em;
-    max-width: 200px ;
+    width: 200px;
+    margin: 0 auto;
+    /* max-width: 200px ; */
     max-height: 200px ;
 }
 
@@ -31,23 +32,28 @@
 }
 
 .in-progress-div-one{
+    margin: 1em;
+    width: 220px;
     background-color: #30E3CA;
     border-radius: 1em;
     padding: 1em 0.9em;
-    margin-left: 2em;
-    margin-right: 1em;
+    /* margin-left: 2em;
+    margin-right: 1em; */
     box-shadow: 0 0 0.3em;
 }
 
 .in-progress-div-two{
+    margin: 1em;
+    width: 220px;
     background-color: #5BC0F8;
     border-radius: 1em;
     padding: 1em 0.9em;
-    margin-left: 0.5em;
+    /* margin-left: 0.5em; */
     box-shadow: 0 0 0.3em;
 }
 
 .add-buttons{
+    margin-bottom: 0.5em;
     border:none;
     outline:none;
     background-color:black;
@@ -76,7 +82,7 @@
     margin-top: 1em;
 }
 
-.offers{
+.offer{
     text-align: center;
     width : 100% ;
     margin : 0em ;
@@ -155,14 +161,20 @@
     margin-left: 0.5em ;
 }
 
+.add-product-div {
+    width: 390px;
+}
+
 .offer-div-valid{
+    width: 253px;
     border-radius: 1em ;
     box-shadow: 0 0 0.5em;
-    height: 30vh;
+    /* height: 30vh; */
     text-align: center;
     margin: 0.5em 0;
     margin-left: 0.5em ;
     padding-top: 1.7em;
+    padding-bottom: 0.5em;
 }
 
 .opened-offer-div{
@@ -185,11 +197,12 @@
 }
 
 .offer-add-button{
+    width: 30%;
     border: none;
     outline: none;
     background-color: #82CD47;
     margin: 0.5em 0.5em;
-    float: right;
+    float: left;
 }
 
 .offer-icon{
@@ -204,7 +217,7 @@
 
 .order-id{
     text-align : left;
-    padding-left: 2em ;
+    /* padding-left: 2em ; */
 }
 .order-details{
     text-align : left;
@@ -281,4 +294,27 @@
 
 .send--button:hover{
     color:grey
+}
+
+@media screen and (max-width: 550px) {
+    .in-progress-div-one, .in-progress-div-two {
+        padding: 0.5em 0.9em;
+        width: 150px;
+    }
+
+    .data .personal-data {
+        text-align: center;
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width: 767px) {
+    .order-id {
+        word-wrap: break-word;
+    }
+    .order-row{
+        font-size: 12px;
+    }
+    
 }

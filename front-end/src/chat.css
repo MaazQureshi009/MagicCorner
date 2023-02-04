@@ -9,7 +9,7 @@
 .chat-space{
     margin: 0;
     height:65vh;
-    overflow-y: hidden;
+    overflow-y:auto;
 }
 
 .default-chats{
@@ -29,6 +29,7 @@
 }
 
 .default-chat-sub-space{
+    max-width: 16.5%;
     padding: 0 0.25em;
     display: inline;
 }
@@ -48,7 +49,7 @@
     box-shadow: 0 0 0.2em;
 }
 
-.message-input{
+.message-type-input{
     width: 80%;
     border: 0;
     outline: 0;
@@ -93,4 +94,22 @@
 
 .clear{
     clear: both;
+}
+
+@media screen and (max-width: 768px) {
+    .chat-space{
+        max-height: 50vh;
+        padding-top: 0;
+        margin-top: 0;
+    }
+    .default-space{
+        min-height: 25vh;
+    }
+    .type-space{
+        max-height: 10vh;
+    }
+    .default-chat-sub-space{
+        max-width: 50%;
+        margin: 0.1em 0;
+    }
 }

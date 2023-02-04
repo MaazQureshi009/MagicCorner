@@ -6,6 +6,7 @@ import ProductView from './ViewProduct';
 import SideBar from './SideBar';
 import './product_card.css';
 import './cart.css';
+import cartempty from './cartempty.png'
 
 function Cart(){
 
@@ -105,13 +106,16 @@ function Cart(){
                 (Loading)?
                 <div className='loader-main'>
                     <div className="loader"></div>
-                    <p className='loader-text'>Loading...</p>
+                    {/* <p className='loader-text'>Loading...</p> */}
                 </div>
                 :
                 <>
                 {
                     (CartItems.length === 0)?
-                        <p>Nothing Here</p>:
+                    <main class="nothing-content"><div class="nothing-loader">
+                        <img className='cartempty-img' src={cartempty} alt="Nothing here" />
+                        <h2 class="text text-center noproduct-text">No products in cart</h2><br></br></div></main>
+                    :
                         <div className='display-row'>
                     {
                         CartItems.map((value) => {
@@ -193,7 +197,7 @@ function Cart(){
                             }}>Checkout</button>
                         </div>
                         <div className="show_price">
-                            <h4>Sub Total : Rs <span className='price'>{Total} /-</span></h4>
+                            <h4 className='sub-total'>Sub Total : Rs <span className='price'>{Total} /-</span></h4>
                         </div>
                     </div>
                 </div>

@@ -67,7 +67,7 @@ function Account(){
                 (Loading)?
                 <div className='loader-main'>
                     <div className="loader"></div>
-                    <p className='loader-text'>Loading...</p>
+                    {/* <p className='loader-text'>Loading...</p> */}
                 </div>
                 :
                 <>
@@ -128,7 +128,7 @@ function Account(){
                                                         return(
                                                             <>
                                                                 <p className='col-10 order-column order-details'>{test.name}</p>
-                                                                <p className='col-2  order-column order-total'>Rs {test.newprice}/-</p>
+                                                                <p className='col-2  order-column order-total rupees'>Rs {test.newprice}/-</p>
                                                             </>
                                                         )
                                                     })
@@ -167,7 +167,7 @@ function Account(){
                             userWorkshops.map((value)=>{
                                 return(
                                     <div className='container w-100 row order-row'>
-                                        <p className='col-6 order-column order-id'>Order Id : {value._id}</p>
+                                        <p className='col-6 order-column order-id first-order-id'>Order Id : {value._id}</p>
                                         <p className='col-4 order-column'>Order Course : {value.wn}</p>
                                         {
                                             (ExpandEnrolls === value._id)?

@@ -107,10 +107,8 @@ function Login(){
                             </input>
                             <button className="final-button general-button"
                                 onClick={check} type="button">
-                                <p className="final-label">
                                 GET IN
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
-                                </p>
                             </button>
                             <Link to="/ForgotPassword" className='forgot-password'>Forgot Password ?</Link>
                         </form>

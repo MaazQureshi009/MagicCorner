@@ -40,3 +40,37 @@
     margin-right: 15px;
     color: black;
 }
+
+.cartempty-img {
+    margin-top: 10%;
+    /* height: 300px; */
+    height: 220px;
+}
+
+.nowishlist-img {
+    margin-top: 10%;
+}
+
+@media screen and (max-width: 767px){
+    .checkout .checkout-btn {
+        margin-top: 4px;
+        margin-left: 5px;
+    }
+
+    .checkout .checkout-btn button {
+        padding-left: 0.5em;
+    padding-right: 0.5em;
+        font-size: 1.2em;
+    }
+    
+    .show_price .sub-total {
+        font-size: 20px;
+    }
+
+    .cartempty-img {
+        margin-top: 20%;
+        /* height: 300px; */
+        height: 160px;
+    }
+    
+}

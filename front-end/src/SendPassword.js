@@ -46,7 +46,7 @@ function Upload_User(){
             {
                 (Loading)?
                 <div className='loader-main'>
-                    <div className="loader"></div>
+                    <div className="loader"></div><br />
                     <p className='loader-text'>Sending Your Password...</p>
                 </div>
                 :
@@ -78,10 +78,8 @@ function Upload_User(){
                                     </input>
                                     <button className="final-button general-button"
                                         onClick={check} type="button">
-                                        <p className="final-label">
                                         VERIFY
                                         <i className="fi fi-br-angle-right end-icons-err"></i>
-                                        </p>
                                     </button>
                                 </form>
                             </div>

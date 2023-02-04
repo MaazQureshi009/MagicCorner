@@ -1,7 +1,7 @@
 .view-pop{
     position:fixed;
-    top:10vh;
-    left:10px;
+    top:6vh;
+    left:5px;
     background:rgba(250, 250, 250, 0.99);
     width:98%;
     border-radius:0.1em;
@@ -9,6 +9,7 @@
 }
 
 .n-active-images{
+    cursor: pointer;
     height:50px;
     width:70px;
     border:solid 0.1em;
@@ -18,10 +19,10 @@
 .active-image{
     height:400px;
     max-width:100%;
-    
 }
 
 .active-image-div{
+    text-align: center;
     border:solid 0.1em;
 }
 
@@ -105,4 +106,46 @@
 .wish-button{
     font-size:1.8em;
     float:left;
+}
+
+@media (max-width: 767px) {
+    .view-product-name {
+        font-size: 1.5em;
+    }
+
+    .product-description {
+        font-size: 1.2em;
+    }
+
+    .live-price {
+        font-size: 1.5em;
+    }
+
+    .view-pop {
+        top: 0.1;
+        overflow: auto;
+    }
+    .first-container {
+        width: 100%;
+      flex-direction: column;
+    }
+
+    .active-image-div {
+        width: 100%;
+    }
+
+    .content-div {
+        width: 100%;
+        margin-left: 2%;
+        margin-right: 2%;
+    }
+
+    .cart-button {
+        margin-bottom: 1em;
+    }
+
+    .active-image{
+        height:250px;
+        max-width:100%;
+    }
 }

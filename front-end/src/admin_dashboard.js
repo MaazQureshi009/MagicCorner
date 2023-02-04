@@ -215,12 +215,12 @@ function AdminDashBoard(){
                 (Loading)?
                 <div className='loader-main'>
                     <div className="loader"></div>
-                    <p className='loader-text'>Loading...</p>
+                    {/* <p className='loader-text'>Loading...</p> */}
                 </div>
                 :
                 <>
                     <div className='row data'>
-                        <img src={UserData.image} alt="Profile" className='col-2 profile' />
+                        <img src={UserData.image} alt="Profile" className='profile' />
                         <div className='col-5 personal-data'>
                             <p className='admin-name'>{UserData.full_name}</p>
                             <p className='admin'>ADMIN</p>
@@ -230,22 +230,22 @@ function AdminDashBoard(){
                             <button className='add-buttons' onClick={()=>{Navigate("/products" , { state:{user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id}})}}><i class="fa-solid fa-plus me-1"></i>ADD PRODUCTS</button>
                             <button className='add-buttons' onClick={()=>{Navigate("/addWorkshops" , { state:{user_status: Location.state.status, user_name : Location.state.name , user:Location.state.user , type:Location.state.type , user_id:Location.state.id} })}}><i class="fa-solid fa-plus me-1"></i>ADD WORKSHOPS</button>
                         </div>
-                        <div className='col-2 in-progress-div-one'>
+                        <div className='in-progress-div-one'>
                             <CircularProgressbar value={parseInt(InProgress)} text={`${parseInt(InProgress)}%`} 
                                 styles={buildStyles({pathTransitionDuration: 1000, trailColor: '#D6EFC7',textColor: '#40514E', backgroundColor: 'white', pathColor: '#40514E'})} 
                             />
                             <p>Order's On Progress</p>
                         </div>
-                        <div className='col-2 in-progress-div-two'>
+                        <div className='in-progress-div-two'>
                             <CircularProgressbar value={parseInt(QueryPercentage)} text={`${parseInt(QueryPercentage)}%`} 
                                 styles={buildStyles({pathTransitionDuration: 1000, trailColor: '#E4F9F5',textColor: '#355C7D', backgroundColor: 'white', pathColor: '#355C7D'})} 
                             />
                             <p>Queries Pending</p>
                         </div>
                     </div>
-                    <div className='row offers'>
+                    <div className='row offer'>
                         <h1 className='col-12 head'>OFFER'S</h1>
-                        <div className='col-3'>
+                        <div className='add-product-div'>
                             {
                                 (Open)?
                                 <>
@@ -273,7 +273,7 @@ function AdminDashBoard(){
                         {
                             Offers.map((value)=>{
                                 return(
-                                    <div className='col-2 offer-div-valid' style={{backgroundColor:Colors[Math.floor((Math.random()*7)+0)].BackgroundColor , color:"white" , boxShadow:" 0 0 0.3em black"}}>
+                                    <div className='offer-div-valid' style={{backgroundColor:Colors[Math.floor((Math.random()*7)+0)].BackgroundColor , color:"white" , boxShadow:" 0 0 0.3em black"}}>
                                         <p className='offer-name'>{value.name}</p>
                                         {
                                             (value.method === "P")?
@@ -438,7 +438,7 @@ function AdminDashBoard(){
                                                 {
                                                     (value.answer === undefined)?
                                                     <>
-                                                        <input type="text" onChange={(e)=>{setReply(e.target.value)}} className='col-11 order-column query-input' placeholder='Reply...'/>
+                                                        <input type="text" onChange={(e)=>{setReply(e.target.value)}} className='col-10 order-column query-input' placeholder='Reply...'/>
                                                         <button className='col-1 send--button' onClick={()=>{AddReply(value._id)}}><i class="fa-solid fa-paper-plane"></i></button>
                                                     </>
                                                     :

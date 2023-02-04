@@ -1,5 +1,5 @@
 import { useState , useEffect } from "react";
-import { useNavigate , Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import Axios from 'axios';
 import './users.css';
 
@@ -101,12 +101,9 @@ function RetrivePassword(){
                             </input>
                             <button className="final-button general-button"
                                 onClick={check} type="button">
-                                <p className="final-label">
                                 VERIFY
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
-                                </p>
                             </button>
-                            <Link to="/users" className='forgot-password'>Forgot Password ?</Link>
                         </form>
                     </div>
                 </div>

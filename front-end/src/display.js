@@ -74,11 +74,13 @@ function Display(){
                     (Loading)?
                     <div className='loader-main'>
                         <div className="loader"></div>
-                        <p className='loader-text'>Loading...</p>
+                        <br></br>
+                        {/* <p className='loader-text'>Loading...</p> */}
                     </div>
                     :
                     Products.map((value) => {
                     return(
+                        // Product cart
                         <div className='display-column' key={value._id} >
                             <div className='image-div'>
                                 <img src={value.image[Math.floor((Math.random()*(value.image.length))+0)]} alt="Product" className='image'></img>
@@ -97,7 +99,7 @@ function Display(){
                                     <>
                                         <button className='add-button' onClick={()=>{
                                             Navigate("/Login")
-                                        }}>ADD TO CART</button>
+                                        }}>Add to Cart</button>
                                         <button className='wish-button' onClick={()=>{
                                             Navigate("/Login")
                                         }}><i class="fi fi-rs-heart end-icons wish-icon"></i></button>

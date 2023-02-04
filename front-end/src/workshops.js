@@ -38,7 +38,7 @@ function Workshop() {
     } , [] );
 
     return (
-        <div id="Home">
+        <div id="Home" className='full-height'>
         {
             (Location.state.user === undefined)?<NavBar Received={{page : "W"}}/>:
                 <NavBar Received={ {page : "W",status: Location.state.status, name: Location.state.name , user:Location.state.user , type:Location.state.type , id:Location.state.id} } />
@@ -52,7 +52,7 @@ function Workshop() {
                     (Loading)?
                     <div className='loader-main'>
                         <div className="loader"></div>
-                        <p className='loader-text'>Loading...</p>
+                        {/* <p className='loader-text'>Loading...</p> */}
                     </div>
                     :
                     (Products === [])?

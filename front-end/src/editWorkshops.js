@@ -45,7 +45,6 @@ function EditWorkshops(){
         </>
         :
         <div className='overall-log'>
-            <p className='header'>Magic Corner</p>
             <div className=" main-container">
                 <div className="container">
                     <button className="float-start general-button disabled-button" disabled>
@@ -99,10 +98,8 @@ function EditWorkshops(){
                             </div>
                         </div>
                         <button className="final-button general-button" onClick={() => {update(Received.id)}}>
-                            <p className="final-label">
                                 UPDATE
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
-                            </p>
                         </button>
                     </div>
                 </div>

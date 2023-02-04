@@ -80,7 +80,7 @@ function Products(){
                 </>
                 :
                 <div className='overall-log'>
-            <p className='header'>Magic Corner</p>
+            {/* <p className='header'>Magic Corner</p> */}
             <div className=" main-container">
                 <div className="container">
                     <button className="float-start general-button disabled-button" disabled>
@@ -144,10 +144,8 @@ function Products(){
                             </div>
                         </div>
                         <button className="final-button general-button" onClick={upload}>
-                            <p className="final-label">
                                 ADD
                                 <i className="fi fi-br-angle-right end-icons-err"></i>
-                            </p>
                         </button>
                     </div>
                 </div>

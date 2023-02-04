@@ -1,6 +1,17 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&family=Roboto:wght@300&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap'); */
+/* .App {
   text-align: center;
-}
+} */
+
+/* #Home {
+  height: 100vh;
+} */
+
+ body {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  /* font-weight: 600; */
+ }
 
 .App-logo {
   height: 40vmin;
@@ -67,18 +78,24 @@ a:hover{
 }
 
 .loader-main{
+  /* margin-top: 20%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100vh;
-  padding-left: 50%;
-  padding-top: 18%;
+  /* text-align: center; */
+  /* padding-left: 50%;
+  padding-top: 18%; */
 }
 
 .loader-text{
-  float:left;
-  margin: 2em;
+  float:left; 
+  margin-top: 2em;
 }
 
 .loader {
+  display: block;
   z-index: 1;
   border: 2px solid #F5F4F4;
   border-radius: 50%;
@@ -106,8 +123,12 @@ a:hover{
   }
 
   .loader-main{
-    margin-left: 0%;
-    margin-top: 50%;
+    margin-top: 40%;
+  }
+
+  .loader {
+    width: 100px;
+    height: 100px;
   }
 
   .whatsapp_float {
@@ -197,22 +218,32 @@ a:hover{
   background-color:white;
   border-radius:0.2em;
   position:relative;
-  top:30vh;
-  left:25%;
-  min-height:50vh;
-  max-width:50%;
+  width: 600px;
+  height: 300px;
+  /* top:30vh;
+  left:25%; */
+  /* min-height:50vh;
+  max-width:50%; */
   box-shadow: 0 0 0.5em;
   text-align:center;
 }
 
 .pb{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position:absolute;
   top:0;
   left:0;
   width:100%;
-  background:rgba(0,0,0,0.1);
+  /* background:rgba(0,0,0,0.1); */
   height:100%;
   overflow-y:hidden;
+}
+
+.offer-rate {
+  color: green;
+  display: inline;
 }
 
 .close{
@@ -225,23 +256,30 @@ a:hover{
 }
 
 .h1{
-  text-decoration:underline solid 0.1em;
+  /* text-decoration:underline solid 0.1em; */
+  /* font-weight: 600; */
+  margin-bottom: 30px;
 }
 
 .offers{
   font-size:1.2em;
+  /* font-weight: 500; */
+  /* text-align: center; */
+    width : 100% ;
+    /* margin : 0.9em ; */
 }
 
 
-@media screen and (max-width: 540px) {
-  .pb{
-    max-height:40vh;
+@media screen and (max-width: 600px) {
+  .content {
+    width: 100%;
   }
+  /* .pb{
+    max-height:40vh;
+  } */
   .PopUp{
-    top:15%;
-    left:5%;
-    min-height:15vh;
-    max-width:90%;
+    width: 300px;
+    height: 200px;
   }
   .h1{
     display:block;
@@ -251,28 +289,3 @@ a:hover{
     font-size:0.7em;
   }
 }
-
-/*
-button {
-	display: block;
-	font-size: 16px;
-	width: calc(100% - 30px);
-	height: 40px;
-	margin: 40px 15px 0;
-	background-color: #f6a4eb;
-	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #ffb9f6;
-	border-radius: 4px;
-	color: #fff;
-	font-weight: 600;
-	cursor: pointer;
-	transition: all 100ms ease-in-out;
-	will-change: transform, background-color, box-shadow;
-	border: none;
-}
-
-button:active {
-	background-color: #d782d9;
-	box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08), inset 0 1px 0 #e298d8;
-	transform: scale(0.99);
-}
-*/

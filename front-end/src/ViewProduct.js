@@ -58,12 +58,12 @@ const ProductView = (Received) => {
             {
                 (Loading)?
                 <div className='loader-main'>
-                    <div className="loader"></div>
-                    <p className='loader-text'>Loading...</p>
+                    <div className="loader"></div><br />
+                    {/* <p className='loader-text'>Loading...</p> */}
                 </div>
                 :
                 < >
-                    <div className='container col-6 float-start  mt-2'>
+                    <div className='container col-6 float-start  mt-2 first-container'>
                         <div className="col-12 active-image-div">
                             <img src={ActiveImage} alt="MainImage" className="active-image" />
                         </div>

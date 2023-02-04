@@ -2,6 +2,22 @@
     clear: both;
 }
 
+.overall-log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+}
+
+.main-container-login {
+    padding:1em;
+    border-radius: 0.19em;
+    width: 50%;
+    box-shadow: 0 0 0.2em;
+    margin: 2em auto;
+}
+
 .main-container{
     padding:1em;
     border-radius: 0.19em;
@@ -22,13 +38,14 @@
     width: 50%;
 }
 
-.general-button{
+.login-button{
     border: 0;
     outline: 0;
 }
 
 .forgot-password{
     color:black;
+    margin-left: 40%;
 }
 
 .forgot-password:hover{
@@ -37,10 +54,11 @@
 }
 
 .disabled-button{
+    border: none;
     border-radius: 0.19em 0.19em 0 0;
     color: black;
     background: rgba(0,0,0,0.01);
-    padding: 0.56em 0.5em;
+    padding: 0.26em 0.5em;
 }
 
 .active-button{
@@ -57,12 +75,26 @@
 }
 */
 
-.final-button{
+.final-button {
+    padding: 0.5em;
+    margin: 0.5em;
+    width: 100%;
+    cursor: pointer;
+    font-weight: 550;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    border:none;
+    outline:none;
+    color:white;
+    background-color:black;
+}
+
+/* .final-button{
     background-color: #008037;
     width: 100%;
     padding: 0.5em;
     margin: 0.5em;
-}
+} */
 
 /*
 .final-button:hover{
@@ -71,11 +103,11 @@
 }
 */
 
-.final-label{
+/* .final-label{
     margin: auto;
     padding: auto;
     font-size: 1em;
-}
+} */
 
 .end-icons{
     margin-left: 0.5em;
@@ -88,6 +120,7 @@
 }
 
 .label-attributes{
+    width: 100%;
     margin-left: 1em;
     margin-bottom: 0.5em;
     padding: 0em;
@@ -149,59 +182,48 @@
     color: black;
 }
 
-.header{
+/* .header{
     color: black;
     font-family: 'Allison', cursive;
     font-size: 5em;
+} */
+
+.verify-admin {
+    margin-left: 1.5em;
 }
 
-@media screen and ( max-width : 420px ) {
-    .label-attributes{
-        font-size: 0.75em;
-    }    
-    .input-attributes{
-        font-size: 0.6em;
+@media screen and ( max-width : 1200px ) {
+    .main-container-login{
+        width: 70%;
+        padding: 0.5em;
     }
-    .header{
-        font-size: 2.5em;
-    }
-    .main-container{
-        width: 100%;
-    }
-}
 
-@media screen and ( max-width : 360px ) {
-    .label-attributes{
-        font-size: 0.6em;
-    }    
-    .input-attributes{
-        font-size: 0.5em;
-    }
-    .header{
-        font-size: 2.5em;
-    }
-    .final-label{
-        font-size: 0.6em;
-    }
     .main-container{
-        width: 100%;
+        width: 60%;
+        padding: 0.5em;
     }
 }
 
-@media screen and ( max-width : 280px ) {
-    .label-attributes{
-        font-size: 0.5em;
-    }    
-    .input-attributes{
-        font-size: 0.4em;
-    }
-    .header{
-        font-size: 2.5em;
-    }
-    .final-label{
-        font-size: 0.6em;
-    }
-    .main-container{
+@media screen and ( max-width : 760px ) {
+    .min-input, .min-input-2{
         width: 100%;
     }
+    
+    .main-container-login{
+        width: 90%;
+    }
+
+    .main-container{
+        width: 90%;
+    }
+
+.forgot-password{
+    color:black;
+    margin-left: 35%;
 }
+
+.input-attributes {
+    width: 100%;
+}
+}
+

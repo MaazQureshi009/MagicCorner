@@ -114,7 +114,7 @@ function EditProducts(){
                                         onChange={(event)=>{setOldPrice(event.target.value)}} required>
                                     </input>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 min-input">
                                     <p className="label-attributes">
                                         CATEGORY:
                                     </p>
@@ -127,7 +127,7 @@ function EditProducts(){
                                         <option className="option-attributes">LINEN</option>
                                     </select>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 min-input">
                                     <p className="label-attributes">
                                         TAGS:
                                     </p>
@@ -138,7 +138,7 @@ function EditProducts(){
                                         <option className="option-attributes">WALL HANGINGS</option>
                                     </select>
                                 </div>
-                                <div className="col-4">
+                                <div className="col-4 min-input">
                                     <p className="label-attributes">
                                         LENGTH(m):
                                     </p>
@@ -149,7 +149,7 @@ function EditProducts(){
                                         onChange={(event)=>{setLength(event.target.value)}} required>
                                     </input>
                                 </div>
-                                <div className="col-4">
+                                <div className="col-4 min-input">
                                     <p className="label-attributes">
                                         WIDTH(m):
                                     </p>
@@ -160,7 +160,7 @@ function EditProducts(){
                                         onChange={(event)=>{setBreath(event.target.value)}} required>
                                     </input>
                                 </div>
-                                <div className="col-4">
+                                <div className="col-4 min-input">
                                     <p className="label-attributes">
                                         HEIGHT(m):
                                     </p>
@@ -171,7 +171,7 @@ function EditProducts(){
                                         onChange={(event)=>{setHeight(event.target.value)}} required>
                                     </input>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 min-input">
                                     <p className="label-attributes">
                                         COD STATUS:
                                     </p>
@@ -182,7 +182,7 @@ function EditProducts(){
                                         <option className="option-attributes">NO</option>
                                     </select>
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 min-input">
                                     <p className="label-attributes">
                                         HOME SCREEN DISPLAY:
                                     </p>
